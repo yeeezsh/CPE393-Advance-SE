@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  cpe393-advance-se:
+    container_name: CPE393-Advance-SE
+    restart: always
+    environment:
+      NODE_ENV: "development"
+      TZ: Asia/Bangkok
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - 3000
+    volumes:
+      - "./src:/src"
+    logging:
+      options:
+        max-size: 50m
