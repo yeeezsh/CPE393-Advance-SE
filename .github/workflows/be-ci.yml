@@ -30,4 +30,5 @@ jobs:
         run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn test --ci --passWithNoTests
+      - run: yarn test:e2e --ci --passWithNoTests
       - run: yarn build
