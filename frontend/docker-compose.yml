@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   cpe393-advance-se:
-    container_name: CPE393-Advance-SE
+    container_name: CPE393-Advance-SE-FE
     restart: always
     environment:
       NODE_ENV: "development"
