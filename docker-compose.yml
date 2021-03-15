@@ -1,5 +1,24 @@
 version: "3.4"
 services:
+  cpe393-advance-se-fe:
+    container_name: cpe393-advance-se-fe
+    restart: always
+    depends_on:
+      - cpe393-advance-se-be
+    environment:
+      NODE_ENV: "development"
+      TZ: Asia/Bangkok
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "5000"
+    volumes:
+      - "./src:/src"
+    logging:
+      options:
+        max-size: 50m
   cpe393-advance-se-be:
     container_name: cpe393-advance-se-be
     restart: always
