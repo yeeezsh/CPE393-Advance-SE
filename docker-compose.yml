@@ -13,9 +13,9 @@ services:
       dockerfile: Dockerfile
       target: dev
     ports:
-      - "5000"
+      - "3000:3000"
     volumes:
-      - "./src:/src"
+      - "./frontend/src:/src"
     logging:
       options:
         max-size: 50m
