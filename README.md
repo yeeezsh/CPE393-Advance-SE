@@ -22,7 +22,14 @@ git clone https://github.com/yee2542/CPE393-Advance-SE
 cd ./CPE393-Advance-SE
 ```
 
-then use docker-compose to run a project in production environment use **docker-compose.yml** by -d for running in backgroud
+## TL;DR
+use this command to run everything for development
+
+```sh
+bash ./dev.sh
+```
+
+use docker-compose to run a project in production environment use **docker-compose.yml** by -d for running in backgroud
 
 ```sh
 docker-compose up -d
