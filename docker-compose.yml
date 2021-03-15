@@ -1,0 +1,68 @@
+version: "3.4"
+services:
+  cpe393-advance-se-fe:
+    container_name: cpe393-advance-se-be
+    restart: always
+    depends_on:
+      - cpe393-advance-se-mongos
+    environment:
+      NODE_ENV: "development"
+      TZ: Asia/Bangkok
+      ORIGIN: http(|s):\/\/localhost:3000
+      DATABASE_CONNECTION: "mongodb://cpe393-advance-se-mongos/online-url"
+      DATABASE_USERAME: root
+      DATABASE_PASSWORD: CPE393@OnlineURL.MongoDB
+      DATABASE_AUTH_SOURCE: admin
+      PORT: 5000
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "5000:3000"
+    volumes:
+      - "./src:/src"
+      - "./schema.gql:/schema.gql"
+    logging:
+      options:
+        max-size: 50m
+  cpe393-advance-se-mongos:
+    image: "bitnami/mongodb-sharded:4.4"
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: cpe393-bff-mongos
+      MONGODB_SHARDING_MODE: mongos
+      MONGODB_CFG_PRIMARY_HOST: cpe393-bff-cfg
+      MONGODB_CFG_REPLICA_SET_NAME: cpe393-bff-cfg
+      MONGODB_REPLICA_SET_KEY: cpe393bff
+      MONGODB_ROOT_PASSWORD: CPE393@OnlineURL.MongoDB
+      TZ: Asia/Bangkok
+    ports:
+      - "27017:27017"
+  cpe393-advance-se-shard:
+    image: "bitnami/mongodb-sharded:4.4"
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: cpe393-bff-shard
+      MONGODB_SHARDING_MODE: shardsvr
+      MONGODB_MONGOS_HOST: cpe393-bff-mongos
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: cpe393bff
+      MONGODB_REPLICA_SET_NAME: cpe393-shard0
+      MONGODB_ROOT_PASSWORD: CPE393@OnlineURL.MongoDB
+      TZ: Asia/Bangkok
+    volumes:
+      - "./db/shard-0:/bitnami"
+  cpe393-advance-se-cfg:
+    image: "bitnami/mongodb-sharded:4.4"
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: cpe393-bff-cfg
+      MONGODB_SHARDING_MODE: configsvr
+      MONGODB_ROOT_PASSWORD: CPE393@OnlineURL.MongoDB
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: cpe393bff
+      MONGODB_REPLICA_SET_NAME: cpe393-cfg
+      TZ: Asia/Bangkok
+    volumes:
+      - "./db/cfg:/bitnami"
