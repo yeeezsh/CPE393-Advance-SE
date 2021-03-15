@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  cpe393-advance-se-fe:
+  cpe393-advance-se-be:
     container_name: cpe393-advance-se-be
     restart: always
     depends_on:
