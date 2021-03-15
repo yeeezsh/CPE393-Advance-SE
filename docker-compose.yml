@@ -40,7 +40,7 @@ services:
     ports:
       - "5000:3000"
     volumes:
-      - "./src:/src"
+      - "./backend/src:/src"
       - "./schema.gql:/schema.gql"
     logging:
       options:
