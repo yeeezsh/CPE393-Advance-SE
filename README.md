@@ -7,5 +7,7 @@ when db not start cause have no permission to create dir e.g.
 fix by this command
 
 ```sh
+chown -R 1001 ./db
+#or
 sudo chown -R 1001 ./db
 ```
