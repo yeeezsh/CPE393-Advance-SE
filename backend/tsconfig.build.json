@@ -7,5 +7,8 @@
     "**/*spec.ts",
     "generate-gql.ts",
     "schema.gql"
-  ]
+  ],
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
 }

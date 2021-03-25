@@ -12,6 +12,8 @@
     "baseUrl": "./",
     "incremental": true,
     "strictNullChecks": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
   }
 }
