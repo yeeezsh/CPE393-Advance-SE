@@ -30,4 +30,4 @@ jobs:
         run: yarn install --frozen-lockfile
       - run: yarn test --ci --passWithNoTests
       - run: yarn build
-      - run: storybook:build
+      - run: yarn storybook:build
