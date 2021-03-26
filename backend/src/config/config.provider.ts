@@ -1,11 +1,9 @@
-import { Provider } from '@nestjs/common';
-import { CONFIG_PROVIDER } from './@types/config.constant';
+import { Injectable } from '@nestjs/common';
 import { ConfigEnvType } from './@types/config.env';
-import { ConfigProviderValue } from './@types/config.type';
 
-export const ConfigProvider: Provider<ConfigProviderValue> = {
-  provide: CONFIG_PROVIDER,
-  useValue: ((): ConfigProviderValue => {
+@Injectable()
+export class ConfigProvider {
+  get() {
     const {
       DATABASE_CONNECTION,
       DATABASE_USERNAME,
@@ -27,5 +25,5 @@ export const ConfigProvider: Provider<ConfigProviderValue> = {
       origin: ORIGIN,
       timezone: TZ,
     };
-  })(),
-};
+  }
+}
