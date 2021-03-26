@@ -32,7 +32,7 @@ services:
       DATABASE_USERAME: root
       DATABASE_PASSWORD: CPE393@OnlineURL.MongoDB
       DATABASE_AUTH_SOURCE: admin
-      PORT: 5000
+      PORT: 3000
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -40,8 +40,7 @@ services:
     ports:
       - "5000:3000"
     volumes:
-      - "./backend/src:/src"
-      - "./schema.gql:/schema.gql"
+      - "./backend/:/src/"
     logging:
       options:
         max-size: 50m
