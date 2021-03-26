@@ -13,3 +13,6 @@ npm-debug.log.*
 .next
 build
 out
+
+# storybook
+storybook-static

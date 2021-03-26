@@ -105,3 +105,6 @@ dist
 
 # DB
 db
+
+# storybook
+frontend/storybook-static
