@@ -8,6 +8,7 @@ import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
+    ConfigModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
