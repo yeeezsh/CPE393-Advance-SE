@@ -1,7 +1,7 @@
 {
   "name": "cpe-393-advance-se-frontend",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -48,7 +48,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 --no-dll -s ./public",
-    "storybook:build": "build-storybook --no-dll"
+    "storybook:build": "build-storybook --no-dll",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": [
