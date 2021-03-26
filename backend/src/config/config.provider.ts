@@ -3,7 +3,7 @@ import { CONFIG_PROVIDER } from './@types/config.constant';
 import { ConfigEnvType } from './@types/config.env';
 import { ConfigType } from './@types/config.type';
 
-export const configProvider: Provider<ConfigType> = {
+export const ConfigProvider: Provider<ConfigType> = {
   provide: CONFIG_PROVIDER,
   useValue: ((): ConfigType => {
     const {
