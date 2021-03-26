@@ -47,6 +47,6 @@ jobs:
           key: yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: yarn-
       - name: Dependency install and integrety check
-       run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Build Storybook
-       run: yarn storybook:build
+        run: yarn storybook:build
