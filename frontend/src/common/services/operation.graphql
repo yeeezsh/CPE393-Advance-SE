@@ -1,3 +1,5 @@
-query serverStatus {
-  status
+query {
+  serverStatus {
+    status
+  }
 }
