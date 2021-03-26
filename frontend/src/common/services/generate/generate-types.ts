@@ -23,10 +23,10 @@ export type Query = {
   serverStatus: AppModel;
 };
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type DemoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = (
+export type DemoQuery = (
   { __typename?: 'Query' }
   & { serverStatus: (
     { __typename?: 'AppModel' }
@@ -35,8 +35,8 @@ export type Unnamed_1_Query = (
 );
 
 
-export const Document = gql`
-    {
+export const DemoDocument = gql`
+    query demo {
   serverStatus {
     status
   }
@@ -44,26 +44,26 @@ export const Document = gql`
     `;
 
 /**
- * __useQuery__
+ * __useDemoQuery__
  *
- * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useDemoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDemoQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuery({
+ * const { data, loading, error } = useDemoQuery({
  *   variables: {
  *   },
  * });
  */
-export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
-        return Apollo.useQuery<Query, QueryVariables>(Document, baseOptions);
+export function useDemoQuery(baseOptions?: Apollo.QueryHookOptions<DemoQuery, DemoQueryVariables>) {
+        return Apollo.useQuery<DemoQuery, DemoQueryVariables>(DemoDocument, baseOptions);
       }
-export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
-          return Apollo.useLazyQuery<Query, QueryVariables>(Document, baseOptions);
+export function useDemoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DemoQuery, DemoQueryVariables>) {
+          return Apollo.useLazyQuery<DemoQuery, DemoQueryVariables>(DemoDocument, baseOptions);
         }
-export type QueryHookResult = ReturnType<typeof useQuery>;
-export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
-export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
+export type DemoQueryHookResult = ReturnType<typeof useDemoQuery>;
+export type DemoLazyQueryHookResult = ReturnType<typeof useDemoLazyQuery>;
+export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;
