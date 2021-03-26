@@ -1,11 +1,11 @@
 import { Provider } from '@nestjs/common';
 import { CONFIG_PROVIDER } from './@types/config.constant';
 import { ConfigEnvType } from './@types/config.env';
-import { ConfigType } from './@types/config.type';
+import { ConfigProviderValue } from './@types/config.type';
 
-export const ConfigProvider: Provider<ConfigType> = {
+export const ConfigProvider: Provider<ConfigProviderValue> = {
   provide: CONFIG_PROVIDER,
-  useValue: ((): ConfigType => {
+  useValue: ((): ConfigProviderValue => {
     const {
       DATABASE_CONNECTION,
       DATABASE_USERNAME,
