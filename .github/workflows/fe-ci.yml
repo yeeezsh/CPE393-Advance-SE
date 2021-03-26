@@ -28,7 +28,6 @@ jobs:
           restore-keys: yarn-
       - name: Dependency install and integrety check
         run: yarn install --frozen-lockfile
-      - name: Unit test
       - run: yarn test --ci --passWithNoTests
-      - name: Build
       - run: yarn build
+      - run: storybook:build
