@@ -4,13 +4,16 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
+import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
+    ConfigModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
     }),
+    ConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

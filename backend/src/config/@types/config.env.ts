@@ -1,0 +1,13 @@
+export enum ConfigEnvEnum {
+  DATABASE_CONNECTION = 'DATABASE_CONNECTION',
+  DATABASE_USERNAME = 'DATABASE_USERNAME',
+  DATABASE_PASSWORD = 'DATABASE_PASSWORD',
+  DATABASE_AUTH_SOURCE = 'DATABASE_AUTH_SOURCE',
+  ORIGIN = 'ORIGIN',
+  PORT = 'PORT',
+  TZ = 'TZ',
+}
+
+export type ConfigEnvType = {
+  [key in ConfigEnvEnum]: string;
+};
