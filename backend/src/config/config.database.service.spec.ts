@@ -11,6 +11,15 @@ const MOCK_ENV = {
   DATABASE_AUTH_SOURCE: 'admin',
   PORT: '3000',
 };
+const BAD_MOCK_ENV = {
+  NODE_ENV: 'development',
+  TZ: 'Asia/Bangkok',
+  ORIGIN: 'http(|s)://localhost:3000',
+  DATABASE_CONNECTION: 'mongodb://cpe393-advance-se-mongos/online-url',
+  DATABASE_PASSWORD: '',
+  DATABASE_AUTH_SOURCE: 'admin',
+  PORT: 'haha',
+};
 
 describe('Config Provider Test', () => {
   let configService: ConfigAppService;
@@ -38,5 +47,9 @@ describe('Config Provider Test', () => {
 
     expect(port).toBe(Number(envPort));
     expect(port).not.toBe(undefined);
+  });
+
+  it('config should warning if env not parse correct', () => {
+    process.env = BAD_MOCK_ENV;
   });
 });
