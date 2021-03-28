@@ -7,6 +7,7 @@ import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from './config/config.module';
       sortSchema: true,
     }),
     ConfigModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
