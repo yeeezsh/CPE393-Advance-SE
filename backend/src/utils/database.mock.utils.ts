@@ -1,6 +1,5 @@
 import { Logger } from '@nestjs/common';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
-import mongoose from 'mongoose';
 import { ConfigAppServiceType } from '../config/@types/config-app.service.type';
 
 export const replSet = new MongoMemoryReplSet({
