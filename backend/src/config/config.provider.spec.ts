@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { ConfigProvider } from './config.provider';
+import { ConfigAppService } from './config.app.service';
 
 const MOCK_ENV = {
   NODE_ENV: 'development',
@@ -13,15 +13,15 @@ const MOCK_ENV = {
 };
 
 describe('Config Provider Test', () => {
-  let configService: ConfigProvider;
+  let configService: ConfigAppService;
 
   beforeEach(async () => {
     process.env = MOCK_ENV;
     const moduleRef = await Test.createTestingModule({
-      providers: [ConfigProvider],
+      providers: [ConfigAppService],
     }).compile();
 
-    configService = moduleRef.get<ConfigProvider>(ConfigProvider);
+    configService = moduleRef.get<ConfigAppService>(ConfigAppService);
   });
 
   it('config should have all these configurations', () => {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigEnvType } from './@types/config.env';
+import { ConfigEnvType } from './@types/config.env.type';
 
 @Injectable()
-export class ConfigProvider {
+export class ConfigAppService {
   get() {
     const {
       DATABASE_CONNECTION,
