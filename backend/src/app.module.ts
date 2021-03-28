@@ -11,7 +11,10 @@ import { ConfigModule } from './config/config.module';
 @Module({
   imports: [
     ConfigModule,
-    MongooseModule.forRootAsync({ useClass: ConfigDatabaseService }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: ConfigDatabaseService,
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
