@@ -7,12 +7,12 @@ import { User, UserDocument } from './schema/user.schema';
 export class AccountService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createAccount(): Promise<void> {
-    await this.userModel.create({
+  async createAccount(): Promise<Omit<UserDocument, 'password'>> {
+    const doc = await this.userModel.create({
       username: '',
       password: '',
       email: '',
     });
-    return;
+    return doc;
   }
 }
