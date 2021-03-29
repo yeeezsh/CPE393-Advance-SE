@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from '../schema/user.schema';
 
 @ObjectType()
-export class UserModel implements User {
+export class UserDTO implements User {
   @Field(() => String)
   _id: string;
 
