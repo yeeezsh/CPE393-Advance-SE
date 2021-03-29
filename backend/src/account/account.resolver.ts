@@ -2,16 +2,17 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AccountService } from './account.service';
 import { UserDTO } from './dtos/user.dto';
 import { UserRegisterInputDTO } from './dtos/user.register.input.dto';
+import { UserResponseDTO } from './dtos/user.response.dto';
 
 @Resolver(() => UserDTO)
 export class AccountResolver {
   constructor(private accountService: AccountService) {}
 
-  @Mutation(() => UserDTO)
+  @Mutation(() => UserResponseDTO)
   async createAccount(
     @Args('UserRegisterInputDTO') userRegisterInputDTO: UserRegisterInputDTO,
-  ): Promise<UserDTO> {
+  ): Promise<UserResponseDTO> {
     const user = await this.accountService.createAccount(userRegisterInputDTO);
-    return user as UserDTO;
+    return user as UserResponseDTO;
   }
 }
