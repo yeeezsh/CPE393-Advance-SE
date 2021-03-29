@@ -16,7 +16,7 @@ export class AccountService {
     try {
       const doc = await this.userModel.create({
         ...data,
-        password: PasswordUtils.hash(data.password),
+        password: await PasswordUtils.hash(data.password),
       });
       return doc;
     } catch (err) {
