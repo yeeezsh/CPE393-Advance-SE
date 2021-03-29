@@ -1,4 +1,4 @@
-export type ConfigProviderValue = {
+export type ConfigAppServiceType = {
   port: number;
   origin: string;
   database: {
