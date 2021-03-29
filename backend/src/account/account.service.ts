@@ -7,12 +7,22 @@ import { User, UserDocument } from './schema/user.schema';
 export class AccountService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createAccount(): Promise<Omit<UserDocument, 'password'>> {
+  async createAccount(): Promise<UserDocument> {
     const doc = await this.userModel.create({
       username: '',
       password: '',
       email: '',
     });
+
     return doc;
+  }
+
+  async deactivateAccount(userId: UserDocument['_id']): Promise<UserDocument> {
+    const updated = await this.userModel.findOneAndUpdate(
+      { _id: userId },
+      { deactivate: true },
+    );
+    if (!updated) throw new Error('user not exisiting');
+    return updated;
   }
 }
