@@ -49,7 +49,7 @@ describe('AccountService', () => {
   });
 
   it('should able to create and return user data', async () => {
-    const createAccount = await provider.createAccount();
+    const createAccount = await provider.createAccount(MOCK_USER_DOCUMENT);
     expect(createAccount).toEqual(MOCK_USER_DOCUMENT);
   });
 
