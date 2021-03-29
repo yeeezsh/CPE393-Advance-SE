@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { UserBadRequestException } from './exceptions/user.bad-request.exception';
+import { UserForbiddenException } from './exceptions/user.forbidden.exception';
 import { User, UserDocument } from './schema/user.schema';
 
 @Injectable()
@@ -18,11 +20,12 @@ export class AccountService {
   }
 
   async deactivateAccount(userId: UserDocument['_id']): Promise<UserDocument> {
+    if (!userId) throw new UserBadRequestException();
     const updated = await this.userModel.findOneAndUpdate(
       { _id: userId },
       { deactivate: true },
     );
-    if (!updated) throw new Error('user not exisiting');
+    if (!updated) throw new UserForbiddenException();
     return updated;
   }
 }
