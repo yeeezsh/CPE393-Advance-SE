@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 
 export class PasswordUtils {
-  static async compare(p1: string, p2: string): Promise<boolean> {
-    return await bcrypt.compare(p1, p2);
+  static async compare(plainText: string, hashed: string): Promise<boolean> {
+    return await bcrypt.compare(plainText, hashed);
   }
 
   static async hash(plainText: string): Promise<string> {
