@@ -1,4 +1,4 @@
-import { Provider, ValueProvider } from '@nestjs/common';
+import { Provider } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
