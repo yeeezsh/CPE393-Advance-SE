@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsString, Max, Min } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 import { User } from '../schema/user.schema';
 
 @InputType()
@@ -14,8 +14,8 @@ export class UserRegisterInputDTO implements Omit<User, 'createAt'> {
 
   @Field()
   @IsString()
-  @Min(6)
-  @Max(40)
+  @MinLength(6)
+  @MaxLength(40)
   password: string;
 
   @Field()
