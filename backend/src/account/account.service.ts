@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UnExpectedServerException } from '../common/exceptions/un-expected.server.exception';
+import { UserRegisterInputDTO } from './dtos/user.register.input.dto';
 import { UserBadRequestException } from './exceptions/user.bad-request.exception';
 import { UserForbiddenException } from './exceptions/user.forbidden.exception';
 import { User, UserDocument } from './schema/user.schema';
@@ -10,14 +11,9 @@ import { User, UserDocument } from './schema/user.schema';
 export class AccountService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createAccount(): Promise<UserDocument> {
+  async createAccount(data: UserRegisterInputDTO): Promise<UserDocument> {
     try {
-      const doc = await this.userModel.create({
-        username: '',
-        password: '',
-        email: '',
-      });
-
+      const doc = await this.userModel.create(data);
       return doc;
     } catch (err) {
       throw new UnExpectedServerException(err);
