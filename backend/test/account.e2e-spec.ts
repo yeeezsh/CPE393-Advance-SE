@@ -54,6 +54,34 @@ describe('Account (e2e)', () => {
       });
   });
 
+  it('should not able to create becuase not meet minimum requirements', async () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: print(gql`
+          mutation {
+            createAccount(
+              UserRegisterInputDTO: {
+                username: "yee"
+                password: "1"
+                displayName: "dsp name"
+                email: "t.com"
+              }
+            ) {
+              username
+              displayName
+            }
+          }
+        `),
+      })
+      .expect(({ body }) => {
+        const errors = body.errors;
+        expect(body.data).toBe(null);
+        expect(errors).not.toBe(null);
+        expect(errors[0].message).toBe('Bad Request Exception');
+      });
+  });
+
   afterAll(async () => {
     await app.close();
   });
