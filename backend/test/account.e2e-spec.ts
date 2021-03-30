@@ -5,6 +5,22 @@ import request from 'supertest';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 
+const userInput = gql`
+  mutation {
+    createAccount(
+      UserRegisterInputDTO: {
+        username: "test1"
+        password: "1234567"
+        displayName: "test dsp name"
+        email: "yee@y.com"
+      }
+    ) {
+      username
+      displayName
+    }
+  }
+`;
+
 describe('Account (e2e)', () => {
   let app: INestApplication;
 
@@ -19,28 +35,22 @@ describe('Account (e2e)', () => {
   });
 
   it('should able to create account', async () => {
-    const userInput = gql`
-      mutation {
-        createAccount(
-          UserRegisterInputDTO: {
-            username: "test1"
-            password: "1234567"
-            displayName: "test dsp name"
-            email: "yee@y.com"
-          }
-        ) {
-          username
-          displayName
-        }
-      }
-    `;
-
     return request(app.getHttpServer())
       .post('/graphql')
       .send({ query: print(userInput) })
       .expect((res) => {
         const data = res.body.data;
         expect(data.createAccount.username).toEqual('test1');
+      });
+  });
+
+  it('should not able to create account becuase it dulpicated', async () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({ query: print(userInput) })
+      .expect(({ body }) => {
+        expect(body.data).toBe(null);
+        expect(body.errors).not.toBe(null);
       });
   });
 
