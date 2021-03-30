@@ -1,9 +1,9 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { TestingModule, Test } from '@nestjs/testing';
-import { AppModule } from '../src/app.module';
-import request from 'supertest';
-import gql from 'graphql-tag';
+import { Test, TestingModule } from '@nestjs/testing';
 import { print } from 'graphql';
+import gql from 'graphql-tag';
+import request from 'supertest';
+import { AppModule } from '../src/app.module';
 
 const userInput = gql`
   mutation {
