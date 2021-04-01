@@ -30,19 +30,17 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
             style={{ marginLeft: -24, fontSize: 24, marginTop: 20 }}
           />
         </Col>
-        <Col span={4} offset={1}>
+        <Col span={2} offset={1}>
           <Row style={LogoCSS} justify="space-between" align="middle">
-            <Col span={8}>
-              <LinkOutlined style={{ fontSize: 38 }} />
+            <Col span={8} style={{ marginTop: -2 }}>
+              <LinkOutlined style={{ fontSize: 30 }} />
             </Col>
             <Col
-              span={7}
-              offset={2}
+              span={3}
               style={{
-                fontSize: 24,
-                fontWeight: "bold",
+                fontSize: 20,
                 textAlign: "center",
-                marginTop: -12,
+                marginTop: -14,
               }}
             >
               <div>OUM</div>
