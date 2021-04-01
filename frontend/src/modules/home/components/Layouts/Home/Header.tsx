@@ -1,8 +1,4 @@
-import {
-  LinkOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
+import { LinkOutlined, MenuOutlined } from "@ant-design/icons";
 import { Col, Layout, Row } from "antd";
 import React from "react";
 
@@ -29,17 +25,10 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
     <HeaderAnt style={HeaderCSS}>
       <Row justify="start" align="middle" style={{ height: 64 }}>
         <Col span={1}>
-          {React.createElement(
-            props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              onClick: props.toggle,
-              style: {
-                marginLeft: -24,
-                fontSize: 24,
-                marginTop: 20,
-              },
-            }
-          )}
+          <MenuOutlined
+            onClick={props.toggle}
+            style={{ marginLeft: -24, fontSize: 24, marginTop: 20 }}
+          />
         </Col>
         <Col span={4} offset={1}>
           <Row style={LogoCSS} justify="space-between" align="middle">
