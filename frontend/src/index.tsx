@@ -7,11 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 import Router from "./router";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={apolloClient}>
-      <Router />
-    </ApolloProvider>
-  </React.StrictMode>,
+  <ApolloProvider client={apolloClient}>
+    <Router />
+  </ApolloProvider>,
   document.getElementById("root")
 );
 
