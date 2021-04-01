@@ -9,12 +9,12 @@ const HeaderCSS: React.CSSProperties = {
   zIndex: 1,
 };
 
-const LogoCSS: React.CSSProperties = {
-  margin: 0,
-  height: 50,
-  marginTop: 7,
-  textAlign: "center",
-};
+const Logo = () => (
+  <div style={{ display: "flex" }}>
+    <LinkOutlined style={{ fontSize: 30, marginTop: 14 }} />
+    <div style={{ fontSize: 16 }}>OUM</div>
+  </div>
+);
 
 const { Header: HeaderAnt } = Layout;
 
@@ -30,22 +30,9 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
             style={{ marginLeft: -24, fontSize: 24, marginTop: 20 }}
           />
         </Col>
-        <Col span={2} offset={1}>
-          <Row style={LogoCSS} justify="space-between" align="middle">
-            <Col span={8} style={{ marginTop: -2 }}>
-              <LinkOutlined style={{ fontSize: 30 }} />
-            </Col>
-            <Col
-              span={3}
-              style={{
-                fontSize: 20,
-                textAlign: "center",
-                marginTop: -14,
-              }}
-            >
-              <div>OUM</div>
-            </Col>
-          </Row>
+
+        <Col span={4} offset={1}>
+          <Logo />
         </Col>
       </Row>
     </HeaderAnt>
