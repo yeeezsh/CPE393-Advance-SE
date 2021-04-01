@@ -13,10 +13,9 @@ const Sider: React.FC<{ collapsed: boolean }> = (props) => {
       trigger={null}
       collapsible
       collapsed={props.collapsed}
-      style={{ width: 100, marginTop: 64 }}
+      style={{ width: 100, marginTop: 64, background: "white" }}
     >
-      <div />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+      <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
         <Menu.Item key="1" icon={<UserOutlined />}>
           nav 1
         </Menu.Item>
