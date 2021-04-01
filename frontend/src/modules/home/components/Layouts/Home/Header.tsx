@@ -1,7 +1,10 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+  LinkOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 import { Col, Layout, Row } from "antd";
 import React from "react";
-import styled from "styled-components";
 
 const HeaderCSS: React.CSSProperties = {
   background: "#fff",
@@ -10,14 +13,12 @@ const HeaderCSS: React.CSSProperties = {
   zIndex: 1,
 };
 
-const Logo = styled.div`
-  background: gray;
-  margin: 0px;
-  border-radius: 50px;
-  height: 50px;
-  margin-top: 7px;
-  text-align: center;
-`;
+const LogoCSS: React.CSSProperties = {
+  margin: 0,
+  height: 50,
+  marginTop: 7,
+  textAlign: "center",
+};
 
 const { Header: HeaderAnt } = Layout;
 
@@ -26,7 +27,7 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
 ) => {
   return (
     <HeaderAnt style={HeaderCSS}>
-      <Row justify="start" style={{ height: 64 }}>
+      <Row justify="start" align="middle" style={{ height: 64 }}>
         <Col span={1}>
           {React.createElement(
             props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
@@ -41,7 +42,23 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
           )}
         </Col>
         <Col span={4} offset={1}>
-          <Logo>Logo Ja</Logo>
+          <Row style={LogoCSS} justify="space-between" align="middle">
+            <Col span={8}>
+              <LinkOutlined style={{ fontSize: 38 }} />
+            </Col>
+            <Col
+              span={7}
+              offset={2}
+              style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginTop: -12,
+              }}
+            >
+              <div>OUM</div>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </HeaderAnt>
