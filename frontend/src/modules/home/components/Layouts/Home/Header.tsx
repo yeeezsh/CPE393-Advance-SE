@@ -31,7 +31,7 @@ const Header: React.FC<{ collapsed: boolean; toggle: () => void }> = (
           />
         </Col>
 
-        <Col span={4} offset={1}>
+        <Col span={2} offset={1}>
           <Logo />
         </Col>
       </Row>
