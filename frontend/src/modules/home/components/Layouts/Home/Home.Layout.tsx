@@ -4,8 +4,12 @@ import Container from "./Container";
 import Header from "./Header";
 import Sider from "./Sider";
 
-const HomeLayout: React.FC = (props) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+export interface HomeLayoutProps {
+  collapse?: boolean;
+}
+
+const HomeLayout: React.FC<HomeLayoutProps> = (props) => {
+  const [collapsed, setCollapsed] = useState<boolean>(props.collapse || false);
   const toggle = () => setCollapsed((s) => !s);
 
   return (
