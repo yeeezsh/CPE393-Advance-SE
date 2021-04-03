@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react";
-import HomeLayout, { HomeLayoutProps } from "./Home.Layout";
 import React from "react";
 import "../../../../../index.css";
+import HomeLayout, { HomeLayoutProps } from "./Home.Layout";
 
 export default {
   title: "Components/Layouts/HomeLayout",
