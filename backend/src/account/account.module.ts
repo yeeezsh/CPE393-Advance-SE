@@ -9,5 +9,6 @@ import { AccountResolver } from './account.resolver';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   providers: [AccountService, AccountResolver],
+  exports: [AccountService]
 })
 export class AccountModule {}

@@ -29,4 +29,12 @@ export class AccountService {
     if (!updated) throw new UserForbiddenException();
     return updated;
   }
+
+  async getByEmail(email: string) {
+    const user = await this.userModel.findOne({ email });
+    if(user) {
+      return user;
+    }
+    throw new UserForbiddenException();
+  }
 }
