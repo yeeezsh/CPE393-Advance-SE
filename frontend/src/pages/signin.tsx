@@ -1,9 +1,8 @@
 import React from "react";
-import SignInPage from "../modules/user/pages/signin";
+import SignIn from "../modules/account/pages/signin";
 
-const SignIn: React.FC = () => {
-  // test
-  return <SignInPage />;
+const SignInPage: React.FC = () => {
+  return <SignIn />;
 };
 
-export default SignIn;
+export default SignInPage;

@@ -8,7 +8,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const SignInPage: React.FC = () => {
+const SignIn: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -54,4 +54,4 @@ const SignInPage: React.FC = () => {
   );
 };
 
-export default SignInPage;
+export default SignIn;
