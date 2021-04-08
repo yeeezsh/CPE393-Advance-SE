@@ -21,7 +21,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
     }),
-    ConfigModule,
+    // ConfigModule,
     AccountModule,
     AuthenticationModule,
   ],

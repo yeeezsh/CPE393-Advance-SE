@@ -32,7 +32,7 @@ export class AccountService {
 
   async getByEmail(email: string) {
     const user = await this.userModel.findOne({ email });
-    if(user) {
+    if (user) {
       return user;
     }
     throw new UserForbiddenException();
