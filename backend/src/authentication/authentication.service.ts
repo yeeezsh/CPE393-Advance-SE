@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { AccountService } from 'src/account/account.service';
+import { JwtService } from '@nestjs/jwt';
+import { AccountResolver } from 'src/account/account.resolver';
+import { UserLoginInputDTO } from 'src/account/dtos/user.login.input.dto';
 import { UserRegisterInputDTO } from 'src/account/dtos/user.register.input.dto';
 import { UserBadRequestException } from 'src/account/exceptions/user.bad-request.exception';
 import { UserInvalidCredentialException } from 'src/account/exceptions/user.invalid-credentials.exception';
 import { PasswordUtils } from 'src/account/utils/password.utils';
-import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private readonly accountService: AccountService,
+    private accountService: AccountResolver,
     private jwtService: JwtService,
   ) {}
   public async register(registrationData: UserRegisterInputDTO) {
@@ -25,9 +26,10 @@ export class AuthenticationService {
     }
   }
 
-  public async getAuthenticatedUser(email: string, hashedPassword: string) {
+  public async getAuthenticatedUser(authenData: UserLoginInputDTO) {
     try {
-      const user = await this.accountService.getByEmail(email);
+      const user = await this.accountService.getByEmail(authenData);
+      const hashedPassword = await PasswordUtils.hash(authenData.password);
       await this.verifyPassword(user.password, hashedPassword);
       //   user.password = undefined;
       return user;
