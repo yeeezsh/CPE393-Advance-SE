@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AccountResolver } from 'src/account/account.resolver';
-import { UserLoginInputDTO } from 'src/account/dtos/user.login.input.dto';
-import { UserRegisterInputDTO } from 'src/account/dtos/user.register.input.dto';
-import { UserBadRequestException } from 'src/account/exceptions/user.bad-request.exception';
-import { UserInvalidCredentialException } from 'src/account/exceptions/user.invalid-credentials.exception';
-import { PasswordUtils } from 'src/account/utils/password.utils';
+import { AccountResolver } from '../account/account.resolver';
+import { UserLoginInputDTO } from '../account/dtos/user.login.input.dto';
+import { UserRegisterInputDTO } from '../account/dtos/user.register.input.dto';
+import { UserBadRequestException } from '../account/exceptions/user.bad-request.exception';
+import { UserInvalidCredentialException } from '../account/exceptions/user.invalid-credentials.exception';
+import { PasswordUtils } from '../account/utils/password.utils';
 @Injectable()
 export class AuthenticationService {
   constructor(
