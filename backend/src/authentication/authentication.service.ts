@@ -1,11 +1,16 @@
+import { Injectable } from '@nestjs/common';
 import { AccountService } from 'src/account/account.service';
 import { UserRegisterInputDTO } from 'src/account/dtos/user.register.input.dto';
 import { UserBadRequestException } from 'src/account/exceptions/user.bad-request.exception';
 import { UserInvalidCredentialException } from 'src/account/exceptions/user.invalid-credentials.exception';
 import { PasswordUtils } from 'src/account/utils/password.utils';
-
-export default class AuthenticationService {
-  constructor(private readonly accountService: AccountService) {}
+import { JwtService } from '@nestjs/jwt';
+@Injectable()
+export class AuthenticationService {
+  constructor(
+    private readonly accountService: AccountService,
+    private jwtService: JwtService,
+  ) {}
   public async register(registrationData: UserRegisterInputDTO) {
     const hashedPassword = await PasswordUtils.hash(registrationData.password);
     try {
@@ -38,5 +43,10 @@ export default class AuthenticationService {
     if (!isPasswordMatching) {
       throw new UserInvalidCredentialException();
     }
+  }
+
+  public async login(user: any) {
+    const payload = { username: user.username, sub: user.userId };
+    return { access_token: this.jwtService.sign(payload) };
   }
 }
