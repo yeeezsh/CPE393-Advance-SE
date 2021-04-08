@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AccountResolver } from '../account/account.resolver';
+import { UserLoginResponseDTO } from 'src/account/dtos/user.login.response.dto';
+import { UserResponseDTO } from 'src/account/dtos/user.response.dto';
+import { AccountResolver as AccountService } from '../account/account.resolver';
 import { UserLoginInputDTO } from '../account/dtos/user.login.input.dto';
 import { UserRegisterInputDTO } from '../account/dtos/user.register.input.dto';
 import { UserBadRequestException } from '../account/exceptions/user.bad-request.exception';
@@ -9,10 +11,12 @@ import { PasswordUtils } from '../account/utils/password.utils';
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private accountService: AccountResolver,
+    private accountService: AccountService,
     private jwtService: JwtService,
   ) {}
-  public async register(registrationData: UserRegisterInputDTO) {
+  public async register(
+    registrationData: UserRegisterInputDTO,
+  ): Promise<UserResponseDTO> {
     const hashedPassword = await PasswordUtils.hash(registrationData.password);
     try {
       const createdUser = await this.accountService.createAccount({
@@ -26,7 +30,9 @@ export class AuthenticationService {
     }
   }
 
-  public async getAuthenticatedUser(authenData: UserLoginInputDTO) {
+  public async getAuthenticatedUser(
+    authenData: UserLoginInputDTO,
+  ): Promise<UserLoginResponseDTO> {
     try {
       const user = await this.accountService.getByEmail(authenData);
       const hashedPassword = await PasswordUtils.hash(authenData.password);
