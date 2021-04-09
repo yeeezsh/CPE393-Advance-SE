@@ -1,11 +1,9 @@
-import { Form, Input, Button, Checkbox, Typography, Card, Divider } from "antd";
+import { Form, Input, Button, Typography, Card, Divider } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import React from "react";
+
 const { Title } = Typography;
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 0 },
-};
 const tailLayout = {
   wrapperCol: { offset: 0, span: 16 },
   width: 1000,
