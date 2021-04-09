@@ -6,6 +6,31 @@ type AppModel {
   status: Int!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createAccount(UserRegisterInputDTO: UserRegisterInputDTO!): UserResponseDTO!
+}
+
 type Query {
   serverStatus: AppModel!
+}
+
+input UserRegisterInputDTO {
+  displayName: String!
+  email: String!
+  password: String!
+  username: String!
+}
+
+type UserResponseDTO {
+  _id: String!
+  createAt: DateTime
+  deactivate: Boolean
+  displayName: String!
+  email: String!
+  username: String!
 }
