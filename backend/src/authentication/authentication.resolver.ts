@@ -1,5 +1,4 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { UserLoginInputDTO } from './dtos/user.login.input.dto';

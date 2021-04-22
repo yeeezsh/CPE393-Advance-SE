@@ -1,6 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
 import { AccountModule } from '../account/account.module';
 import { AuthenticationResolver } from './authentication.resolver';
 import { AuthenticationService } from './authentication.service';
@@ -12,7 +11,7 @@ const JwtProvider = JwtModule.register({
   signOptions: { expiresIn: '3600s' },
 });
 @Module({
-  imports: [forwardRef(() => AccountModule), PassportModule, JwtProvider],
+  imports: [forwardRef(() => AccountModule), JwtProvider],
   providers: [AuthenticationService, AuthenticationResolver, JwtAuthGuard],
   exports: [AuthenticationService, JwtAuthGuard, JwtProvider],
 })
