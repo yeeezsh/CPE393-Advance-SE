@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
@@ -21,6 +21,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
       cors: { origin: true, credentials: true },
+      context: ({ req }) => ({ ...req }),
     }),
     AccountModule,
     AuthenticationModule,
