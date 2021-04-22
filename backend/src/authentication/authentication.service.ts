@@ -18,7 +18,10 @@ export class AuthenticationService {
     if (!user) throw new UserInvalidCredentialException();
     const valid = await PasswordUtils.compare(loginDto.password, user.password);
     if (!valid) throw new UserInvalidCredentialException();
-    const token = await this.jwtService.signAsync(user);
+    const token = await this.jwtService.signAsync({
+      ...user,
+      password: undefined,
+    });
     return { ...user, token, _id: user._id };
   }
 }
