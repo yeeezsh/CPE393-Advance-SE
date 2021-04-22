@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { UserDTO } from './user.dto';
+import { UserDTO } from '../../account/dtos/user.dto';
 
 @ObjectType()
 export class UserLoginResponseDTO implements Partial<UserDTO> {
@@ -15,6 +15,5 @@ export class UserLoginResponseDTO implements Partial<UserDTO> {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
-  password: string;
+  token?: string;
 }
