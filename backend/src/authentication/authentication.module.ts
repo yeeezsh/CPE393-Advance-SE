@@ -2,22 +2,19 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AccountModule } from '../account/account.module';
-import { AccountResolver } from '../account/account.resolver';
+import { AuthenticationResolver } from './authentication.resolver';
 import { AuthenticationService } from './authentication.service';
-import { jwtConstants } from './constants';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { JwtStrategy } from './strategies/่jwt.strategy';
+import { JWT_CONSTANTS } from './constants';
 @Module({
   imports: [
     AccountModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      secret: JWT_CONSTANTS.secret,
+      signOptions: { expiresIn: '3600s' },
     }),
   ],
-  providers: [AuthenticationService, JwtStrategy, JwtAuthGuard, AccountResolver],
+  providers: [AuthenticationService, AuthenticationResolver],
   exports: [AuthenticationService],
-  // controller: [AuthenticationController]
 })
 export class AuthenticationModule {}
