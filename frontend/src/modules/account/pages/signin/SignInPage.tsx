@@ -20,6 +20,10 @@ const SignIn: React.FC = () => {
     console.log("Success:", values);
   };
 
+  const onClickSignUp = () => {
+    console.log("Routing to SignUp page...");
+  };
+
   return (
     <div className="site-card-border-less-wrapper" style={componentLayout}>
       <Card bordered={true} style={{ width: 450 }}>
@@ -65,7 +69,9 @@ const SignIn: React.FC = () => {
           <Divider>Or</Divider>
 
           <div style={componentLayout}>
-            <Button type="link">Sign Up</Button>
+            <Button type="link" onClick={onClickSignUp}>
+              Sign Up
+            </Button>
           </div>
         </Form>
       </Card>
