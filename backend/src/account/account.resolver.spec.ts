@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountResolver } from './account.resolver';
 import { AccountService } from './account.service';
@@ -16,6 +17,7 @@ describe('AccountResolver', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [JwtModule.register({})],
       providers: [AccountResolver, AccountService, MOCK_USER_MODEL],
     }).compile();
 
