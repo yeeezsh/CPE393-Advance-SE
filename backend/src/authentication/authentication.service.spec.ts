@@ -1,15 +1,15 @@
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AccountModule } from '../account/account.module';
+import { AccountResolver } from '../account/account.resolver';
 import { UserLoginInputDTO } from '../account/dtos/user.login.input.dto';
 import { UserLoginResponseDTO } from '../account/dtos/user.login.response.dto';
-import { MOCK_USER_MODEL } from '../account/tests/mock.user.model';
-import { AccountModule } from '../account/account.module';
+import {
+  MOCK_USER_MODEL
+} from '../account/tests/mock.user.model';
 import { AuthenticationService } from './authentication.service';
 import { jwtConstants } from './constants';
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtStrategy } from './strategies/่jwt.strategy';
-import { AccountResolver } from '../account/account.resolver';
 
 const MOCK_LOGIN_INPUT = {
   email: 'a@b.c',
@@ -30,18 +30,14 @@ describe('AuthenticationService', () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [
         AccountModule,
-
         PassportModule,
+
         JwtModule.register({
           secret: jwtConstants.secret,
           signOptions: { expiresIn: '60s' },
         }),
       ],
-      providers: [
-        MOCK_USER_MODEL,
-        AuthenticationService,
-        AccountResolver,
-      ],
+      providers: [AuthenticationService, AccountResolver, MOCK_USER_MODEL],
     }).compile();
 
     service = moduleRef.get<AuthenticationService>(AuthenticationService);
