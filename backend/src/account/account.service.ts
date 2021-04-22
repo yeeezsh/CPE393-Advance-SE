@@ -32,9 +32,7 @@ export class AccountService {
 
   async getByEmail(email: string): Promise<LeanDocument<UserDocument>> {
     const user = await this.userModel.findOne({ email }).lean();
-    if (user) {
-      return user;
-    }
-    throw new UserForbiddenException();
+    if (!user) throw new UserForbiddenException();
+    return user;
   }
 }
