@@ -1,5 +1,6 @@
-import { UseFilters } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UseFilters, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
 import { AccountService } from './account.service';
 import { UserDTO } from './dtos/user.dto';
 import { UserRegisterInputDTO } from './dtos/user.register.input.dto';
@@ -17,5 +18,16 @@ export class AccountResolver {
   ): Promise<UserResponseDTO> {
     const user = await this.accountService.createAccount(userRegisterInputDTO);
     return user as UserResponseDTO;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Query(() => UserResponseDTO)
+  async getAccount(@Args('id') userId: string) {
+    return {
+      _id: '1',
+      displayName: 'k',
+      email: '1',
+      username: '1',
+    } as UserResponseDTO;
   }
 }
