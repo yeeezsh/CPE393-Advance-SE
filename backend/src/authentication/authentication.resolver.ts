@@ -15,7 +15,9 @@ export class AuthenticationResolver {
     @Context('req') req: Request,
   ): Promise<UserLoginResponseDTO> {
     const user = await this.authenticationService.login(userLogin);
-    req.res?.cookie('Authorization', user.token);
+    req.res?.cookie('Authorization', `Bearer ${user.token}`, {
+      httpOnly: true,
+    });
     return { ...user, token: undefined };
   }
 }
