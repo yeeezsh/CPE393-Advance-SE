@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { LeanDocument, Model } from 'mongoose';
 import { UserRegisterInputDTO } from './dtos/user.register.input.dto';
 import { UserBadRequestException } from './exceptions/user.bad-request.exception';
 import { UserForbiddenException } from './exceptions/user.forbidden.exception';
@@ -30,8 +30,8 @@ export class AccountService {
     return updated;
   }
 
-  async getByEmail(email: string) {
-    const user = await this.userModel.findOne({ email });
+  async getByEmail(email: string): Promise<LeanDocument<UserDocument>> {
+    const user = await this.userModel.findOne({ email }).lean();
     if (user) {
       return user;
     }
