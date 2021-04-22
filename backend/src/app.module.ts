@@ -20,8 +20,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
+      cors: { origin: true, credentials: true },
     }),
-    // ConfigModule,
     AccountModule,
     AuthenticationModule,
   ],
