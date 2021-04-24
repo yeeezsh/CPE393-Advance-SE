@@ -21,7 +21,6 @@ export const NavbarStyleRight = styled.div`
 `;
 
 export const LogoStyle = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.1);
   margin-left: 32px;
   width: 84px;
   padding: 4px;
