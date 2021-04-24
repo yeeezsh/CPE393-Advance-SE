@@ -6,7 +6,7 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
   return (
     <>
       <NavbarStyle>
-        <div style={{ marginLeft: "24px" }}>
+        <div style={{ marginLeft: "26px" }}>
           <MenuOutlined
             onClick={props.onClick}
             style={{
