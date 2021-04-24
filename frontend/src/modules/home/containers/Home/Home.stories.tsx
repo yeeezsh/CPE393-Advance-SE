@@ -10,9 +10,7 @@ export default {
 
 const HomeLayoutStory: Story<HomeLayoutProps> = (args) => (
   <>
-    <div style={{ width: "70vw", border: "1px solid red" }}>
-      <HomeContainer {...args} />
-    </div>
+    <HomeContainer {...args} />
   </>
 );
 
