@@ -1,8 +1,11 @@
 import { Input } from "antd";
 import React from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import onEnterKey from "../../../../common/utils/onEnterKey";
 
-export type SearchbarProps = {};
+export type SearchbarProps = {
+  onSearch?: (s: string) => void;
+};
 
 const SearchIcon: React.FC = () => (
   <div style={{ marginRight: 8 }}>
@@ -11,5 +14,16 @@ const SearchIcon: React.FC = () => (
 );
 
 export const Searchbar: React.FC<SearchbarProps> = (props) => {
-  return <Input placeholder="Search" size="large" prefix={<SearchIcon />} />;
+  const onSearch = (e?: string) => {
+    props.onSearch && e && props.onSearch(e);
+  };
+
+  return (
+    <Input
+      placeholder="Search"
+      size="large"
+      prefix={<SearchIcon />}
+      onKeyPress={onEnterKey(onSearch)}
+    />
+  );
 };
