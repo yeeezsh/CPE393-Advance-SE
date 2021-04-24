@@ -14,6 +14,9 @@ export const AccountBadgeStyle = styled.div`
 
   .overlay {
     margin-top: 385px;
+    padding: 10px;
+    justify-content: center;
+    align-items: flex-start;
     border: 1px solid rgba(0, 0, 0, 0.08);
     width: 320px;
     height: 320px;
