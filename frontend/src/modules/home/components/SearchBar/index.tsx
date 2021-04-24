@@ -20,6 +20,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
 
   return (
     <Input
+      style={{ width: "100%", display: "flex" }}
       placeholder="Search"
       size="large"
       prefix={<SearchIcon />}
