@@ -16,3 +16,6 @@ const AccountBadgeStory: Story<AccountBadgeProps> = (args) => (
 );
 
 export const Default = AccountBadgeStory.bind({});
+Default.args = {
+  username: "hello",
+} as AccountBadgeProps;
