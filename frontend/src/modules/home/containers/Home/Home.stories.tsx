@@ -1,14 +1,14 @@
 import { Meta, Story } from "@storybook/react";
 import React from "react";
 import "../../../../index.css";
-import HomeContainer, { HomeLayoutProps } from "./Home.container";
+import HomeContainer, { HomeContainerProps } from "./Home.container";
 
 export default {
   title: "Module/Home/Container/Home",
   component: HomeContainer,
 } as Meta;
 
-const HomeLayoutStory: Story<HomeLayoutProps> = (args) => (
+const HomeLayoutStory: Story<HomeContainerProps> = (args) => (
   <>
     <div style={{ border: "1px solid red" }}>
       <HomeContainer {...args} />

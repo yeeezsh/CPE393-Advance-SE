@@ -4,11 +4,11 @@ import Navbar from "../Navbar";
 import Body from "./Container";
 import SiderContainer from "../Sider";
 
-export interface HomeLayoutProps {
+export interface HomeContainerProps {
   collapse?: boolean;
 }
 
-const HomeContainer: React.FC<HomeLayoutProps> = (props) => {
+const HomeContainer: React.FC<HomeContainerProps> = (props) => {
   const [collapsed, setCollapsed] = useState<boolean>(props.collapse || false);
   const toggle = () => setCollapsed((s) => !s);
 

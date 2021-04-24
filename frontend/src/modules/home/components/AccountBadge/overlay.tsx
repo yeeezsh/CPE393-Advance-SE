@@ -11,7 +11,10 @@ const Overlay: React.FC<OverlayProps> = (props) => {
   };
   if (props.position === "right") style = { right: 0 };
   return (
-    <AccountBadgeStyle className="overlay" style={style}>
+    <AccountBadgeStyle
+      className="overlay"
+      style={{ ...style, position: "fixed" }}
+    >
       {props.children}
     </AccountBadgeStyle>
   );

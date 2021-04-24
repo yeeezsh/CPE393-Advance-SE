@@ -4,7 +4,7 @@ export const AccountBadgeStyle = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.08);
   width: 120px;
   height: 100%;
-  border-radius: 28px;
+  border-radius: 0.5em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,7 +22,8 @@ export const AccountBadgeStyle = styled.div`
     height: 320px;
     position: absolute;
     right: 0;
-    z-index: 9;
+    z-index: 2;
+    background: white;
   }
 `;
 
