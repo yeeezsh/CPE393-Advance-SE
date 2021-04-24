@@ -7,6 +7,7 @@ import {
 
 export type AccountBadgeProps = {
   username: string;
+  style?: React.CSSProperties;
 };
 
 const CharacterBadge: React.FC = (props) => (
@@ -23,7 +24,7 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
   const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
 
   return (
-    <AccountBadgeStyle>
+    <AccountBadgeStyle style={props?.style}>
       <UsernameBadge>{props.username}</UsernameBadge>
       <CharacterBadge>{firstCharacter}</CharacterBadge>
     </AccountBadgeStyle>
