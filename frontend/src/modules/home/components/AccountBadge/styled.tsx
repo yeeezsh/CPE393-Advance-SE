@@ -10,6 +10,7 @@ export const AccountBadgeStyle = styled.div`
   justify-content: space-between;
   align-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const CharacterBadgeStyle = styled.div`
