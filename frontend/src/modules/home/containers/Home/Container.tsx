@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import React from "react";
 import styled from "styled-components";
 
-const ContentStyle = styled.div`
+const BodyStyle = styled.div`
   margin: 24px 16px;
   padding: 24px;
   min-height: 280px;
@@ -10,16 +10,14 @@ const ContentStyle = styled.div`
 
 const { Content } = Layout;
 
-const Container: React.FC<{ collapsed: boolean; toggle: () => void }> = (
-  props
-) => {
+const Body: React.FC<{ collapsed: boolean; toggle: () => void }> = (props) => {
   return (
     <Layout>
-      <ContentStyle>
+      <BodyStyle>
         <Content>{props.children}</Content>
-      </ContentStyle>
+      </BodyStyle>
     </Layout>
   );
 };
 
-export default Container;
+export default Body;

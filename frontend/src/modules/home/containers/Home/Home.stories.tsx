@@ -1,16 +1,16 @@
 import { Meta, Story } from "@storybook/react";
 import React from "react";
-import "../../../../../index.css";
-import HomeLayout, { HomeLayoutProps } from "./Home.Layout";
+import "../../../../index.css";
+import HomeContainer, { HomeLayoutProps } from "./Home.container";
 
 export default {
-  title: "Components/Layouts/HomeLayout",
-  component: HomeLayout,
+  title: "Components/Container/HomeLayout",
+  component: HomeContainer,
 } as Meta;
 
 const HomeLayoutStory: Story<HomeLayoutProps> = (args) => (
   <>
-    <HomeLayout {...args} />
+    <HomeContainer {...args} />
   </>
 );
 
