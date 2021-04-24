@@ -7,7 +7,7 @@ import { Layout, Menu } from "antd";
 import React from "react";
 const { Sider: SiderAnt } = Layout;
 
-const Sider: React.FC<{ collapsed: boolean }> = (props) => {
+const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
   return (
     <SiderAnt
       trigger={null}
@@ -30,4 +30,4 @@ const Sider: React.FC<{ collapsed: boolean }> = (props) => {
   );
 };
 
-export default Sider;
+export default SiderContainer;
