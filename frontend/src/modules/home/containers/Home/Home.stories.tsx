@@ -4,7 +4,7 @@ import "../../../../index.css";
 import HomeContainer, { HomeLayoutProps } from "./Home.container";
 
 export default {
-  title: "Module/Home/Container/HomeLayout",
+  title: "Module/Home/Container/Home",
   component: HomeContainer,
 } as Meta;
 
