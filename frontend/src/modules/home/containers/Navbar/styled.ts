@@ -13,10 +13,12 @@ export const NavbarStyleRight = styled.div`
   background-color: white;
   position: absolute;
   width: 50%;
-  left: 50%;
+  right: 0;
+  margin: auto;
   height: 54px;
   align-items: center;
   justify-content: flex-end;
+  padding-right: 24px;
 `;
 
 export const LogoStyle = styled.div`
@@ -31,8 +33,8 @@ export const LogoStyle = styled.div`
 
 export const SearchBarContainer = styled.div`
   display: flex;
-  margin-left: 25vw;
-  min-width: 45vw;
+  margin-left: 20vw;
+  min-width: 35vw;
   align-items: center;
   justify-content: center;
   transform: translateX(-25%);
