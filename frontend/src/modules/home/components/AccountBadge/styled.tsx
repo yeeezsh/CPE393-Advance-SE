@@ -22,8 +22,8 @@ export const CharacterBadgeStyle = styled.div`
     font-weight: bold;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 2.6em;
+    height: 2.6em;
     background: orange;
     border-radius: 50%;
     margin: auto;
@@ -34,7 +34,7 @@ export const CharacterBadgeStyle = styled.div`
 export const UsernameBadgeStyle = styled.p`
   display: flex;
   margin: auto;
-  margin-left: 8px;
+  margin-left: 10px;
   width: 50px;
   white-space: nowrap;
   overflow: hidden;
