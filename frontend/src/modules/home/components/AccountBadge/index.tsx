@@ -1,4 +1,6 @@
 import React from "react";
+import CharacterBadge from "../../../../common/components/CharacterBadge";
+import Overlay, { OverlayProps } from "./overlay";
 import {
   AccountBadgeStyle,
   CharacterBadgeStyle,
@@ -8,13 +10,9 @@ import {
 export type AccountBadgeProps = {
   username: string;
   style?: React.CSSProperties;
+  overlay?: OverlayProps["position"];
+  overlayContainer?: React.FC;
 };
-
-const CharacterBadge: React.FC = (props) => (
-  <CharacterBadgeStyle>
-    <p>{props.children}</p>
-  </CharacterBadgeStyle>
-);
 
 const UsernameBadge: React.FC = (props) => (
   <UsernameBadgeStyle>{props.children}</UsernameBadgeStyle>
@@ -27,6 +25,9 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
     <AccountBadgeStyle style={props?.style}>
       <UsernameBadge>{props.username}</UsernameBadge>
       <CharacterBadge>{firstCharacter}</CharacterBadge>
+      <Overlay position={props.overlay || "left"}>
+        {props.overlayContainer}
+      </Overlay>
     </AccountBadgeStyle>
   );
 };

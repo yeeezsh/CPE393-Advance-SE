@@ -11,24 +11,15 @@ export const AccountBadgeStyle = styled.div`
   align-content: center;
   align-items: center;
   cursor: pointer;
-`;
 
-export const CharacterBadgeStyle = styled.div`
-  padding: 4px;
-  display: flex;
-
-  p {
-    display: flex;
-    color: white;
-    font-weight: bold;
-    align-items: center;
-    justify-content: center;
-    width: 2.6em;
-    height: 2.6em;
-    background: orange;
-    border-radius: 50%;
-    margin: auto;
-    margin-right: 4px;
+  .overlay {
+    margin-top: 385px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    width: 320px;
+    height: 320px;
+    position: absolute;
+    right: 0;
+    z-index: 9;
   }
 `;
 

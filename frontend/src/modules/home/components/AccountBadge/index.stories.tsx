@@ -9,7 +9,7 @@ export default {
 
 const AccountBadgeStory: Story<AccountBadgeProps> = (args) => (
   <>
-    <div style={{ height: 60 }}>
+    <div style={{ height: 50 }}>
       <AccountBadge {...args} />
     </div>
   </>
@@ -18,4 +18,11 @@ const AccountBadgeStory: Story<AccountBadgeProps> = (args) => (
 export const Default = AccountBadgeStory.bind({});
 Default.args = {
   username: "hello",
+  overlay: "left",
+} as AccountBadgeProps;
+
+export const Right = AccountBadgeStory.bind({});
+Right.args = {
+  username: "hello",
+  overlay: "right",
 } as AccountBadgeProps;
