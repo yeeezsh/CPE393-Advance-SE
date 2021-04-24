@@ -7,6 +7,7 @@ import {
   SearchBarContainer,
 } from "./styled";
 import { Searchbar } from "../../components/SearchBar";
+import AccountBadge from "../../components/AccountBadge";
 
 const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
   return (
@@ -31,7 +32,9 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
         </SearchBarContainer>
       </NavbarStyle>
 
-      <NavbarStyleRight>hello</NavbarStyleRight>
+      <NavbarStyleRight>
+        <AccountBadge style={{ height: "80%" }} username="Hello" />
+      </NavbarStyleRight>
     </>
   );
 };
