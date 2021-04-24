@@ -1,17 +1,31 @@
 import React from "react";
-import { AccountBadgeStyle, CharacterBadgeStyle } from "./styled";
+import {
+  AccountBadgeStyle,
+  CharacterBadgeStyle,
+  UsernameBadgeStyle,
+} from "./styled";
 
-export type AccountBadgeProps = {};
+export type AccountBadgeProps = {
+  username: string;
+};
 
 const CharacterBadge: React.FC = (props) => (
-  <CharacterBadgeStyle>{props.children}</CharacterBadgeStyle>
+  <CharacterBadgeStyle>
+    <p>{props.children}</p>
+  </CharacterBadgeStyle>
 );
 
-const AccountBadge: React.FC<AccountBadgeProps> = () => {
+const UsernameBadge: React.FC = (props) => (
+  <UsernameBadgeStyle>{props.children}</UsernameBadgeStyle>
+);
+
+const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
+  const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
+
   return (
     <AccountBadgeStyle>
-      <div>Hello</div>
-      <CharacterBadge>H</CharacterBadge>
+      <UsernameBadge>{props.username}</UsernameBadge>
+      <CharacterBadge>{firstCharacter}</CharacterBadge>
     </AccountBadgeStyle>
   );
 };
