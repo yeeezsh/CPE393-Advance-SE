@@ -1,11 +1,7 @@
 import React from "react";
 import CharacterBadge from "../../../../common/components/CharacterBadge";
 import Overlay, { OverlayProps } from "./overlay";
-import {
-  AccountBadgeStyle,
-  CharacterBadgeStyle,
-  UsernameBadgeStyle,
-} from "./styled";
+import { AccountBadgeStyle, UsernameBadgeStyle } from "./styled";
 
 export type AccountBadgeProps = {
   username: string;
