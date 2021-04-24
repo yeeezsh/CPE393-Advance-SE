@@ -4,7 +4,6 @@ export const NavbarStyle = styled.div`
   display: flex;
   background-color: white;
   position: absolute;
-  width: 50%;
   height: 54px;
   align-items: center;
 `;
@@ -28,4 +27,14 @@ export const LogoStyle = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+`;
+
+export const SearchBarContainer = styled.div`
+  display: flex;
+  margin-left: 25vw;
+  min-width: 45vw;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-25%);
+  z-index: 1;
 `;
