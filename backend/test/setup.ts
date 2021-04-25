@@ -18,6 +18,8 @@ beforeAll(async () => {
     DATABASE_USERNAME: db.username,
     DATABASE_PASSWORD: db.password,
     DATABASE_AUTH_SOURCE: db.auth_source,
+    JWT_SECRET: '1234abcde567',
+    JWT_EXPIRE: '6h',
   } as ConfigEnvType;
 });
 
