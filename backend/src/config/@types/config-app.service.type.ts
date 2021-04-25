@@ -8,4 +8,8 @@ export type ConfigAppServiceType = {
     auth_source: string | 'admin';
   };
   timezone: string;
+  jwt: {
+    secret: string;
+    expire: string;
+  };
 };
