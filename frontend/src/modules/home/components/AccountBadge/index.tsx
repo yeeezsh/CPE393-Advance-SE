@@ -6,6 +6,8 @@ import { AccountBadgeStyle, UsernameBadgeStyle } from "./styled";
 
 export type AccountBadgeProps = {
   username: string;
+  email: string;
+  displayname: string;
   style?: React.CSSProperties;
   overlayPosition?: OverlayProps["position"];
   overlay?: boolean;
@@ -30,7 +32,11 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
       {/* overlay */}
       {overlay && (
         <Overlay position={props.overlayPosition || "right"}>
-          <AccountInfo />
+          <AccountInfo
+            username={props.username}
+            email={props.email}
+            displayname={props.displayname}
+          />
         </Overlay>
       )}
     </AccountBadgeStyle>

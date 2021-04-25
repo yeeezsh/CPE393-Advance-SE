@@ -15,30 +15,35 @@ const AccountBadgeStory: Story<AccountBadgeProps> = (args) => (
   </>
 );
 
-export const Default = AccountBadgeStory.bind({});
-Default.args = {
-  username: "John",
+const DEFAULT_ARGS = {
+  username: "John1234",
+  email: "john@doe.com",
+  displayname: "John Doe",
   overlayPosition: "left",
   overlay: false,
 } as AccountBadgeProps;
 
+export const Default = AccountBadgeStory.bind({});
+Default.args = {
+  ...DEFAULT_ARGS,
+} as AccountBadgeProps;
+
 export const WithOverlayDefault = AccountBadgeStory.bind({});
 WithOverlayDefault.args = {
-  username: "John",
-  overlayPosition: "left",
+  ...DEFAULT_ARGS,
   overlay: true,
 } as AccountBadgeProps;
 
 export const Right = AccountBadgeStory.bind({});
 Right.args = {
-  username: "John",
+  ...DEFAULT_ARGS,
   overlayPosition: "right",
   overlay: false,
 } as AccountBadgeProps;
 
 export const WithOverylayRight = AccountBadgeStory.bind({});
 WithOverylayRight.args = {
-  username: "John",
+  ...DEFAULT_ARGS,
   overlayPosition: "right",
   overlay: true,
 } as AccountBadgeProps;

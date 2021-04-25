@@ -11,7 +11,7 @@ const EmailStyle = styled.p`
   color: grey;
 `;
 
-const DisplayName = styled.p`
+const DisplayNameStyle = styled.p`
   display: flex;
   justify-content: center;
   margin: 0px;
@@ -47,12 +47,22 @@ const LogoutButton: React.FC = () => (
   </Button>
 );
 
-const AccountInfo: React.FC = () => {
+export type AccountInfoProps = {
+  displayname: string;
+  email: string;
+  username: string;
+};
+
+const AccountInfo: React.FC<AccountInfoProps> = (props) => {
+  const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
+
   return (
     <div style={{ width: "100%" }}>
-      <CharacterBadge textStyle={{ marginRight: "auto" }}>J</CharacterBadge>
-      <DisplayName>John Doe</DisplayName>
-      <EmailStyle>John@Doe.com</EmailStyle>
+      <CharacterBadge textStyle={{ marginRight: "auto" }}>
+        {firstCharacter}
+      </CharacterBadge>
+      <DisplayNameStyle>{props.displayname}</DisplayNameStyle>
+      <EmailStyle>{props.email}</EmailStyle>
       <ManageButton />
       <Line />
       <div style={{ height: 102 }} />

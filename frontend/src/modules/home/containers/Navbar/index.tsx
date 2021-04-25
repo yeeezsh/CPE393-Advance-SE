@@ -33,7 +33,12 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
       </NavbarStyle>
 
       <NavbarStyleRight>
-        <AccountBadge style={{ height: "80%" }} username="Hello" />
+        <AccountBadge
+          style={{ height: "80%" }}
+          username="hello1234"
+          displayname="Hello"
+          email={"hello@world.com"}
+        />
       </NavbarStyleRight>
     </>
   );
