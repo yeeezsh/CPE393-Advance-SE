@@ -22,12 +22,14 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
   const [overlay, setOverlay] = useState<boolean>(props?.overlay || false);
 
   return (
-    <AccountBadgeStyle
-      style={props?.style}
-      onClick={() => setOverlay((o) => !o)}
-    >
-      <UsernameBadge>{props.username}</UsernameBadge>
-      <CharacterBadge>{firstCharacter}</CharacterBadge>
+    <>
+      <AccountBadgeStyle
+        style={props?.style}
+        onClick={() => setOverlay((o) => !o)}
+      >
+        <UsernameBadge>{props.username}</UsernameBadge>
+        <CharacterBadge>{firstCharacter}</CharacterBadge>
+      </AccountBadgeStyle>
 
       {/* overlay */}
       {overlay && (
@@ -39,7 +41,7 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
           />
         </Overlay>
       )}
-    </AccountBadgeStyle>
+    </>
   );
 };
 

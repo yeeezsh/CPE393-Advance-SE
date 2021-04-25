@@ -11,20 +11,20 @@ export const AccountBadgeStyle = styled.div`
   align-content: center;
   align-items: center;
   cursor: pointer;
+`;
 
-  .overlay {
-    margin-top: 385px;
-    padding: 10px;
-    justify-content: center;
-    align-items: flex-start;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    width: 320px;
-    height: 320px;
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    background: white;
-  }
+export const AccountBadgeOverlayStyle = styled.div`
+  margin-top: 8px;
+  padding: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 320px;
+  height: 320px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  background: white;
 `;
 
 export const UsernameBadgeStyle = styled.p`

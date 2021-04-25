@@ -1,5 +1,5 @@
 import React from "react";
-import { AccountBadgeStyle } from "./styled";
+import { AccountBadgeOverlayStyle } from "./styled";
 
 export type OverlayProps = {
   position: "left" | "right";
@@ -11,12 +11,9 @@ const Overlay: React.FC<OverlayProps> = (props) => {
   };
   if (props.position === "right") style = { right: 0 };
   return (
-    <AccountBadgeStyle
-      className="overlay"
-      style={{ ...style, position: "fixed" }}
-    >
+    <AccountBadgeOverlayStyle style={{ ...style, position: "fixed" }}>
       {props.children}
-    </AccountBadgeStyle>
+    </AccountBadgeOverlayStyle>
   );
 };
 
