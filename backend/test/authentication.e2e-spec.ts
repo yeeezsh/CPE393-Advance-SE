@@ -92,7 +92,7 @@ describe('Authentication (e2e)', () => {
         query: print(gql`
           mutation {
             userLogin(
-              UserLoginInputDTO: { email: "should_fail@mail.com", password: "" }
+              UserLoginInputDTO: { email: "yee@y.com@mail.com", password: "" }
             ) {
               username
               displayName
@@ -105,6 +105,29 @@ describe('Authentication (e2e)', () => {
         expect(body.data).toBe(null);
         expect(errors).not.toBe(null);
         expect(errors[0].message).toBe('Bad Request Exception');
+      });
+  });
+
+  it('Should not be able to login when the password is wrong', async () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: print(gql`
+          mutation {
+            userLogin(
+              UserLoginInputDTO: { email: "yee@y.com", password: "111111111" }
+            ) {
+              username
+              displayName
+            }
+          }
+        `),
+      })
+      .expect(({ body }) => {
+        const errors = body.errors;
+        expect(body.data).toBe(null);
+        expect(errors).not.toBe(null);
+        expect(errors[0].message).toBe('Invalid credentials');
       });
   });
 
