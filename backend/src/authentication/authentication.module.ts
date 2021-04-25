@@ -1,6 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AccountModule } from '../account/account.module';
+import { ConfigModule } from '../config/config.module';
 import { AuthenticationResolver } from './authentication.resolver';
 import { AuthenticationService } from './authentication.service';
 import { JWT_CONSTANTS } from './constants';
@@ -11,7 +12,7 @@ const JwtProvider = JwtModule.register({
   signOptions: { expiresIn: '3600s' },
 });
 @Module({
-  imports: [forwardRef(() => AccountModule), JwtProvider],
+  imports: [ConfigModule, forwardRef(() => AccountModule), JwtProvider],
   providers: [AuthenticationService, AuthenticationResolver, JwtAuthGuard],
   exports: [AuthenticationService, JwtAuthGuard, JwtProvider],
 })
