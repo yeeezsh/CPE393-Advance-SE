@@ -1,5 +1,7 @@
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigAppService } from '../config/config.app.service';
+import { ConfigModule } from '../config/config.module';
 import { AccountResolver } from './account.resolver';
 import { AccountService } from './account.service';
 import { UserRegisterInputDTO } from './dtos/user.register.input.dto';
@@ -17,7 +19,19 @@ describe('AccountResolver', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [JwtModule.register({})],
+      imports: [
+        ConfigModule,
+        JwtModule.registerAsync({
+          imports: [ConfigModule],
+          inject: [ConfigAppService],
+          useFactory: (config: ConfigAppService) => ({
+            secret: config.get().jwt.secret,
+            signOptions: {
+              expiresIn: config.get().jwt.expire,
+            },
+          }),
+        }),
+      ],
       providers: [AccountResolver, AccountService, MOCK_USER_MODEL],
     }).compile();
 
