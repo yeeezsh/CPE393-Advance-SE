@@ -10,10 +10,10 @@ export class AuthenticationResolver {
 
   @Mutation(() => UserLoginResponseDTO)
   async userLogin(
-    @Args('UserLogin') userLogin: UserLoginInputDTO,
+    @Args('UserLoginInputDTO') userLoginInputDTO: UserLoginInputDTO,
     @Context('req') req: Request,
   ): Promise<UserLoginResponseDTO> {
-    const user = await this.authenticationService.login(userLogin);
+    const user = await this.authenticationService.login(userLoginInputDTO);
     req.res?.cookie('Authorization', `Bearer ${user.token}`, {
       httpOnly: true,
     });
