@@ -2,12 +2,15 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { JWT_CONSTANTS } from '../constants';
+import { ConfigAppService } from '../../config/config.app.service';
 import { UserLoginResponseDTO } from '../dtos/user.login.response.dto';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configAppService: ConfigAppService,
+  ) {}
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context);
     const req = ctx.getContext().req as Request;
@@ -17,7 +20,7 @@ export class JwtAuthGuard implements CanActivate {
 
     const extractToken = token.replace('Bearer ', '');
     const { username } = this.jwtService.verify(extractToken, {
-      secret: JWT_CONSTANTS.secret,
+      secret: this.configAppService.get().jwt.secret,
     }) as Pick<UserLoginResponseDTO, 'username'>;
     const valid = !!username;
     return valid;

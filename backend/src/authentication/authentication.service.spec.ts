@@ -3,8 +3,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountService } from '../account/account.service';
 import { MOCK_USER_DOCUMENT } from '../account/tests/mock.user.model';
 import { PasswordUtils } from '../account/utils/password.utils';
+import { ConfigAppService } from '../config/config.app.service';
+import { ConfigModule } from '../config/config.module';
 import { AuthenticationService } from './authentication.service';
-import { JWT_CONSTANTS } from './constants';
 import { UserLoginInputDTO } from './dtos/user.login.input.dto';
 import { UserLoginResponseDTO } from './dtos/user.login.response.dto';
 
@@ -30,9 +31,16 @@ describe('AuthenticationService', () => {
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [
-        JwtModule.register({
-          secret: JWT_CONSTANTS.secret,
-          signOptions: { expiresIn: '3600s' },
+        ConfigModule,
+        JwtModule.registerAsync({
+          imports: [ConfigModule],
+          inject: [ConfigAppService],
+          useFactory: (config: ConfigAppService) => ({
+            secret: config.get().jwt.secret,
+            signOptions: {
+              expiresIn: config.get().jwt.expire,
+            },
+          }),
         }),
       ],
       providers: [AuthenticationService, AccountService],
