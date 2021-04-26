@@ -13,10 +13,24 @@ scalar DateTime
 
 type Mutation {
   createAccount(UserRegisterInputDTO: UserRegisterInputDTO!): UserResponseDTO!
+  userLogin(UserLoginInputDTO: UserLoginInputDTO!): UserLoginResponseDTO!
 }
 
 type Query {
+  getAccount(id: String!): UserResponseDTO!
   serverStatus: AppModel!
+}
+
+input UserLoginInputDTO {
+  email: String!
+  password: String!
+}
+
+type UserLoginResponseDTO {
+  _id: String!
+  displayName: String!
+  email: String!
+  username: String!
 }
 
 input UserRegisterInputDTO {

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { AccountModule } from './account/account.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -19,9 +20,11 @@ import { AccountModule } from './account/account.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
+      cors: { origin: true, credentials: true },
+      context: ({ req }) => ({ ...req }),
     }),
-    ConfigModule,
     AccountModule,
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

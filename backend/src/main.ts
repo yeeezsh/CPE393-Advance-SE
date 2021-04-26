@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { ConfigAppServiceType } from './config/@types/config-app.service.type';
 import { ConfigAppService } from './config/config.app.service';
 import { ConfigModule } from './config/config.module';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,6 +13,8 @@ async function bootstrap() {
     .select(ConfigModule)
     .get(ConfigAppService)
     .get();
+
+  app.use(cookieParser());
 
   await app.listen(port);
 }
