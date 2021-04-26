@@ -9,13 +9,11 @@ import reportWebVitals from "./reportWebVitals";
 import Router from "./router";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
-        <Router />
-      </ApolloProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ApolloProvider client={apolloClient}>
+      <Router />
+    </ApolloProvider>
+  </Provider>,
   document.getElementById("root")
 );
 
