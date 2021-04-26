@@ -6,6 +6,8 @@ export enum ConfigEnvEnum {
   ORIGIN = 'ORIGIN',
   PORT = 'PORT',
   TZ = 'TZ',
+  JWT_SECRET = 'JWT_SECRET',
+  JWT_EXPIRE = 'JWT_EXPIRE',
 }
 
 export type ConfigEnvType = {
