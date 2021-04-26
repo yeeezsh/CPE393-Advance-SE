@@ -13,6 +13,8 @@ export class ConfigAppService {
       PORT,
       ORIGIN,
       TZ,
+      JWT_SECRET,
+      JWT_EXPIRE,
     } = process.env as ConfigEnvType;
 
     if (
@@ -48,6 +50,12 @@ export class ConfigAppService {
     if ((!TZ && typeof TZ !== 'string') || TZ === '')
       // allow empty but warn
       Logger.warn('TZ should be filled');
+
+    if (!JWT_SECRET && typeof JWT_SECRET !== 'string')
+      Logger.error('JWT_SECRET should be filled');
+
+    if (!JWT_EXPIRE && typeof JWT_EXPIRE !== 'string')
+      Logger.error('JWT_EXPIRE should be filled');
   }
 
   get(): ConfigAppServiceType {
@@ -61,6 +69,8 @@ export class ConfigAppService {
       PORT,
       ORIGIN,
       TZ,
+      JWT_SECRET,
+      JWT_EXPIRE,
     } = process.env as ConfigEnvType;
 
     return {
@@ -73,6 +83,10 @@ export class ConfigAppService {
       port: Number(PORT),
       origin: ORIGIN,
       timezone: TZ,
+      jwt: {
+        secret: JWT_SECRET,
+        expire: JWT_EXPIRE,
+      },
     };
   }
 }
