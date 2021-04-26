@@ -56,7 +56,7 @@ describe('Config Provider Test', () => {
     Logger.warn = jest.fn();
     process.env = BAD_MOCK_ENV;
     configService.get();
-    expect(Logger.error).toBeCalledTimes(2);
+    expect(Logger.error).toBeCalledTimes(4);
     expect(Logger.warn).toBeCalledTimes(1);
   });
 });

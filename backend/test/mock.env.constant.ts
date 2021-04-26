@@ -7,4 +7,6 @@ export const MOCK_ENV = {
   DATABASE_PASSWORD: 'CPE393@OnlineURL.MongoDB',
   DATABASE_AUTH_SOURCE: 'admin',
   PORT: '3000',
+  JWT_SECRET: '1234abcde567',
+  JWT_EXPIRE: '6h',
 };
