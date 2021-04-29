@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
+import { Tag, TagDocument } from './tag.schema';
 
 export type UrlDocument = Url & Document;
 
@@ -30,6 +31,14 @@ export class Url {
 
   @Prop()
   note: string;
+
+  @Prop({
+    type: [Tag],
+    refs: Tag.name,
+    index: true,
+    default: [],
+  })
+  tags: TagDocument['_id'][];
 
   @Prop({ required: true, default: Date.now })
   createAt: Date;
