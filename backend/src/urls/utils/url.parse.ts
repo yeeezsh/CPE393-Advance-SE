@@ -5,9 +5,9 @@ export default (
   original: string;
 } => {
   let domain = null;
-  const domainPattern = /(http(|s):\/\/)(.*)/;
+  const domainPattern = /((http(|s):\/\/)|(www.)|)((.*\/)|(.*$))/;
   const domainMatch = original.match(domainPattern);
-  if (domainMatch) [, , , domain] = domainMatch;
+  if (domainMatch) [, , , , , domain] = domainMatch;
 
   return {
     domain,
