@@ -15,9 +15,6 @@ export class UrlDTO implements Url {
   domain: string;
 
   @Field(() => String)
-  subdomain: string;
-
-  @Field(() => String)
   note: string;
 
   @Field(() => [Tag])

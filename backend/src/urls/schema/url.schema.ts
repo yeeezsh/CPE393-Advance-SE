@@ -24,11 +24,6 @@ export class Url {
   })
   domain: string;
 
-  @Prop({
-    required: true,
-  })
-  subdomain: string;
-
   @Prop()
   note: string;
 
