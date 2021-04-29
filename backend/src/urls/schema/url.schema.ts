@@ -1,5 +1,5 @@
 import { Prop, Schema } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { Types, Document } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
 
 export type UrlDocument = Url & Document;
