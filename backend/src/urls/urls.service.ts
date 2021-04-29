@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { UserDTO } from '../account/dtos/user.dto';
+import { Model, Types } from 'mongoose';
 import { UrlDTO } from './dtos/url.dto';
+import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
 import { Tag, TagDocument } from './schema/tag.schema';
 import { Url, UrlDocument } from './schema/url.schema';
 
@@ -13,14 +13,19 @@ export class UrlsService {
     @InjectModel(Tag.name) private tagModel: Model<TagDocument>,
   ) {}
 
-  async addUrl(owner: UserDTO['_id'], url: UrlDTO): Promise<UrlDocument> {
+  async addUrl(url: UrlDTO): Promise<UrlDocument> {
     const now = new Date();
     const doc = await this.urlModel.create({
       ...url,
-      owner,
       createAt: now,
       updateAt: now,
     });
     return doc;
+  }
+
+  async editUrl(id: Types.ObjectId, update: UrlDTO): Promise<UrlDocument> {
+    const updated = await this.urlModel.findByIdAndUpdate(id, update);
+    if (!updated) throw new UrlBadIdException();
+    return updated;
   }
 }
