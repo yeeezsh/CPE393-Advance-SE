@@ -21,7 +21,7 @@ export class Url {
   @Prop({
     required: true,
   })
-  doamin: string;
+  domain: string;
 
   @Prop({
     required: true,
