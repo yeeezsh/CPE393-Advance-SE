@@ -33,7 +33,7 @@ export class Url {
   note: string;
 
   @Prop({
-    type: [Tag],
+    type: Array,
     refs: Tag.name,
     index: true,
     default: [],
