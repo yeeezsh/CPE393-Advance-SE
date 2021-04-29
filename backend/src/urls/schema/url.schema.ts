@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
 
@@ -37,3 +37,5 @@ export class Url {
   @Prop({ required: true, default: Date.now })
   updateAt: Date;
 }
+
+export const UrlSchema = SchemaFactory.createForClass(Url);

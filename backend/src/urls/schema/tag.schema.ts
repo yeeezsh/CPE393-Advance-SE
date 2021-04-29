@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
 import { TagType } from '../@types/tag-type.type';
@@ -34,3 +34,5 @@ export class Tag {
   @Prop({ required: true, default: Date.now })
   updateAt: Date;
 }
+
+export const TagSchema = SchemaFactory.createForClass(Tag);
