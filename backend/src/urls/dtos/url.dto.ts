@@ -18,7 +18,7 @@ export class UrlDTO implements Url {
   note: string;
 
   @Field(() => [Tag])
-  tags: Tag[];
+  tags: Types.ObjectId[];
 
   @Field(() => Date, { nullable: true, defaultValue: Date.now })
   createAt: Date;
