@@ -9,11 +9,12 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true,
     "strictNullChecks": true,
     "strict": true,
     "esModuleInterop": true,
     "strictPropertyInitialization": false
-  }
+  },
+  "exclude": ["schema.gql", "jest.setup.ts"]
 }
