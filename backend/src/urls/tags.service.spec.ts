@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { TagType } from './@types/tag-type.type';
-import { TagEditInputDTO } from './dtos/input/tag-create.input.dto';
-import { TagCreateInputDTO } from './dtos/input/tag-edit.input.dto';
+import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
+import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
 import { TagService } from './tag.service';
 import { MOCK_TAG_MODEL, MOCK_TAG_VALUE } from './tests/mock.tag.model';
 import { MOCK_URL_MODEL } from './tests/mock.url.model';
