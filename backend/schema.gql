@@ -18,7 +18,18 @@ type Mutation {
 
 type Query {
   getAccount(id: String!): UserResponseDTO!
+  getUrls: UrlDTO!
   serverStatus: AppModel!
+}
+
+type UrlDTO {
+  createAt: DateTime
+  domain: String!
+  note: String!
+  original: String!
+  owner: String!
+  tags: [String!]!
+  updateAt: DateTime
 }
 
 input UserLoginInputDTO {
