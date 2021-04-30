@@ -1,10 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Types } from 'mongoose';
-import { Tag } from '../schema/tag.schema';
 import { Url } from '../schema/url.schema';
 
 @ObjectType()
 export class UrlDTO implements Url {
+  @Field(() => String)
+  _id: string;
+
   @Field(() => String)
   owner: string;
 
