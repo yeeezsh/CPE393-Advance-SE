@@ -1,4 +1,4 @@
-FROM node:14-alpine3.12 as base
+FROM node:14.15.3-alpine3.10 as base
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install
