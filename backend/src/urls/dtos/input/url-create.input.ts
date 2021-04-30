@@ -2,15 +2,13 @@ import { Field, InputType } from '@nestjs/graphql';
 import { Url } from '../../schema/url.schema';
 
 @InputType()
-export class UrlCreateInputDTO implements Omit<Url, 'createAt' | 'updateAt'> {
+export class UrlCreateInputDTO
+  implements Pick<Url, 'owner' | 'original' | 'note' | 'tags'> {
   @Field()
   owner: string;
 
   @Field()
   original: string;
-
-  @Field()
-  domain: string;
 
   @Field()
   note: string;
