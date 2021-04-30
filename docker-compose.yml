@@ -42,7 +42,8 @@ services:
     ports:
       - "5000:3000"
     volumes:
-      - "./backend/:/app/"
+      - "./backend/src:/src/"
+      - "./backend/schema.gql:/schema.gql"
     logging:
       options:
         max-size: 50m
