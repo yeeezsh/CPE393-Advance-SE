@@ -5,7 +5,6 @@ import { apolloClient } from "./common/services/apollo.client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Router from "./router";
-
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>

@@ -1,0 +1,20 @@
+{
+  "name": "CPE393-Advance-SE",
+  "version": "1.0.0",
+  "description": "## Getting Started Preparing the server environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yee2542/CPE393-Advance-SE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yee2542/CPE393-Advance-SE/issues"
+  },
+  "homepage": "https://github.com/yee2542/CPE393-Advance-SE#readme"
+}
