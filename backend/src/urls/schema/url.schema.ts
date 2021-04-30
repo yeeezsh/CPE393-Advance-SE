@@ -12,7 +12,7 @@ export class Url {
     ref: User.name,
     required: true,
   })
-  owner: Types.ObjectId;
+  owner: string;
 
   @Prop({
     required: true,
@@ -33,7 +33,7 @@ export class Url {
     index: true,
     default: [],
   })
-  tags: Array<Types.ObjectId>;
+  tags: string[];
 
   @Prop({ required: true, default: Date.now })
   createAt: Date;

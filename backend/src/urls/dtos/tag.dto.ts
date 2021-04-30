@@ -8,7 +8,7 @@ registerEnumType(TagType, { name: 'TagType' });
 @ObjectType()
 export class TagDTO implements Tag {
   @Field(() => String)
-  owner: Types.ObjectId;
+  owner: string;
 
   @Field(() => String)
   label: string;

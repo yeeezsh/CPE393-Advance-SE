@@ -12,7 +12,7 @@ export class Tag {
     ref: User.name,
     required: true,
   })
-  owner: Types.ObjectId;
+  owner: string;
 
   @Prop({
     required: true,

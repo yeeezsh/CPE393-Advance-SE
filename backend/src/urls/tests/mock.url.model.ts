@@ -6,8 +6,8 @@ import { Url, UrlDocument } from '../schema/url.schema';
 const now = new Date();
 
 export const MOCK_URL_DOCUMENT = ({
-  _id: Types.ObjectId(),
-  owner: Types.ObjectId(),
+  _id: Types.ObjectId().toHexString(),
+  owner: Types.ObjectId().toHexString(),
   original: 'https://docs.google.com',
   domain: 'docs.google.com',
   note: '',

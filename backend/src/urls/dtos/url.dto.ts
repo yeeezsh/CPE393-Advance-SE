@@ -6,7 +6,7 @@ import { Url } from '../schema/url.schema';
 @ObjectType()
 export class UrlDTO implements Url {
   @Field(() => String)
-  owner: Types.ObjectId;
+  owner: string;
 
   @Field(() => String)
   original: string;
@@ -17,8 +17,8 @@ export class UrlDTO implements Url {
   @Field(() => String)
   note: string;
 
-  @Field(() => [Tag])
-  tags: Types.ObjectId[];
+  @Field(() => [String])
+  tags: string[];
 
   @Field(() => Date, { nullable: true, defaultValue: Date.now })
   createAt: Date;

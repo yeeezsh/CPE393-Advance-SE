@@ -7,8 +7,8 @@ import { Tag, TagDocument } from '../schema/tag.schema';
 const now = new Date();
 
 export const MOCK_TAG_DOCUMENT = {
-  _id: Types.ObjectId(),
-  owner: Types.ObjectId(),
+  _id: Types.ObjectId().toHexString(),
+  owner: Types.ObjectId().toHexString(),
   label: 'test',
   type: TagType.tag,
   createAt: now,
