@@ -14,6 +14,12 @@ describe('Url parse util', () => {
     expect(domain).toBe('docs.google.co.th');
   });
 
+  it('Should parse with subdomain & prefix www. correctly', () => {
+    const sample = 'http://wwww.docs.google.co.th';
+    const { domain } = urlParse(sample);
+    expect(domain).toBe('docs.google.co.th');
+  });
+
   it('Should parse with subdomain & query string, param correctly', () => {
     const sample = 'https://docs.google.co.th/hello?test=true';
     const { domain } = urlParse(sample);
