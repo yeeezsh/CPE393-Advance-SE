@@ -21,7 +21,7 @@ export class TagService {
     return doc as TagDTO;
   }
 
-  async editTag(update: TagCreateInputDTO): Promise<TagDTO> {
+  async editTag(update: TagEditInputDTO): Promise<TagDTO> {
     const now = new Date();
     const updated = await this.tagModel.findByIdAndUpdate(
       update._id,
