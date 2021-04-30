@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { UrlCreateInputDTO } from './dtos/input/url-create.input';
 import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
 import { UrlDTO } from './dtos/url.dto';
