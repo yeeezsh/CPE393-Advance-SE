@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { TagType } from './@types/tag-type.type';
-import { TagEditInputDTO } from './dtos/input/tag-create.input.dto';
-import { TagCreateInputDTO } from './dtos/input/tag-edit.input.dto';
+import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
+import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
 import { TagDTO } from './dtos/tag.dto';
 import { Tag, TagDocument } from './schema/tag.schema';
 
@@ -21,7 +21,7 @@ export class TagService {
     return doc as TagDTO;
   }
 
-  async editTag(update: TagEditInputDTO): Promise<TagDTO> {
+  async editTag(update: TagCreateInputDTO): Promise<TagDTO> {
     const now = new Date();
     const updated = await this.tagModel.findByIdAndUpdate(
       update._id,

@@ -7,7 +7,10 @@ registerEnumType(TagType, {
 });
 
 @InputType()
-export class TagCreateInputDTO implements Omit<Tag, 'createAt' | 'updateAt'> {
+export class TagEditInputDTO implements Omit<Tag, 'createAt' | 'updateAt'> {
+  @Field()
+  _id: string;
+
   @Field()
   owner: string;
 
