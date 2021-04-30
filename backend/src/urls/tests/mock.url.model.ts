@@ -20,6 +20,9 @@ export const MOCK_URL_VALUE = {
   create: jest
     .fn()
     .mockImplementation(() => Promise.resolve(MOCK_URL_DOCUMENT)),
+  findByIdAndUpdate: jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(MOCK_URL_DOCUMENT)),
 };
 
 export const MOCK_URL_MODEL: Provider = {
