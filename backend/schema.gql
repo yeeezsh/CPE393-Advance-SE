@@ -12,17 +12,26 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
+  addUrls(UrlCreateInputDTO: UrlCreateInputDTO!): UrlDTO!
   createAccount(UserRegisterInputDTO: UserRegisterInputDTO!): UserResponseDTO!
+  editUrls(UrlEditInputDTO: UrlEditInputDTO!): UrlDTO!
   userLogin(UserLoginInputDTO: UserLoginInputDTO!): UserLoginResponseDTO!
 }
 
 type Query {
   getAccount(id: String!): UserResponseDTO!
-  getUrls: UrlDTO!
   serverStatus: AppModel!
 }
 
+input UrlCreateInputDTO {
+  note: String!
+  original: String!
+  owner: String!
+  tags: [String!]!
+}
+
 type UrlDTO {
+  _id: String!
   createAt: DateTime
   domain: String!
   note: String!
@@ -30,6 +39,14 @@ type UrlDTO {
   owner: String!
   tags: [String!]!
   updateAt: DateTime
+}
+
+input UrlEditInputDTO {
+  _id: String!
+  note: String
+  original: String
+  owner: String!
+  tags: [String!]
 }
 
 input UserLoginInputDTO {
