@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'antd';
 import { PushpinOutlined } from '@ant-design/icons';
-import UploadImage from './upload-image/UploadImage';
+import UploadImage from './Upload-image/UploadImage';
 import Categories from './categories/Categories';
 
 const styles = {
