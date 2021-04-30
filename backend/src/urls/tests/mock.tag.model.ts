@@ -15,7 +15,14 @@ export const MOCK_TAG_DOCUMENT = {
   updateAt: now,
 } as TagDocument;
 
-export const MOCK_TAG_VALUE = {};
+export const MOCK_TAG_VALUE = {
+  create: jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(MOCK_TAG_DOCUMENT)),
+  findByIdAndUpdate: jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(MOCK_TAG_DOCUMENT)),
+};
 
 export const MOCK_TAG_MODEL: Provider = {
   provide: getModelToken(Tag.name),
