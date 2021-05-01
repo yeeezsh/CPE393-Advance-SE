@@ -23,6 +23,11 @@ export const MOCK_URL_VALUE = {
   findByIdAndUpdate: jest
     .fn()
     .mockImplementation(() => Promise.resolve(MOCK_URL_DOCUMENT)),
+  find: jest.fn().mockReturnThis(),
+  sort: jest.fn().mockReturnThis(),
+  skip: jest.fn().mockReturnThis(),
+  limit: jest.fn().mockReturnThis(),
+  lean: jest.fn().mockReturnThis(),
 };
 
 export const MOCK_URL_MODEL: Provider = {
