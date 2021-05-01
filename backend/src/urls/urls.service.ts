@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UrlCreateInputDTO } from './dtos/input/url-create.input';
 import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
 import { UrlDTO } from './dtos/url.dto';
@@ -8,9 +8,25 @@ import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
 import { Url, UrlDocument } from './schema/url.schema';
 import urlParse from './utils/url.parse';
 
+const MAX_QUERY = 100;
+
 @Injectable()
 export class UrlsService {
   constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>) {}
+
+  async getRecentUrl(
+    owner: string,
+    skip = 0,
+    limit = MAX_QUERY,
+  ): Promise<UrlDTO[]> {
+    const doc = await this.urlModel
+      .find({ owner })
+      .sort({ updateAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+    return doc as UrlDTO[];
+  }
 
   async addUrl(create: UrlCreateInputDTO): Promise<UrlDTO> {
     const now = new Date();
@@ -38,6 +54,7 @@ export class UrlsService {
       },
       { new: true },
     );
+
     if (!updated) throw new UrlBadIdException();
     return updated as UrlDTO;
   }

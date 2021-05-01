@@ -47,4 +47,14 @@ describe('UrlsService', () => {
     const model = jest.spyOn(MOCK_URL_VALUE, 'findByIdAndUpdate');
     expect(model).toBeCalled();
   });
+
+  it('Should call find, sort, skip, limit, lean when call getRecentUrl', async () => {
+    const MOCK_OWNER = Types.ObjectId().toHexString();
+    await service.getRecentUrl(MOCK_OWNER, 0);
+    expect(jest.spyOn(MOCK_URL_VALUE, 'find')).toBeCalled();
+    expect(jest.spyOn(MOCK_URL_VALUE, 'sort')).toBeCalled();
+    expect(jest.spyOn(MOCK_URL_VALUE, 'skip')).toBeCalled();
+    expect(jest.spyOn(MOCK_URL_VALUE, 'limit')).toBeCalled();
+    expect(jest.spyOn(MOCK_URL_VALUE, 'lean')).toBeCalled();
+  });
 });
