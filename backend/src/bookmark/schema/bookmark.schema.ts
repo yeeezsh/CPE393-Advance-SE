@@ -3,10 +3,10 @@ import { Document, Types } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
 import { Tag } from './tag.schema';
 
-export type UrlDocument = Url & Document;
+export type UrlDocument = Bookmark & Document;
 
 @Schema()
-export class Url {
+export class Bookmark {
   @Prop({
     type: Types.ObjectId,
     ref: User.name,
@@ -42,4 +42,4 @@ export class Url {
   updateAt: Date;
 }
 
-export const UrlSchema = SchemaFactory.createForClass(Url);
+export const UrlSchema = SchemaFactory.createForClass(Bookmark);

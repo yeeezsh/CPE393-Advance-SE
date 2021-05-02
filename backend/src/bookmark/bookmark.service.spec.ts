@@ -4,7 +4,7 @@ import { UrlCreateInputDTO } from './dtos/input/url-create.input';
 import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
 import { MOCK_TAG_MODEL } from './tests/mock.tag.model';
 import { MOCK_URL_MODEL, MOCK_URL_VALUE } from './tests/mock.url.model';
-import { UrlsService } from './urls.service';
+import { UrlsService } from './bookmark.service';
 
 describe('UrlsService', () => {
   let service: UrlsService;

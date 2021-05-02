@@ -3,32 +3,34 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { UrlCreateInputDTO } from './dtos/input/url-create.input';
 import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
-import { UrlDTO } from './dtos/url.dto';
+import { BookmarkDTO } from './dtos/bookmark.dto';
 import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
-import { Url, UrlDocument } from './schema/url.schema';
+import { Bookmark, UrlDocument } from './schema/bookmark.schema';
 import urlParse from './utils/url.parse';
 
 const MAX_QUERY = 100;
 
 @Injectable()
 export class UrlsService {
-  constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>) {}
+  constructor(
+    @InjectModel(Bookmark.name) private urlModel: Model<UrlDocument>,
+  ) {}
 
   async getRecentUrl(
     owner: string,
     skip = 0,
     limit = MAX_QUERY,
-  ): Promise<UrlDTO[]> {
+  ): Promise<BookmarkDTO[]> {
     const doc = await this.urlModel
       .find({ owner })
       .sort({ updateAt: -1 })
       .skip(skip)
       .limit(limit)
       .lean();
-    return doc as UrlDTO[];
+    return doc as BookmarkDTO[];
   }
 
-  async addUrl(create: UrlCreateInputDTO): Promise<UrlDTO> {
+  async addUrl(create: UrlCreateInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(create.original);
     const doc = await this.urlModel.create({
@@ -38,10 +40,10 @@ export class UrlsService {
       createAt: now,
       updateAt: now,
     });
-    return doc as UrlDTO;
+    return doc as BookmarkDTO;
   }
 
-  async editUrl(update: UrlEditInputDTO): Promise<UrlDTO> {
+  async editUrl(update: UrlEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(update.original);
     const updated = await this.urlModel.findByIdAndUpdate(
@@ -56,6 +58,6 @@ export class UrlsService {
     );
 
     if (!updated) throw new UrlBadIdException();
-    return updated as UrlDTO;
+    return updated as BookmarkDTO;
   }
 }

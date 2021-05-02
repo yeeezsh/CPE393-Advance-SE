@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
-import { Url, UrlDocument } from '../schema/url.schema';
+import { Bookmark, UrlDocument } from '../schema/bookmark.schema';
 
 const now = new Date();
 
@@ -31,6 +31,6 @@ export const MOCK_URL_VALUE = {
 };
 
 export const MOCK_URL_MODEL: Provider = {
-  provide: getModelToken(Url.name),
+  provide: getModelToken(Bookmark.name),
   useValue: MOCK_URL_VALUE,
 };

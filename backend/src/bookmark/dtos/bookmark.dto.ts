@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Url } from '../schema/url.schema';
+import { Bookmark } from '../schema/bookmark.schema';
 
 @ObjectType()
-export class UrlDTO implements Url {
+export class BookmarkDTO implements Bookmark {
   @Field(() => String)
   _id: string;
 
