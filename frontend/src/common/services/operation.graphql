@@ -3,3 +3,11 @@ query demo {
     status
   }
 }
+
+mutation account($user: UserLoginInputDTO!) {
+  userLogin(UserLoginInputDTO: $user) {
+    username
+    displayName
+    email
+  }
+}

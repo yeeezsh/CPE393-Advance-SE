@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Typography, Card, Divider } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 
 const { Title } = Typography;
 
@@ -18,11 +19,22 @@ const componentLayout = {
 const SignIn: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    accountMutation({ variables: { user: values } });
+    // console.log(data?.userLogin.displayName);
   };
 
   const onClickSignUp = () => {
     console.log("Routing to SignUp page...");
   };
+
+  const [accountMutation, { data, loading, error }] = useAccountMutation({
+    variables: {
+      user: {
+        email: "",
+        password: "",
+      },
+    },
+  });
 
   return (
     <div className="site-card-border-less-wrapper" style={componentLayout}>
@@ -38,12 +50,12 @@ const SignIn: React.FC = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your Username!" }]}
+            name="email"
+            rules={[{ required: true, message: "Please input your Email!" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Email"
             />
           </Form.Item>
           <Form.Item
