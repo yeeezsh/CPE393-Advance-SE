@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { UrlCreateInputDTO } from './dtos/input/url-create.input';
-import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
+import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
+import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
 import { MOCK_TAG_MODEL } from './tests/mock.tag.model';
 import { MOCK_URL_MODEL, MOCK_URL_VALUE } from './tests/mock.url.model';
 import { BookmarkService } from './bookmark.service';
@@ -27,7 +27,7 @@ describe('Bookmark Service', () => {
       original: 'http://google.co.th',
       note: 'note',
       tags: [],
-    } as UrlCreateInputDTO;
+    } as BookmarkCreateInputDTO;
 
     await service.addUrl(MOCK_URL_INPUT);
     const model = jest.spyOn(MOCK_URL_VALUE, 'create');
@@ -41,7 +41,7 @@ describe('Bookmark Service', () => {
       original: 'http://google.co.th',
       note: 'note',
       tags: [],
-    } as UrlEditInputDTO;
+    } as BookmarkEditInputDTO;
 
     await service.editUrl(MOCK_URL_INPUT);
     const model = jest.spyOn(MOCK_URL_VALUE, 'findByIdAndUpdate');

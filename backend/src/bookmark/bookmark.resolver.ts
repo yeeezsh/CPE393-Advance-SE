@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { UrlCreateInputDTO } from './dtos/input/url-create.input';
-import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
+import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
+import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkService } from './bookmark.service';
 
@@ -10,14 +10,15 @@ export class BookmarkResolver {
 
   @Mutation(() => BookmarkDTO)
   async addUrls(
-    @Args(UrlCreateInputDTO.name) urlCreateInputDTO: UrlCreateInputDTO,
+    @Args(BookmarkCreateInputDTO.name)
+    urlCreateInputDTO: BookmarkCreateInputDTO,
   ): Promise<BookmarkDTO> {
     return this.urlService.addUrl(urlCreateInputDTO);
   }
 
   @Mutation(() => BookmarkDTO)
   async editUrls(
-    @Args(UrlEditInputDTO.name) urlEditInputDTO: UrlEditInputDTO,
+    @Args(BookmarkEditInputDTO.name) urlEditInputDTO: BookmarkEditInputDTO,
   ): Promise<BookmarkDTO> {
     return this.urlService.editUrl(urlEditInputDTO);
   }

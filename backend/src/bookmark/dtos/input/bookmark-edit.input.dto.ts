@@ -1,8 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { UrlCreateInputDTO } from './url-create.input';
+import { BookmarkCreateInputDTO } from './bookmark-create.input';
 
 @InputType()
-export class UrlEditInputDTO implements UrlCreateInputDTO {
+export class BookmarkEditInputDTO implements BookmarkCreateInputDTO {
   @Field()
   _id: string;
 

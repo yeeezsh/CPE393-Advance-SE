@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { UrlCreateInputDTO } from './dtos/input/url-create.input';
-import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
+import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
+import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
 import { Bookmark, UrlDocument } from './schema/bookmark.schema';
@@ -30,7 +30,7 @@ export class BookmarkService {
     return doc as BookmarkDTO[];
   }
 
-  async addUrl(create: UrlCreateInputDTO): Promise<BookmarkDTO> {
+  async addUrl(create: BookmarkCreateInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(create.original);
     const doc = await this.urlModel.create({
@@ -43,7 +43,7 @@ export class BookmarkService {
     return doc as BookmarkDTO;
   }
 
-  async editUrl(update: UrlEditInputDTO): Promise<BookmarkDTO> {
+  async editUrl(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(update.original);
     const updated = await this.urlModel.findByIdAndUpdate(
