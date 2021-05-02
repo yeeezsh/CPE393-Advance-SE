@@ -4,17 +4,17 @@ import { UrlCreateInputDTO } from './dtos/input/url-create.input';
 import { UrlEditInputDTO } from './dtos/input/url-edit.input.dto';
 import { MOCK_TAG_MODEL } from './tests/mock.tag.model';
 import { MOCK_URL_MODEL, MOCK_URL_VALUE } from './tests/mock.url.model';
-import { UrlsService } from './bookmark.service';
+import { BookmarkService } from './bookmark.service';
 
-describe('UrlsService', () => {
-  let service: UrlsService;
+describe('Bookmark Service', () => {
+  let service: BookmarkService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MOCK_URL_MODEL, MOCK_TAG_MODEL, UrlsService],
+      providers: [MOCK_URL_MODEL, MOCK_TAG_MODEL, BookmarkService],
     }).compile();
 
-    service = module.get<UrlsService>(UrlsService);
+    service = module.get<BookmarkService>(BookmarkService);
   });
 
   it('Should be defined', () => {

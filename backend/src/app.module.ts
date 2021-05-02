@@ -1,15 +1,15 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
+import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { BookmarkModule } from './bookmark/bookmark.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
-import { AccountModule } from './account/account.module';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { UrlsModule } from './bookmark/urls.module';
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import { UrlsModule } from './bookmark/urls.module';
     }),
     AccountModule,
     AuthenticationModule,
-    UrlsModule,
+    BookmarkModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

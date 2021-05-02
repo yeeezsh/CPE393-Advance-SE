@@ -11,7 +11,7 @@ import urlParse from './utils/url.parse';
 const MAX_QUERY = 100;
 
 @Injectable()
-export class UrlsService {
+export class BookmarkService {
   constructor(
     @InjectModel(Bookmark.name) private urlModel: Model<UrlDocument>,
   ) {}

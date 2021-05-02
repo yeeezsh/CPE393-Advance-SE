@@ -7,7 +7,7 @@ import { TagService } from './tag.service';
 import { MOCK_TAG_MODEL, MOCK_TAG_VALUE } from './tests/mock.tag.model';
 import { MOCK_URL_MODEL } from './tests/mock.url.model';
 
-describe('TagsService', () => {
+describe('Tags Service', () => {
   let service: TagService;
 
   beforeEach(async () => {
@@ -25,8 +25,8 @@ describe('TagsService', () => {
   it('Should able to call create when using addUrl', async () => {
     const MOCK_URL_INPUT = {
       owner: Types.ObjectId().toHexString(),
-      label: 'test lable',
-      type: TagType.tag,
+      label: 'default',
+      type: TagType.user,
     } as TagCreateInputDTO;
 
     await service.addTag(MOCK_URL_INPUT);
@@ -38,7 +38,7 @@ describe('TagsService', () => {
     const MOCK_URL_INPUT = {
       owner: Types.ObjectId().toHexString(),
       label: 'test lable',
-      type: TagType.tag,
+      type: TagType.user,
     } as TagEditInputDTO;
 
     await service.editTag(MOCK_URL_INPUT);

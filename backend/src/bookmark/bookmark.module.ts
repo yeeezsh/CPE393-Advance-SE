@@ -4,8 +4,8 @@ import { Tag, TagSchema } from './schema/tag.schema';
 import { Bookmark, UrlSchema } from './schema/bookmark.schema';
 import { TagService } from './tag.service';
 import { TagsResolver } from './tags.resolve';
-import { UrlsResolver } from './bookmark.resolver';
-import { UrlsService } from './bookmark.service';
+import { BookmarkResolver } from './bookmark.resolver';
+import { BookmarkService } from './bookmark.service';
 
 @Module({
   imports: [
@@ -17,6 +17,6 @@ import { UrlsService } from './bookmark.service';
       { name: Tag.name, schema: TagSchema },
     ]),
   ],
-  providers: [UrlsService, TagService, UrlsResolver, TagsResolver],
+  providers: [BookmarkService, TagService, BookmarkResolver, TagsResolver],
 })
-export class UrlsModule {}
+export class BookmarkModule {}
