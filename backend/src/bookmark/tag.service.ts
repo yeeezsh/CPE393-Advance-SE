@@ -28,7 +28,7 @@ export class TagService {
       {
         ...update,
         updateAt: now,
-        type: TagType.tag,
+        type: TagType.user,
       },
       { new: true },
     );
