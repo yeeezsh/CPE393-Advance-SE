@@ -10,7 +10,7 @@ export const MOCK_TAG_DOCUMENT = {
   _id: Types.ObjectId().toHexString(),
   owner: Types.ObjectId().toHexString(),
   label: 'test',
-  type: TagType.tag,
+  type: TagType.user,
   createAt: now,
   updateAt: now,
 } as TagDocument;
