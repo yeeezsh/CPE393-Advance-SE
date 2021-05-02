@@ -30,7 +30,7 @@ export class BookmarkService {
     return doc as BookmarkDTO[];
   }
 
-  async addUrl(create: BookmarkCreateInputDTO): Promise<BookmarkDTO> {
+  async addBookmark(create: BookmarkCreateInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(create.original);
     const doc = await this.urlModel.create({
@@ -43,7 +43,7 @@ export class BookmarkService {
     return doc as BookmarkDTO;
   }
 
-  async editUrl(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
+  async editBookmark(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(update.original);
     const updated = await this.urlModel.findByIdAndUpdate(

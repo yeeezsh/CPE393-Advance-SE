@@ -13,13 +13,13 @@ export class BookmarkResolver {
     @Args(BookmarkCreateInputDTO.name)
     urlCreateInputDTO: BookmarkCreateInputDTO,
   ): Promise<BookmarkDTO> {
-    return this.urlService.addUrl(urlCreateInputDTO);
+    return this.urlService.addBookmark(urlCreateInputDTO);
   }
 
   @Mutation(() => BookmarkDTO)
   async editUrls(
     @Args(BookmarkEditInputDTO.name) urlEditInputDTO: BookmarkEditInputDTO,
   ): Promise<BookmarkDTO> {
-    return this.urlService.editUrl(urlEditInputDTO);
+    return this.urlService.editBookmark(urlEditInputDTO);
   }
 }

@@ -29,7 +29,7 @@ describe('Bookmark Service', () => {
       tags: [],
     } as BookmarkCreateInputDTO;
 
-    await service.addUrl(MOCK_URL_INPUT);
+    await service.addBookmark(MOCK_URL_INPUT);
     const model = jest.spyOn(MOCK_URL_VALUE, 'create');
     expect(model).toBeCalled();
   });
@@ -43,7 +43,7 @@ describe('Bookmark Service', () => {
       tags: [],
     } as BookmarkEditInputDTO;
 
-    await service.editUrl(MOCK_URL_INPUT);
+    await service.editBookmark(MOCK_URL_INPUT);
     const model = jest.spyOn(MOCK_URL_VALUE, 'findByIdAndUpdate');
     expect(model).toBeCalled();
   });
