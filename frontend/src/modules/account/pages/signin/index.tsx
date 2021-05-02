@@ -1,9 +1,9 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Card, Divider, Form, Input, Typography } from "antd";
 import React from "react";
-import { Form, Input, Button, Typography, Card, Divider } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
-import { deleteUser, setUser } from "../../../../store/reducers/users/actions";
+import { setUser } from "../../../../store/reducers/users/actions";
 
 const { Title } = Typography;
 
