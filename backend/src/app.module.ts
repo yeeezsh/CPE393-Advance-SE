@@ -9,7 +9,7 @@ import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { AccountModule } from './account/account.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { UrlsModule } from './urls/urls.module';
+import { UrlsModule } from './bookmark/urls.module';
 
 @Module({
   imports: [
