@@ -18,5 +18,5 @@
     "strictNullChecks": true
   },
   "include": ["**/**.ts", "**/**.tsx"],
-  "exclude": ["jest.setup.ts"]
+  "exclude": ["jest.setup.ts", "**/**.spec.tsx", "**/**.spec.ts"]
 }
