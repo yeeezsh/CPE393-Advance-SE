@@ -19,6 +19,7 @@ import { ConfigModule } from './config/config.module';
       useClass: ConfigDatabaseService,
     }),
     GraphQLModule.forRoot({
+      useGlobalPrefix: true,
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
       cors: { origin: true, credentials: true },
