@@ -18,5 +18,11 @@
     "strictNullChecks": true
   },
   "include": ["**/**.ts", "**/**.tsx"],
-  "exclude": ["jest.setup.ts", "**/**.spec.tsx", "**/**.spec.ts"]
+  "exclude": [
+    "jest.setup.ts",
+    "node_modules",
+    ".storybook",
+    "public",
+    ".vscode"
+  ]
 }
