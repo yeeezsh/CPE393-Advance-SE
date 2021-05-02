@@ -98,7 +98,7 @@ export type AccountMutation = (
   { __typename?: 'Mutation' }
   & { userLogin: (
     { __typename?: 'UserLoginResponseDTO' }
-    & Pick<UserLoginResponseDto, 'username' | 'displayName' | 'email'>
+    & Pick<UserLoginResponseDto, '_id' | 'username' | 'displayName' | 'email'>
   ) }
 );
 
@@ -138,6 +138,7 @@ export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;
 export const AccountDocument = gql`
     mutation account($user: UserLoginInputDTO!) {
   userLogin(UserLoginInputDTO: $user) {
+    _id
     username
     displayName
     email

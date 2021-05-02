@@ -2,6 +2,8 @@ import React from "react";
 import { Form, Input, Button, Typography, Card, Divider } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
+import store from "../../../../store";
+import { deleteUser, setUser } from "../../../../store/reducers/users/actions";
 
 const { Title } = Typography;
 
@@ -17,16 +19,6 @@ const componentLayout = {
 };
 
 const SignIn: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-    accountMutation({ variables: { user: values } });
-    // console.log(data?.userLogin.displayName);
-  };
-
-  const onClickSignUp = () => {
-    console.log("Routing to SignUp page...");
-  };
-
   const [accountMutation, { data, loading, error }] = useAccountMutation({
     variables: {
       user: {
@@ -35,6 +27,18 @@ const SignIn: React.FC = () => {
       },
     },
   });
+
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+    accountMutation({ variables: { user: values } });
+    console.log(data?.userLogin);
+    console.log(error?.message);
+    if (!error) store.dispatch(setUser(data));
+  };
+
+  const onClickSignUp = () => {
+    console.log("Routing to SignUp page...");
+  };
 
   return (
     <div className="site-card-border-less-wrapper" style={componentLayout}>
