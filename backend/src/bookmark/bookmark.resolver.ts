@@ -9,7 +9,7 @@ export class BookmarkResolver {
   constructor(private readonly urlService: BookmarkService) {}
 
   @Mutation(() => BookmarkDTO)
-  async addUrls(
+  async addBookmark(
     @Args(BookmarkCreateInputDTO.name)
     urlCreateInputDTO: BookmarkCreateInputDTO,
   ): Promise<BookmarkDTO> {
@@ -17,7 +17,7 @@ export class BookmarkResolver {
   }
 
   @Mutation(() => BookmarkDTO)
-  async editUrls(
+  async editBookmark(
     @Args(BookmarkEditInputDTO.name) urlEditInputDTO: BookmarkEditInputDTO,
   ): Promise<BookmarkDTO> {
     return this.urlService.editBookmark(urlEditInputDTO);
