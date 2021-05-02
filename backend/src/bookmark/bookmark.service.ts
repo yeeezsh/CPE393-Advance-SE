@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
+import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
-import { BookmarkDTO } from './dtos/bookmark.dto';
 import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
 import { Bookmark, UrlDocument } from './schema/bookmark.schema';
 import urlParse from './utils/url.parse';
