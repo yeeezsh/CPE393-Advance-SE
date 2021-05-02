@@ -16,7 +16,7 @@ export class BookmarkService {
     @InjectModel(Bookmark.name) private urlModel: Model<UrlDocument>,
   ) {}
 
-  async getRecentUrl(
+  async getRecentBookmark(
     owner: string,
     skip = 0,
     limit = MAX_QUERY,
