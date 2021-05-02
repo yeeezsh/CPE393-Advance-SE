@@ -48,6 +48,7 @@ type Mutation {
 
 type Query {
   getAccount(id: String!): UserResponseDTO!
+  getRecentBookmark(limit: Float = 100, skip: Float = 0, userId: String!): [BookmarkDTO!]!
   serverStatus: AppModel!
 }
 

@@ -10,9 +10,9 @@ export class BookmarkResolver {
 
   @Query(() => [BookmarkDTO])
   async getRecentBookmark(
-    @Args('skip', { type: Number, defaultValue: 0 }) skip: number,
-    @Args('limit', { type: Number, defaultValue: 100 }) limit: number,
-    @Args('userId', { type: String }) userId: string,
+    @Args('skip', { defaultValue: 0 }) skip: number,
+    @Args('limit', { defaultValue: 100 }) limit: number,
+    @Args('userId') userId: string,
   ): Promise<BookmarkDTO[]> {
     return this.urlService.getRecentBookmark(userId, skip, limit);
   }
