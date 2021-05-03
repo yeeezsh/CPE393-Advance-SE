@@ -19,7 +19,9 @@ const componentLayout = {
 };
 
 const SignIn: React.FC = () => {
-  const [accountMutation, { data, loading, error }] = useAccountMutation({
+  const [accountMutation, { data,
+    //  loading,
+      error }] = useAccountMutation({
     variables: {
       user: {
         email: "",
