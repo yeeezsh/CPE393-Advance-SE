@@ -4,7 +4,7 @@ import React from "react";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
 import { setUser } from "../../../../store/reducers/users/actions";
-
+import { useHistory } from "react-router-dom";
 const { Title } = Typography;
 
 const tailLayout = {
@@ -19,9 +19,16 @@ const componentLayout = {
 };
 
 const SignIn: React.FC = () => {
-  const [accountMutation, { data,
-    //  loading,
-      error }] = useAccountMutation({
+  const history = useHistory();
+
+  const [
+    accountMutation,
+    {
+      data,
+      //  loading,
+      error,
+    },
+  ] = useAccountMutation({
     variables: {
       user: {
         email: "",
@@ -39,7 +46,7 @@ const SignIn: React.FC = () => {
   };
 
   const onClickSignUp = () => {
-    console.log("Routing to SignUp page...");
+    history.push("/signup");
   };
 
   return (
