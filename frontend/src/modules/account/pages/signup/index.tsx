@@ -3,7 +3,6 @@ import { Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
-
 const tailLayout = {
   width: 1000,
 };
@@ -14,15 +13,17 @@ const componentLayout = {
   justifyContent: "center",
 };
 
-const SignUp: React.FC = () => {
+const AccountSignUpPage: React.FC = () => {
   const [form] = Form.useForm();
 
-  const [createAccountMutation, { data, error }] = useCreateAccountMutation({
+  const [
+    createAccountMutation,
+    { data, loading, error },
+  ] = useCreateAccountMutation({
     variables: {
       user: { displayName: "", email: " ", password: "", username: "" },
     },
   });
-
   const onFinish = (values: any) => {
     const createAccountData = {
       displayName: values.username,
@@ -33,8 +34,6 @@ const SignUp: React.FC = () => {
 
     console.log("Success:", createAccountData);
     createAccountMutation({ variables: { user: createAccountData } });
-    console.log("helloworld", data?.createAccount);
-    console.log("ERRRO SHOULD BE HERE", error?.message);
   };
 
   return (
@@ -107,6 +106,11 @@ const SignUp: React.FC = () => {
                   required: true,
                   message: "Please input your Username",
                 },
+                {
+                  min: 6,
+                  message:
+                    "Password must be longer than or equal to 6 characters",
+                },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
@@ -138,4 +142,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default AccountSignUpPage;
