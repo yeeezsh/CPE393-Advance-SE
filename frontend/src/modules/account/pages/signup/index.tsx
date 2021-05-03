@@ -1,5 +1,10 @@
-import { MailOutlined, UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Row, Space } from "antd";
+import {
+  MailOutlined,
+  UserOutlined,
+  LockOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
+import { Alert, Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
@@ -15,15 +20,13 @@ const componentLayout = {
 
 const AccountSignUpPage: React.FC = () => {
   const [form] = Form.useForm();
-
-  const [
-    createAccountMutation,
-    { data, loading, error },
-  ] = useCreateAccountMutation({
+  const [createAccountMutation, { error }] = useCreateAccountMutation({
     variables: {
       user: { displayName: "", email: " ", password: "", username: "" },
     },
+    errorPolicy: "all",
   });
+
   const onFinish = (values: any) => {
     const createAccountData = {
       displayName: values.username,
@@ -32,14 +35,28 @@ const AccountSignUpPage: React.FC = () => {
       password: values.password,
     };
 
-    console.log("Success:", createAccountData);
     createAccountMutation({ variables: { user: createAccountData } });
   };
+  let statusError = 0;
+  statusError = error?.graphQLErrors[0].extensions?.exception.status;
 
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
       <div className="site-card-border-less-wrapper" style={componentLayout}>
         <Card bordered={true} style={{ width: 450, textAlign: "center" }}>
+          {statusError !== 400 ? (
+            <div> </div>
+          ) : (
+            <div>
+              <Alert
+                icon={<SmileOutlined />}
+                message="Error"
+                description="The Email or Username is used!"
+                type="error"
+                showIcon
+              />
+            </div>
+          )}
           <Title level={4} style={componentLayout}>
             Sign up for your account
           </Title>
@@ -88,6 +105,11 @@ const AccountSignUpPage: React.FC = () => {
                   required: true,
                   message: "Please input your Password",
                 },
+                {
+                  min: 6,
+                  message:
+                    "Password must be longer than or equal to 6 characters",
+                },
               ]}
               hasFeedback
             >
@@ -106,11 +128,7 @@ const AccountSignUpPage: React.FC = () => {
                   required: true,
                   message: "Please input your Username",
                 },
-                {
-                  min: 6,
-                  message:
-                    "Password must be longer than or equal to 6 characters",
-                },
+
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
