@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 const { Title } = Typography;
 
 const tailLayout = {
-  wrapperCol: { offset: 0, span: 16 },
   width: 1000,
 };
 
@@ -83,13 +82,16 @@ const SignIn: React.FC = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Log in
-            </Button>
+            <div style = {{textAlign : "center"}}>
+             
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
+                Log in
+              </Button>
+            </div>
           </Form.Item>
           <Divider>Or</Divider>
 
