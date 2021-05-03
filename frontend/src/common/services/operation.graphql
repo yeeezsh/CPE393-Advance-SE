@@ -12,3 +12,12 @@ mutation account($user: UserLoginInputDTO!) {
     email
   }
 }
+
+mutation createAccount($user: UserRegisterInputDTO!) {
+  createAccount(UserRegisterInputDTO: $user) {
+    _id
+    displayName
+    email
+    username
+  }
+}
