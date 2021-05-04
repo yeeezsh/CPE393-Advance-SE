@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/react";
 import React from "react";
 import AccountSignUpPage from ".";
 import { apolloClient } from "../../../../common/services/apollo.client";
-import SignUpPage from "../../../../pages/signup";
+import SignUpPage from "../../../../pages/signUpPage";
 
 export default {
   title: "Pages/signup",
