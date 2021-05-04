@@ -1,8 +1,8 @@
 import {
-  MailOutlined,
-  UserOutlined,
-  LockOutlined,
-  SmileOutlined,
+  LockOutlined, MailOutlined,
+
+
+  SmileOutlined, UserOutlined
 } from "@ant-design/icons";
 import { Alert, Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
@@ -19,23 +19,22 @@ const componentLayout = {
 };
 
 const AccountSignUpPage: React.FC = () => {
-  const [form] = Form.useForm();
   const [createAccountMutation, { error }] = useCreateAccountMutation({
-    variables: {
-      user: { displayName: "", email: " ", password: "", username: "" },
-    },
     errorPolicy: "all",
   });
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    const createAccountData = {
-      displayName: values.username,
-      username: values.username,
-      email: values.email,
-      password: values.password,
-    };
-
-    createAccountMutation({ variables: { user: createAccountData } });
+    createAccountMutation({
+      variables: {
+        user: {
+          displayName: values.username,
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        },
+      },
+    });
   };
   let statusError = 0;
   statusError = error?.graphQLErrors[0].extensions?.exception.status;
@@ -52,6 +51,19 @@ const AccountSignUpPage: React.FC = () => {
                 icon={<SmileOutlined />}
                 message="Error"
                 description="The Email or Username is used!"
+                type="error"
+                showIcon
+              />
+            </div>
+          )}
+          {statusError !== 500 ? (
+            <div> </div>
+          ) : (
+            <div>
+              <Alert
+                icon={<SmileOutlined />}
+                message="Error"
+                description="Something went wrong! Please try again later"
                 type="error"
                 showIcon
               />
