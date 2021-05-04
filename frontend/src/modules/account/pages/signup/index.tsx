@@ -1,13 +1,9 @@
-import {
-  LockOutlined, MailOutlined,
-
-
-  SmileOutlined, UserOutlined
-} from "@ant-design/icons";
-import { Alert, Button, Card, Form, Input, Row, Space } from "antd";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
+import ErrorBadge from "./ErrorBadge";
 const tailLayout = {
   width: 1000,
 };
@@ -18,7 +14,9 @@ const componentLayout = {
   justifyContent: "center",
 };
 
-const AccountSignUpPage: React.FC = () => {
+const AccountSignUpPage: React.FC<{
+  onError?: (status: number) => void;
+}> = (props) => {
   const [createAccountMutation, { error }] = useCreateAccountMutation({
     errorPolicy: "all",
   });
@@ -36,39 +34,16 @@ const AccountSignUpPage: React.FC = () => {
       },
     });
   };
+
   let statusError = 0;
   statusError = error?.graphQLErrors[0].extensions?.exception.status;
 
+  props.onError && props.onError(statusError);
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
       <div className="site-card-border-less-wrapper" style={componentLayout}>
         <Card bordered={true} style={{ width: 450, textAlign: "center" }}>
-          {statusError !== 400 ? (
-            <div> </div>
-          ) : (
-            <div>
-              <Alert
-                icon={<SmileOutlined />}
-                message="Error"
-                description="The Email or Username is used!"
-                type="error"
-                showIcon
-              />
-            </div>
-          )}
-          {statusError !== 500 ? (
-            <div> </div>
-          ) : (
-            <div>
-              <Alert
-                icon={<SmileOutlined />}
-                message="Error"
-                description="Something went wrong! Please try again later"
-                type="error"
-                showIcon
-              />
-            </div>
-          )}
+          <ErrorBadge statusError={statusError} />
           <Title level={4} style={componentLayout}>
             Sign up for your account
           </Title>
