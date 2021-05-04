@@ -1,15 +1,8 @@
-import { SmileOutlined } from "@ant-design/icons";
-import { MockedProvider } from "@apollo/client/testing";
-import { Alert } from "antd";
 import { shallow } from "enzyme";
 import { GraphQLError } from "graphql/error/GraphQLError";
-import renderer from "react-test-renderer";
 import AccountSignUpPage from ".";
+import * as generateTypes from "../../../../common/services/generate/generate-types";
 import { CreateAccountDocument } from "../../../../common/services/generate/generate-types";
-
-
-
-
 
 describe("Page/Signup", () => {
   const mocksError = [
@@ -55,29 +48,41 @@ describe("Page/Signup", () => {
   // ).toEqual(true);
   // });
 
-  it("should match snapshot", () => {
-    const wrap = renderer.create(<AccountSignUpPage />).toJSON();
-    expect(wrap).toMatchSnapshot();
-  });
+  // it("should match snapshot", () => {
+  //   const wrap = renderer.create(<AccountSignUpPage />).toJSON();
+  //   expect(wrap).toMatchSnapshot();
+  // });
 
   it("Should render successfully", () => {
-    const wrapper = shallow(
-      <MockedProvider mocks={[]}>
-        <AccountSignUpPage />
-      </MockedProvider>
-    );
+    const mockFn: any = () => {};
+    const apollo: any = {};
+    const error: any = {};
 
-    expect(
-      wrapper.contains(
-        <Alert
-          icon={<SmileOutlined />}
-          message="Error"
-          description="The Email or Username is used!"
-          type="error"
-          showIcon
-        />
-      )
-    ).toEqual(false);
+    const MOCK_GRAPQL_ERRORS: any = [
+      {
+        extensions: {
+          exception: {
+            status: 400,
+          },
+        },
+      },
+    ];
+
+    jest.spyOn(generateTypes, "useCreateAccountMutation").mockReturnValue([
+      mockFn,
+      {
+        error: {
+          graphQLErrors: MOCK_GRAPQL_ERRORS,
+          ...error,
+        },
+        ...apollo,
+      },
+    ]);
+
+    const onError = jest.fn();
+    shallow(<AccountSignUpPage onError={onError} />);
+
+    expect(onError).toBeCalledWith(400);
   });
 
   // it("Testtest", () => {
