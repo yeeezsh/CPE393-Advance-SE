@@ -11,7 +11,7 @@ export const DuplicationAlert: React.FC = () => (
     showIcon
   />
 );
-export const UnexptecErrorAlert: React.FC = () => (
+export const UnexpectedErrorAlert: React.FC = () => (
   <Alert
     icon={<SmileOutlined />}
     message="Error"
@@ -25,7 +25,7 @@ const ErrorBadge: React.FC<{ statusError: number }> = (props) => {
   return (
     <>
       {statusError === 400 && <DuplicationAlert />}
-      {statusError === 500 && <UnexptecErrorAlert />}
+      {statusError === 500 && <UnexpectedErrorAlert />}
     </>
   );
 };
