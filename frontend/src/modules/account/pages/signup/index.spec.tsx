@@ -1,8 +1,6 @@
 import { shallow } from "enzyme";
-import { GraphQLError } from "graphql/error/GraphQLError";
 import AccountSignUpPage from ".";
 import * as generateTypes from "../../../../common/services/generate/generate-types";
-import { CreateAccountDocument } from "../../../../common/services/generate/generate-types";
 
 describe("Page/Signup", () => {
   it("Should render successfully", () => {
@@ -36,20 +34,4 @@ describe("Page/Signup", () => {
 
     expect(onError).toBeCalledWith(400);
   });
-
-  // it("Testtest", () => {
-  //   const wrapper = shallow(<AccountSignUpPage />);
-
-  //   expect(
-  //     wrapper.contains(
-  //       <Alert
-  //         icon={<SmileOutlined />}
-  //         message="Error"
-  //         description="The Email or Username is used!"
-  //         type="error"
-  //         showIcon
-  //       />
-  //     )
-  //   ).toEqual(false);
-  // });
 });
