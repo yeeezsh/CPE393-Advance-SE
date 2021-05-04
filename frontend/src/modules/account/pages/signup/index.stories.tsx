@@ -18,4 +18,4 @@ const SignUpPageStory: Story = () => {
   );
 };
 
-export const RegisterPage = SignUpPageStory.bind({}); 
+export const Default = SignUpPageStory.bind({});
