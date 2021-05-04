@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form } from 'antd';
 import { PushpinOutlined } from '@ant-design/icons';
 import UploadImage from './Upload-image/UploadImage';
-import Categories from './categories/Categories';
+import Categories from './Categories/Categories';
 
 const styles = {
   inputCard: {
