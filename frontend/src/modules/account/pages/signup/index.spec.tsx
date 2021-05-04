@@ -4,7 +4,9 @@ import * as generateTypes from "../../../../common/services/generate/generate-ty
 
 describe("Page/Signup", () => {
   it("Should render successfully", () => {
-    const mockFn: any = () => {};
+    const mockFn: any = () => {
+      //this is intentional
+    };
     const apollo: any = {};
     const error: any = {};
 

@@ -6,7 +6,7 @@ export const DuplicationAlert: React.FC = () => (
   <Alert
     icon={<SmileOutlined />}
     message="Error"
-    description="Something went wrong! Please try again later"
+    description="Username or Email has been used!"
     type="error"
     showIcon
   />
