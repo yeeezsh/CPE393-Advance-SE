@@ -1,0 +1,30 @@
+.card{
+    height: 200px;
+    width: 300px;
+    margin: 15px;
+    padding: 3px;
+}
+.showModal{
+    height: 500px;
+    width: 440px;
+    padding: 5px;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+
+}
+.image{
+    height: 70%;
+    /* width: ; */
+    width: 100%;
+    margin: 15px;
+}
+.text{
+    height: 80px;
+    width: 300px;
+}
+.divStyle{
+    display: flex;
+    align-items: center;
+}
+

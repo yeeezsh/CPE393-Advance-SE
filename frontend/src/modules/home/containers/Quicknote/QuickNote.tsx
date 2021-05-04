@@ -1,6 +1,6 @@
 import { PushpinOutlined } from "@ant-design/icons";
 import { Button, Form } from "antd";
-import React from "react";
+import React, {useState} from "react";
 import Categories from "./Categories/Categories";
 import UploadImage from "./Upload-image/UploadImage";
 
@@ -37,6 +37,8 @@ const styles = {
 };
 
 const QuickNote: React.FC = () => {
+  const initialState = {inputURL: ""};
+  const [stateInput, setStateInput] = useState(initialState);
   return (
     <>
       <Form>
@@ -55,6 +57,10 @@ const QuickNote: React.FC = () => {
             style={styles.inputField}
             type="text"
             placeholder="Take a note"
+            value={stateInput.inputURL}
+            onChange={e =>{
+              setStateInput({...stateInput, inputURL: e.target.value})
+            }}
           />
           <div style={{ height: "35px", width: "578px" }}>
             <div style={{ float: "right" }}>
