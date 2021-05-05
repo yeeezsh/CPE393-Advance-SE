@@ -91,6 +91,7 @@ describe('', () => {
       .expect((res) => {
         const data = res.body.data;
         expect(data.editBookmark.domain).toBe('google.com');
+        // partial update should be supported
         expect(data.editBookmark.note).toBe('test note');
       });
   });
