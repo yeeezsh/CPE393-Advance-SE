@@ -4,11 +4,10 @@ import React from "react";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
 import { setUser } from "../../../../store/reducers/users/actions";
-
+import { useHistory } from "react-router-dom";
 const { Title } = Typography;
 
 const tailLayout = {
-  wrapperCol: { offset: 0, span: 16 },
   width: 1000,
 };
 
@@ -19,9 +18,16 @@ const componentLayout = {
 };
 
 const SignIn: React.FC = () => {
-  const [accountMutation, { data,
-    //  loading,
-      error }] = useAccountMutation({
+  const history = useHistory();
+
+  const [
+    accountMutation,
+    {
+      data,
+      //  loading,
+      error,
+    },
+  ] = useAccountMutation({
     variables: {
       user: {
         email: "",
@@ -39,7 +45,7 @@ const SignIn: React.FC = () => {
   };
 
   const onClickSignUp = () => {
-    console.log("Routing to SignUp page...");
+    history.push("/signup");
   };
 
   return (
@@ -76,13 +82,16 @@ const SignIn: React.FC = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Log in
-            </Button>
+            <div style = {{textAlign : "center"}}>
+             
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
+                Log in
+              </Button>
+            </div>
           </Form.Item>
           <Divider>Or</Divider>
 
