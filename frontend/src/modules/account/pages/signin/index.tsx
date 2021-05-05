@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, Form, Input, Typography } from "antd";
+import { Button, Card, Divider, Form, Input, Row, Typography } from "antd";
 import React from "react";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
@@ -49,60 +49,63 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="site-card-border-less-wrapper" style={componentLayout}>
-      <Card bordered={true} style={{ width: 450 }}>
-        <Title level={4} style={componentLayout}>
-          Sign in to application
-        </Title>
+    <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
+      <div className="site-card-border-less-wrapper" style={componentLayout}>
+        <Card bordered={true} style={{ width: 450 }}>
+          <Title level={4} style={componentLayout}>
+            Sign in to application
+          </Title>
 
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+          <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
           >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Email"
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="Password"
-            />
-          </Form.Item>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please input your Email!" }]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Email"
+              />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Item>
 
-          <Form.Item {...tailLayout}>
-            <div style = {{textAlign : "center"}}>
-             
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Log in
+            <Form.Item {...tailLayout}>
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Log in
+                </Button>
+              </div>
+            </Form.Item>
+            <Divider>Or</Divider>
+
+            <div style={componentLayout}>
+              <Button type="link" onClick={onClickSignUp}>
+                Sign Up
               </Button>
             </div>
-          </Form.Item>
-          <Divider>Or</Divider>
-
-          <div style={componentLayout}>
-            <Button type="link" onClick={onClickSignUp}>
-              Sign Up
-            </Button>
-          </div>
-        </Form>
-      </Card>
-    </div>
+          </Form>
+        </Card>
+      </div>
+    </Row>
   );
 };
 
