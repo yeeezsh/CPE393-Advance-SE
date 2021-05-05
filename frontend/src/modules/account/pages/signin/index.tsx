@@ -1,4 +1,4 @@
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined, SmileOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -8,8 +8,9 @@ import {
   Row,
   Typography,
   Checkbox,
+  Alert,
 } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useUserLoginMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
 import { setUser } from "../../../../store/reducers/users/actions";
@@ -28,30 +29,31 @@ const componentLayout = {
 
 const AccountSignInPage: React.FC = () => {
   const history = useHistory();
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const [
-    userLoginMutation,
-    {
-      data,
-      //  loading,
-      error,
-    },
-  ] = useUserLoginMutation({
-    variables: {
-      user: {
-        email: "",
-        password: "",
-      },
-    },
+  const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
+    errorPolicy: "all",
   });
+
+  useEffect(() => {
+    if (!error && data) {
+      store.dispatch(setUser(data));
+      history.push("/");
+    } else if (error) {
+      setErrorMsg(error?.graphQLErrors[0].message);
+    }
+  }, [data, loading, error, history]);
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    userLoginMutation({ variables: { user: values } });
-    console.log(data?.userLogin.displayName);
-    console.log(error?.message);
-    if (!error) store.dispatch(setUser(data));
-    history.push("/");
+    userLoginMutation({
+      variables: {
+        user: {
+          email: values.email,
+          password: values.password,
+        },
+      },
+    });
   };
 
   const onClickSignUp = () => {
@@ -62,6 +64,15 @@ const AccountSignInPage: React.FC = () => {
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
       <div className="site-card-border-less-wrapper" style={componentLayout}>
         <Card bordered={true} style={{ width: 450 }}>
+          {error && (
+            <Alert
+              icon={<SmileOutlined />}
+              message="Error"
+              description={errorMsg}
+              type="error"
+              showIcon
+            />
+          )}
           <Title level={4} style={componentLayout}>
             Sign in to application
           </Title>
@@ -85,7 +96,7 @@ const AccountSignInPage: React.FC = () => {
               ]}
             >
               <Input
-                prefix={<MailOutlined/>}
+                prefix={<MailOutlined />}
                 placeholder="Enter email address"
               />
             </Form.Item>
