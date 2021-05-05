@@ -25,13 +25,16 @@ const bookmarkInput = gql`
 const bookmarkQueryByUser = gql`
   query {
     getRecentBookmark(userId: "12") {
+      _id
       original
       domain
     }
   }
 `;
+
 describe('', () => {
   let app: INestApplication;
+  let id: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -59,7 +62,33 @@ describe('', () => {
       .send({ query: print(bookmarkQueryByUser) })
       .expect((res) => {
         const data = res.body.data;
-        expect(data.getRecentBookmark.domain).toBe('docs.google.com/');
+        expect(data.getRecentBookmark[0].domain).toBe('docs.google.com/');
+        id = data.getRecentBookmark[0]._id;
+      });
+  });
+
+  it('should able to edit bookmark via _id from previous test', () => {
+    const editBookmarkById = gql`
+    mutation {
+  editBookmark(BookmarkEditInputDTO: {
+    _id: ${`"${id}"`},
+    note: "edited",
+    original: "http://google.com",
+    tags: []
+  }) {
+    _id
+    note
+    domain
+  }
+}`;
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: print(editBookmarkById),
+      })
+      .expect((res) => {
+        const data = res.body.data;
+        expect(data.editBookmark.domain).toBe('google.com');
       });
   });
 });

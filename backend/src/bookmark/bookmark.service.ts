@@ -50,7 +50,7 @@ export class BookmarkService {
       update._id,
       {
         ...update,
-        domain: domain ?? '',
+        domain: domain ?? origin,
         original,
         updateAt: now,
       },
