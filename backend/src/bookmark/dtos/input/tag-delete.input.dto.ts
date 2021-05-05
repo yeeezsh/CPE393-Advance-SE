@@ -1,9 +1,5 @@
-import { Field, InputType, registerEnumType } from '@nestjs/graphql';
-import { TagType } from '../../@types/tag-type.type';
+import { Field, InputType } from '@nestjs/graphql';
 
-registerEnumType(TagType, {
-  name: String(TagType),
-});
 
 @InputType()
 export class TagDeleteInputDTO {
