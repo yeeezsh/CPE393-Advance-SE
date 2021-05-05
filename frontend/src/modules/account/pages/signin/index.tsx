@@ -12,9 +12,10 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useUserLoginMutation } from "../../../../common/services/generate/generate-types";
-import store from "../../../../store";
-import { setUser } from "../../../../store/reducers/users/actions";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../common/store/user";
+
 const { Title } = Typography;
 
 const loginButtonLayout = {
@@ -30,6 +31,7 @@ const componentLayout = {
 const AccountSignInPage: React.FC = () => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
+  const dispatch = useDispatch();
 
   const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
     errorPolicy: "all",
@@ -37,12 +39,12 @@ const AccountSignInPage: React.FC = () => {
 
   useEffect(() => {
     if (!error && data) {
-      store.dispatch(setUser(data));
+      dispatch(setUser(data.userLogin));
       history.push("/");
     } else if (error) {
       setErrorMsg(error?.graphQLErrors[0].message);
     }
-  }, [data, loading, error, history]);
+  }, [data, loading, error, history, dispatch]);
 
   const onFinish = (values: any) => {
     console.log("Success:", values);

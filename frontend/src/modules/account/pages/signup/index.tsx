@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
 import ErrorBadge from "./ErrorBadge";
-import store from "../../../../store";
-import { setUser } from "../../../../store/reducers/users/actions";
 const tailLayout = {
   width: 1000,
 };
@@ -32,7 +30,7 @@ const AccountSignUpPage: React.FC<{
 
   useEffect(() => {
     if (!error && data) {
-      store.dispatch(setUser(data));
+      // store.dispatch(setUser(data));
       history.push("/");
     } else {
       setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
