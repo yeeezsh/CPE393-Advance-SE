@@ -26,9 +26,9 @@ type BookmarkDTO {
 
 input BookmarkEditInputDTO {
   _id: String!
-  note: String!
-  original: String!
-  tags: [String!]!
+  note: String
+  original: String
+  tags: [String!]
 }
 
 """
