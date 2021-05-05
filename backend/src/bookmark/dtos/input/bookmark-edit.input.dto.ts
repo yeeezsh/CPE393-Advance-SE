@@ -2,19 +2,16 @@ import { Field, InputType } from '@nestjs/graphql';
 import { BookmarkCreateInputDTO } from './bookmark-create.input';
 
 @InputType()
-export class BookmarkEditInputDTO implements BookmarkCreateInputDTO {
+export class BookmarkEditInputDTO implements Partial<BookmarkCreateInputDTO> {
   @Field()
   _id: string;
 
-  @Field()
-  owner: string;
-
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   original: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   note: string;
 
-  @Field(() => [String], { nullable: true })
+  @Field(() => [String])
   tags: string[];
 }
