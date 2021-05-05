@@ -1,5 +1,14 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, Form, Input, Row, Typography } from "antd";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Typography,
+  Checkbox,
+} from "antd";
 import React from "react";
 import { useAccountMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
@@ -7,8 +16,8 @@ import { setUser } from "../../../../store/reducers/users/actions";
 import { useHistory } from "react-router-dom";
 const { Title } = Typography;
 
-const tailLayout = {
-  width: 1000,
+const loginButtonLayout = {
+  width: "100%",
 };
 
 const componentLayout = {
@@ -59,17 +68,25 @@ const SignIn: React.FC = () => {
 
           <Form
             name="normal_login"
-            className="login-form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
           >
             <Form.Item
               name="email"
-              rules={[{ required: true, message: "Please input your Email!" }]}
+              rules={[
+                {
+                  type: "email",
+                  message: "The input is not a valid E-mail",
+                },
+                {
+                  required: true,
+                  message: "Please input your Email",
+                },
+              ]}
             >
               <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Email"
+                prefix={<MailOutlined/>}
+                placeholder="Enter email address"
               />
             </Form.Item>
             <Form.Item
@@ -85,12 +102,18 @@ const SignIn: React.FC = () => {
               />
             </Form.Item>
 
-            <Form.Item {...tailLayout}>
+            <Form.Item>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
+            </Form.Item>
+
+            <Form.Item>
               <div style={{ textAlign: "center" }}>
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="login-form-button"
+                  style={loginButtonLayout}
                 >
                   Log in
                 </Button>
