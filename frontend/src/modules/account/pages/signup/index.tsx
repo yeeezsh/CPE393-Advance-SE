@@ -2,8 +2,10 @@ import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
+import { setUser } from "../../../../common/store/user";
 import ErrorBadge from "./ErrorBadge";
 const tailLayout = {
   width: 1000,
@@ -25,17 +27,19 @@ const AccountSignUpPage: React.FC<{
     errorPolicy: "all",
   });
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [form] = Form.useForm();
   const [statusError, setStatusError] = useState(0);
 
   useEffect(() => {
     if (!error && data) {
-      // store.dispatch(setUser(data));
+      dispatch(setUser(data.createAccount));
       history.push("/");
     } else {
       setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
     }
-  }, [data, loading, error, history]);
+  }, [data, loading, error, history, dispatch]);
 
   const onFinish = (values: any) => {
     createAccountMutation({
