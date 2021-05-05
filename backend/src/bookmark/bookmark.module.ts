@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tag, TagSchema } from './schema/tag.schema';
-import { Bookmark, UrlSchema } from './schema/bookmark.schema';
+import { Bookmark, BookmarkSchema } from './schema/bookmark.schema';
 import { TagService } from './tag.service';
 import { TagsResolver } from './tags.resolve';
 import { BookmarkResolver } from './bookmark.resolver';
@@ -12,7 +12,7 @@ import { BookmarkService } from './bookmark.service';
     MongooseModule.forFeature([
       {
         name: Bookmark.name,
-        schema: UrlSchema,
+        schema: BookmarkSchema,
       },
       { name: Tag.name, schema: TagSchema },
     ]),

@@ -4,8 +4,8 @@ import { Model } from 'mongoose';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
-import { UrlBadIdException } from './exceptions/url-bad-id.exceptions';
-import { Bookmark, UrlDocument } from './schema/bookmark.schema';
+import { BookmarkBadIdException } from './exceptions/bookmark-bad-id.exceptions';
+import { Bookmark, BookmarkDocument } from './schema/bookmark.schema';
 import urlParse from './utils/url.parse';
 
 const MAX_QUERY = 100;
@@ -13,7 +13,7 @@ const MAX_QUERY = 100;
 @Injectable()
 export class BookmarkService {
   constructor(
-    @InjectModel(Bookmark.name) private urlModel: Model<UrlDocument>,
+    @InjectModel(Bookmark.name) private urlModel: Model<BookmarkDocument>,
   ) {}
 
   async getRecentBookmark(
@@ -45,8 +45,10 @@ export class BookmarkService {
 
   async editBookmark(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
-    const bookmark = (await this.urlModel.findById(update._id)) as UrlDocument;
-    if (!bookmark) throw new UrlBadIdException();
+    const bookmark = (await this.urlModel.findById(
+      update._id,
+    )) as BookmarkDocument;
+    if (!bookmark) throw new BookmarkBadIdException();
 
     const parse = update.original && urlParse(update.original);
     bookmark.domain = (parse && parse?.domain) || bookmark.domain;
