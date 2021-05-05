@@ -1,31 +1,20 @@
-import React from "react";
-import "antd/dist/antd.css";
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Story, Meta } from "@storybook/react/types-6-0";
-
-import SignInPage from ".";
 import { ApolloProvider } from "@apollo/client/react/context/ApolloProvider";
+import { Story, Meta } from "@storybook/react";
 import { apolloClient } from "../../../../common/services/apollo.client";
+import AccountSignInPage from ".";
+import SignInPage from "../../../../pages/signInPage";
 
 export default {
-  title: "Account/Pages/SignIn",
-  component: SignInPage,
+  title: "Pages/signin",
+  component: AccountSignInPage,
 } as Meta;
 
-const Template: Story = () => {
+const SignInPageStory: Story = () => {
   return (
     <ApolloProvider client={apolloClient}>
-      <SignInPage />{" "}
+      <SignInPage />
     </ApolloProvider>
   );
 };
 
-export const LoggedIn = Template.bind({});
-// LoggedIn.args = {
-//   ...HeaderStories.LoggedIn.args,
-// };
-
-export const LoggedOut = Template.bind({});
-// LoggedOut.args = {
-//   ...HeaderStories.LoggedOut.args,
-// };
+export const Default = SignInPageStory.bind({});

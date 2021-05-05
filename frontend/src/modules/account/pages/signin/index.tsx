@@ -26,7 +26,7 @@ const componentLayout = {
   justifyContent: "center",
 };
 
-const SignIn: React.FC = () => {
+const AccountSignInPage: React.FC = () => {
   const history = useHistory();
 
   const [
@@ -133,4 +133,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default AccountSignInPage;
