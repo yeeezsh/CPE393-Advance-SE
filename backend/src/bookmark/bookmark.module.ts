@@ -7,16 +7,16 @@ import { TagsResolver } from './tags.resolve';
 import { BookmarkResolver } from './bookmark.resolver';
 import { BookmarkService } from './bookmark.service';
 
+const Schema = MongooseModule.forFeature([
+  {
+    name: Bookmark.name,
+    schema: UrlSchema,
+  },
+  { name: Tag.name, schema: TagSchema },
+]);
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      {
-        name: Bookmark.name,
-        schema: UrlSchema,
-      },
-      { name: Tag.name, schema: TagSchema },
-    ]),
-  ],
+  imports: [Schema],
   providers: [BookmarkService, TagService, BookmarkResolver, TagsResolver],
+  exports: [BookmarkService, TagService, Schema],
 })
 export class BookmarkModule {}
