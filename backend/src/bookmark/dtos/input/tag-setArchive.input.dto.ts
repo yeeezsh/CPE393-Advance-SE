@@ -8,5 +8,8 @@ registerEnumType(TagType, {
 @InputType()
 export class TagSetArchiveInputDTO {
   @Field()
+  bookMarkId: string;
+
+  @Field()
   _id: string;
 }
