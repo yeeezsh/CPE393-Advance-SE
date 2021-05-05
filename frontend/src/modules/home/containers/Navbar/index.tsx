@@ -1,13 +1,13 @@
-import React from "react";
 import { LinkOutlined, MenuOutlined } from "@ant-design/icons";
+import React from "react";
+import AccountBadge from "../../components/AccountBadge";
+import { Searchbar } from "../../components/SearchBar";
 import {
   LogoStyle,
   NavbarStyle,
   NavbarStyleRight,
   SearchBarContainer,
 } from "./styled";
-import { Searchbar } from "../../components/SearchBar";
-import AccountBadge from "../../components/AccountBadge";
 
 const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
   return (
