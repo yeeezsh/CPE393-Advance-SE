@@ -33,7 +33,10 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
 
       {/* overlay */}
       {overlay && (
-        <Overlay position={props.overlayPosition || "right"}>
+        <Overlay
+          position={props.overlayPosition || "right"}
+          style={{ marginTop: 58 }}
+        >
           <AccountInfo
             username={props.username}
             email={props.email}
