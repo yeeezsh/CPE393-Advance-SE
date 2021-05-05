@@ -1,10 +1,12 @@
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
 import ErrorBadge from "./ErrorBadge";
+import store from "../../../../store";
+import { setUser } from "../../../../store/reducers/users/actions";
 const tailLayout = {
   width: 1000,
 };
@@ -18,11 +20,24 @@ const componentLayout = {
 const AccountSignUpPage: React.FC<{
   onError?: (status: number) => void;
 }> = (props) => {
-  const [createAccountMutation, { error }] = useCreateAccountMutation({
+  const [
+    createAccountMutation,
+    { data, loading, error },
+  ] = useCreateAccountMutation({
     errorPolicy: "all",
   });
   const history = useHistory();
   const [form] = Form.useForm();
+  const [statusError, setStatusError] = useState(0);
+
+  useEffect(() => {
+    if (!error && data) {
+      store.dispatch(setUser(data));
+      history.push("/");
+    } else {
+      setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
+    }
+  }, [data, loading, error, history]);
 
   const onFinish = (values: any) => {
     createAccountMutation({
@@ -40,9 +55,6 @@ const AccountSignUpPage: React.FC<{
   const onClickSignIn = () => {
     history.push("/signin");
   };
-
-  let statusError = 0;
-  statusError = error?.graphQLErrors[0].extensions?.exception.status;
 
   props.onError && props.onError(statusError);
   return (
