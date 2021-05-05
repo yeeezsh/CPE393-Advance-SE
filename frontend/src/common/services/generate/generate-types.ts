@@ -89,12 +89,12 @@ export type DemoQuery = (
   ) }
 );
 
-export type AccountMutationVariables = Exact<{
+export type UserLoginMutationVariables = Exact<{
   user: UserLoginInputDto;
 }>;
 
 
-export type AccountMutation = (
+export type UserLoginMutation = (
   { __typename?: 'Mutation' }
   & { userLogin: (
     { __typename?: 'UserLoginResponseDTO' }
@@ -148,8 +148,8 @@ export function useDemoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DemoQ
 export type DemoQueryHookResult = ReturnType<typeof useDemoQuery>;
 export type DemoLazyQueryHookResult = ReturnType<typeof useDemoLazyQuery>;
 export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;
-export const AccountDocument = gql`
-    mutation account($user: UserLoginInputDTO!) {
+export const UserLoginDocument = gql`
+    mutation userLogin($user: UserLoginInputDTO!) {
   userLogin(UserLoginInputDTO: $user) {
     _id
     username
@@ -158,31 +158,31 @@ export const AccountDocument = gql`
   }
 }
     `;
-export type AccountMutationFn = Apollo.MutationFunction<AccountMutation, AccountMutationVariables>;
+export type UserLoginMutationFn = Apollo.MutationFunction<UserLoginMutation, UserLoginMutationVariables>;
 
 /**
- * __useAccountMutation__
+ * __useUserLoginMutation__
  *
- * To run a mutation, you first call `useAccountMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAccountMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUserLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLoginMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [accountMutation, { data, loading, error }] = useAccountMutation({
+ * const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
  *   variables: {
  *      user: // value for 'user'
  *   },
  * });
  */
-export function useAccountMutation(baseOptions?: Apollo.MutationHookOptions<AccountMutation, AccountMutationVariables>) {
-        return Apollo.useMutation<AccountMutation, AccountMutationVariables>(AccountDocument, baseOptions);
+export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<UserLoginMutation, UserLoginMutationVariables>) {
+        return Apollo.useMutation<UserLoginMutation, UserLoginMutationVariables>(UserLoginDocument, baseOptions);
       }
-export type AccountMutationHookResult = ReturnType<typeof useAccountMutation>;
-export type AccountMutationResult = Apollo.MutationResult<AccountMutation>;
-export type AccountMutationOptions = Apollo.BaseMutationOptions<AccountMutation, AccountMutationVariables>;
+export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
+export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
+export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
 export const CreateAccountDocument = gql`
     mutation createAccount($user: UserRegisterInputDTO!) {
   createAccount(UserRegisterInputDTO: $user) {

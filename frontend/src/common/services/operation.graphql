@@ -4,7 +4,7 @@ query demo {
   }
 }
 
-mutation account($user: UserLoginInputDTO!) {
+mutation userLogin($user: UserLoginInputDTO!) {
   userLogin(UserLoginInputDTO: $user) {
     _id
     username

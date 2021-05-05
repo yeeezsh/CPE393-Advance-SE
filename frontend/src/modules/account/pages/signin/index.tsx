@@ -10,7 +10,7 @@ import {
   Checkbox,
 } from "antd";
 import React from "react";
-import { useAccountMutation } from "../../../../common/services/generate/generate-types";
+import { useUserLoginMutation } from "../../../../common/services/generate/generate-types";
 import store from "../../../../store";
 import { setUser } from "../../../../store/reducers/users/actions";
 import { useHistory } from "react-router-dom";
@@ -30,13 +30,13 @@ const AccountSignInPage: React.FC = () => {
   const history = useHistory();
 
   const [
-    accountMutation,
+    userLoginMutation,
     {
       data,
       //  loading,
       error,
     },
-  ] = useAccountMutation({
+  ] = useUserLoginMutation({
     variables: {
       user: {
         email: "",
@@ -47,7 +47,7 @@ const AccountSignInPage: React.FC = () => {
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    accountMutation({ variables: { user: values } });
+    userLoginMutation({ variables: { user: values } });
     console.log(data?.userLogin.displayName);
     console.log(error?.message);
     if (!error) store.dispatch(setUser(data));
