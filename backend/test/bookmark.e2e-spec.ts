@@ -69,18 +69,21 @@ describe('', () => {
 
   it('should able to edit bookmark via _id from previous test', () => {
     const editBookmarkById = gql`
-    mutation {
-  editBookmark(BookmarkEditInputDTO: {
-    _id: ${`"${id}"`},
-    note: "edited",
-    original: "http://google.com",
-    tags: []
-  }) {
-    _id
-    note
-    domain
-  }
-}`;
+      mutation {
+        editBookmark(
+          BookmarkEditInputDTO: {
+            _id: ${`"${id}"`}
+            note: "edited"
+            original: "http://google.com"
+            tags: []
+          }
+        ) {
+          _id
+          note
+          domain
+        }
+      }
+    `;
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
