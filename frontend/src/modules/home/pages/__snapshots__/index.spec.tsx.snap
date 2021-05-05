@@ -155,11 +155,12 @@ exports[`Pages/index Should match snapshots 1`] = `
       style={
         Object {
           "height": "80%",
+          "width": "10em",
         }
       }
     >
       <p
-        className="sc-jrQzUz YpUSZ"
+        className="sc-jrQzUz hQCWKQ"
       >
         hello1234
       </p>
