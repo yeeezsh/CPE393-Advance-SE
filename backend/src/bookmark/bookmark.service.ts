@@ -45,19 +45,17 @@ export class BookmarkService {
 
   async editBookmark(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
-    const { original, domain } = urlParse(update.original);
-    const updated = await this.urlModel.findByIdAndUpdate(
-      update._id,
-      {
-        ...update,
-        domain: domain ?? origin,
-        original,
-        updateAt: now,
-      },
-      { new: true },
-    );
+    const bookmark = (await this.urlModel.findById(update._id)) as UrlDocument;
+    if (!bookmark) throw new UrlBadIdException();
 
-    if (!updated) throw new UrlBadIdException();
-    return updated as BookmarkDTO;
+    const parse = update.original && urlParse(update.original);
+    bookmark.domain = (parse && parse?.original) || bookmark.domain;
+    bookmark.original = update.original || bookmark.original;
+    bookmark.tags = update.tags || bookmark.tags;
+    bookmark.note = update.note || bookmark.note;
+    bookmark.updateAt = now;
+
+    const saved = await bookmark.save();
+    return saved as BookmarkDTO;
   }
 }
