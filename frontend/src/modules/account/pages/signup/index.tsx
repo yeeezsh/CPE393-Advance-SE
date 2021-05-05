@@ -148,7 +148,7 @@ const AccountSignUpPage: React.FC<{
             </Space>
           </Form>
           <div>
-            Alredy have an account?
+            Already have an account?
             <Button type="link" size="small" onClick={onClickSignIn}>
               Sign In
             </Button>
