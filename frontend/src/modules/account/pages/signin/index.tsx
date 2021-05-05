@@ -39,9 +39,10 @@ const SignIn: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
     accountMutation({ variables: { user: values } });
-    console.log(data?.userLogin);
+    console.log(data?.userLogin.displayName);
     console.log(error?.message);
     if (!error) store.dispatch(setUser(data));
+    history.push("/");
   };
 
   const onClickSignUp = () => {
