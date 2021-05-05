@@ -10,7 +10,7 @@ const bookmarkInput = gql`
     addBookmark(
       BookmarkCreateInputDTO: {
         original: "http://www.docs.google.com/app"
-        note: ""
+        note: "test note"
         owner: "12"
         tags: []
       }
@@ -73,7 +73,6 @@ describe('', () => {
         editBookmark(
           BookmarkEditInputDTO: {
             _id: ${`"${id}"`}
-            note: "edited"
             original: "http://google.com"
             tags: []
           }
@@ -92,6 +91,7 @@ describe('', () => {
       .expect((res) => {
         const data = res.body.data;
         expect(data.editBookmark.domain).toBe('google.com');
+        expect(data.editBookmark.note).toBe('test note');
       });
   });
 });
