@@ -28,6 +28,8 @@ export const MOCK_URL_VALUE = {
   skip: jest.fn().mockReturnThis(),
   limit: jest.fn().mockReturnThis(),
   lean: jest.fn().mockReturnThis(),
+  findById: jest.fn().mockReturnThis(),
+  save: jest.fn().mockReturnThis(),
 };
 
 export const MOCK_URL_MODEL: Provider = {

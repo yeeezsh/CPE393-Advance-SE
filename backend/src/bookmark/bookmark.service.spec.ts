@@ -34,7 +34,7 @@ describe('Bookmark Service', () => {
     expect(model).toBeCalled();
   });
 
-  it('Should able to call findByIdAndUpdate when using editUrl', async () => {
+  it('Should able to call findById and save when using editBookmark', async () => {
     const MOCK_URL_INPUT = {
       owner: Types.ObjectId().toHexString(),
       _id: Types.ObjectId().toHexString(),
@@ -44,8 +44,10 @@ describe('Bookmark Service', () => {
     } as BookmarkEditInputDTO;
 
     await service.editBookmark(MOCK_URL_INPUT);
-    const model = jest.spyOn(MOCK_URL_VALUE, 'findByIdAndUpdate');
-    expect(model).toBeCalled();
+    const findById = jest.spyOn(MOCK_URL_VALUE, 'findById');
+    expect(findById).toBeCalled();
+    const save = jest.spyOn(MOCK_URL_VALUE, 'save');
+    expect(save).toBeCalled();
   });
 
   it('Should call find, sort, skip, limit, lean when call getRecentUrl', async () => {
