@@ -31,7 +31,7 @@ export const UsernameBadgeStyle = styled.p`
   display: flex;
   margin: auto;
   margin-left: 10px;
-  width: 50px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

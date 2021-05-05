@@ -1,13 +1,13 @@
-import React from "react";
 import { LinkOutlined, MenuOutlined } from "@ant-design/icons";
+import React from "react";
+import AccountBadge from "../../components/AccountBadge";
+import { Searchbar } from "../../components/SearchBar";
 import {
   LogoStyle,
   NavbarStyle,
   NavbarStyleRight,
   SearchBarContainer,
 } from "./styled";
-import { Searchbar } from "../../components/SearchBar";
-import AccountBadge from "../../components/AccountBadge";
 
 const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
   return (
@@ -34,7 +34,7 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
 
       <NavbarStyleRight>
         <AccountBadge
-          style={{ height: "80%" }}
+          style={{ height: "80%", width: "10em" }}
           username="hello1234"
           displayname="Hello"
           email={"hello@world.com"}
