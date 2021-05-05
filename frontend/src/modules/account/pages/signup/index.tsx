@@ -2,6 +2,7 @@ import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Row, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useCreateAccountMutation } from "../../../../common/services/generate/generate-types";
 import ErrorBadge from "./ErrorBadge";
 const tailLayout = {
@@ -20,6 +21,7 @@ const AccountSignUpPage: React.FC<{
   const [createAccountMutation, { error }] = useCreateAccountMutation({
     errorPolicy: "all",
   });
+  const history = useHistory();
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -33,6 +35,10 @@ const AccountSignUpPage: React.FC<{
         },
       },
     });
+  };
+
+  const onClickSignIn = () => {
+    history.push("/signin");
   };
 
   let statusError = 0;
@@ -141,6 +147,12 @@ const AccountSignUpPage: React.FC<{
               </Form.Item>
             </Space>
           </Form>
+          <div>
+            Alredy have an account?
+            <Button type="link" size="small" onClick={onClickSignIn}>
+              Sign In
+            </Button>
+          </div>
         </Card>
       </div>
     </Row>
