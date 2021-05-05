@@ -49,7 +49,7 @@ export class BookmarkService {
     if (!bookmark) throw new UrlBadIdException();
 
     const parse = update.original && urlParse(update.original);
-    bookmark.domain = (parse && parse?.original) || bookmark.domain;
+    bookmark.domain = (parse && parse?.domain) || bookmark.domain;
     bookmark.original = update.original || bookmark.original;
     bookmark.tags = update.tags || bookmark.tags;
     bookmark.note = update.note || bookmark.note;
