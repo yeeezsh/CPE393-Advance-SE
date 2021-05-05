@@ -16,5 +16,5 @@
     "esModuleInterop": true,
     "strictPropertyInitialization": false
   },
-  "exclude": ["schema.gql", "jest.setup.ts"]
+  "exclude": ["schema.gql", "jest.setup.ts", "dist", "node_modules"]
 }
