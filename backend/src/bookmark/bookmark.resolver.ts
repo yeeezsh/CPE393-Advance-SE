@@ -6,7 +6,7 @@ import { BookmarkService } from './bookmark.service';
 
 @Resolver(() => BookmarkDTO)
 export class BookmarkResolver {
-  constructor(private readonly urlService: BookmarkService) {}
+  constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Query(() => [BookmarkDTO])
   async getRecentBookmark(
@@ -14,20 +14,20 @@ export class BookmarkResolver {
     @Args('limit', { defaultValue: 100 }) limit: number,
     @Args('userId') userId: string,
   ): Promise<BookmarkDTO[]> {
-    return this.urlService.getRecentBookmark(userId, skip, limit);
+    return this.bookmarkService.getRecentBookmark(userId, skip, limit);
   }
   @Mutation(() => BookmarkDTO)
   async addBookmark(
     @Args(BookmarkCreateInputDTO.name)
-    urlCreateInputDTO: BookmarkCreateInputDTO,
+    bookmarkCreateInputDTO: BookmarkCreateInputDTO,
   ): Promise<BookmarkDTO> {
-    return this.urlService.addBookmark(urlCreateInputDTO);
+    return this.bookmarkService.addBookmark(bookmarkCreateInputDTO);
   }
 
   @Mutation(() => BookmarkDTO)
   async editBookmark(
-    @Args(BookmarkEditInputDTO.name) urlEditInputDTO: BookmarkEditInputDTO,
+    @Args(BookmarkEditInputDTO.name) bookmarkEditInputDTO: BookmarkEditInputDTO,
   ): Promise<BookmarkDTO> {
-    return this.urlService.editBookmark(urlEditInputDTO);
+    return this.bookmarkService.editBookmark(bookmarkEditInputDTO);
   }
 }

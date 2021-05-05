@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
 import { Tag } from './tag.schema';
 
-export type UrlDocument = Bookmark & Document;
+export type BookmarkDocument = Bookmark & Document;
 
 @Schema()
 export class Bookmark {
@@ -42,4 +42,4 @@ export class Bookmark {
   updateAt: Date;
 }
 
-export const UrlSchema = SchemaFactory.createForClass(Bookmark);
+export const BookmarkSchema = SchemaFactory.createForClass(Bookmark);
