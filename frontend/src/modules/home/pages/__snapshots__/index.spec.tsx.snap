@@ -10,7 +10,7 @@ exports[`Pages/index Should match snapshots 1`] = `
   }
 >
   <div
-    className="sc-bdvvaa cKTnws"
+    className="sc-iCfLBT eEzmYI"
   >
     <div
       style={
@@ -47,7 +47,7 @@ exports[`Pages/index Should match snapshots 1`] = `
       </span>
     </div>
     <div
-      className="sc-dkPtyc kDNxmM"
+      className="sc-pVTma cHlksb"
     >
       <span
         aria-label="link"
@@ -88,7 +88,7 @@ exports[`Pages/index Should match snapshots 1`] = `
       </p>
     </div>
     <div
-      className="sc-hKwCoD hFlkuz"
+      className="sc-jrQzUz bRtlDv"
     >
       <span
         className="ant-input-affix-wrapper ant-input-affix-wrapper-lg"
@@ -147,10 +147,10 @@ exports[`Pages/index Should match snapshots 1`] = `
     </div>
   </div>
   <div
-    className="sc-gsDJrp cEnvKL"
+    className="sc-furvIG bMnRme"
   >
     <div
-      className="sc-furvIG gWuGkr"
+      className="sc-eCImvq orkUT"
       onClick={[Function]}
       style={
         Object {
@@ -160,15 +160,15 @@ exports[`Pages/index Should match snapshots 1`] = `
       }
     >
       <p
-        className="sc-jrQzUz hQCWKQ"
+        className="sc-gKckTs cDkmGf"
       >
         hello1234
       </p>
       <div
-        className="sc-eCImvq iVcrFx"
+        className="sc-bdvvaa gygOTm"
       >
         <p
-          className="sc-jRQAMF ljmyGE"
+          className="sc-gsDJrp kEkgOf"
         >
           H
         </p>
