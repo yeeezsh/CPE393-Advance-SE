@@ -6,12 +6,12 @@ export class BookmarkEditInputDTO implements Partial<BookmarkCreateInputDTO> {
   @Field()
   _id: string;
 
-  @Field(() => String)
-  original: string;
+  @Field(() => String, { nullable: true })
+  original?: string;
 
-  @Field(() => String)
-  note: string;
+  @Field(() => String, { nullable: true })
+  note?: string;
 
-  @Field(() => [String])
-  tags: string[];
+  @Field(() => [String], { nullable: true })
+  tags?: string[];
 }
