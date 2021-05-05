@@ -11,6 +11,7 @@ export type AccountBadgeProps = {
   style?: React.CSSProperties;
   overlayPosition?: OverlayProps["position"];
   overlay?: boolean;
+  overlayTopMargin?: number;
 };
 
 const UsernameBadge: React.FC = (props) => (
@@ -35,7 +36,7 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
       {overlay && (
         <Overlay
           position={props.overlayPosition || "right"}
-          style={{ marginTop: 58 }}
+          style={{ marginTop: props.overlayTopMargin || 58 }}
         >
           <AccountInfo
             username={props.username}
