@@ -46,9 +46,20 @@ type Mutation {
 }
 
 type Query {
+  allTextSearchBookmark(SearchTextInputDTO: SearchTextInputDTO!): SearchDTO!
   getAccount(id: String!): UserResponseDTO!
   getRecentBookmark(limit: Float = 100, skip: Float = 0, userId: String!): [BookmarkDTO!]!
   serverStatus: AppModel!
+}
+
+type SearchDTO {
+  results: [BookmarkDTO!]!
+}
+
+input SearchTextInputDTO {
+  owner: String!
+  tags: [String!]
+  text: String
 }
 
 input TagCreateInputDTO {
