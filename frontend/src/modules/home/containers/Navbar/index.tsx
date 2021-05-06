@@ -1,5 +1,7 @@
 import { LinkOutlined, MenuOutlined } from "@ant-design/icons";
 import React from "react";
+import { useSelector } from "react-redux";
+import { Store } from "../../../../common/store";
 import AccountBadge from "../../components/AccountBadge";
 import { Searchbar } from "../../components/SearchBar";
 import {
@@ -10,6 +12,8 @@ import {
 } from "./styled";
 
 const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
+  const user = useSelector((state: Store) => state.user.user);
+
   return (
     <>
       <NavbarStyle>
@@ -35,9 +39,9 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
       <NavbarStyleRight>
         <AccountBadge
           style={{ height: "80%", width: "10em" }}
-          username="hello1234"
-          displayname="Hello"
-          email={"hello@world.com"}
+          username={user.username}
+          displayname={user.displayName || ""}
+          email={user.email || ""}
         />
       </NavbarStyleRight>
     </>
