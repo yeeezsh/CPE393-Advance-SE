@@ -30,6 +30,7 @@ export const MOCK_BOOKMARK_VALUE = {
   lean: jest.fn().mockReturnThis(),
   findById: jest.fn().mockReturnThis(),
   save: jest.fn().mockReturnThis(),
+  aggregate: jest.fn().mockReturnThis(),
 };
 
 export const MOCK_BOOKMARK_MODEL: Provider = {
