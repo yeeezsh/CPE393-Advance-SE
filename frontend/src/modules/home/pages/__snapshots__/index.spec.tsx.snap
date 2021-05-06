@@ -161,17 +161,13 @@ exports[`Pages/index Should match snapshots 1`] = `
     >
       <p
         className="sc-gKckTs cDkmGf"
-      >
-        hello1234
-      </p>
+      />
       <div
         className="sc-bdvvaa gygOTm"
       >
         <p
           className="sc-gsDJrp kEkgOf"
-        >
-          H
-        </p>
+        />
       </div>
     </div>
   </div>

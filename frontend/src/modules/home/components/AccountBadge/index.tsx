@@ -20,7 +20,7 @@ const UsernameBadge: React.FC = (props) => (
 );
 
 const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
-  const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
+  const firstCharacter = props.username?.slice(0, 1).toLocaleUpperCase();
   const [overlay, setOverlay] = useState<boolean>(props?.overlay || false);
 
   const ref = useRef(null);
