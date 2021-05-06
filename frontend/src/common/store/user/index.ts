@@ -9,6 +9,7 @@ export interface User {
 
 const initialState = {
   user: { _id: "", username: "", displayName: "", email: "" } as User,
+  isAuth: false,
 };
 
 const userSlice = createSlice({
@@ -17,9 +18,11 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
+      state.isAuth = true;
     },
     deleteUser: (state) => {
       state.user = initialState.user;
+      state.isAuth = false;
     },
   },
 });

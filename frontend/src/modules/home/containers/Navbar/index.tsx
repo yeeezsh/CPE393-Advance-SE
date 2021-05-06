@@ -12,7 +12,7 @@ import {
 } from "./styled";
 
 const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
-  const user = useSelector((state: Store) => state.user);
+  const user = useSelector((state: Store) => state.user.user);
 
   return (
     <>
@@ -39,9 +39,9 @@ const Navbar: React.FC<{ title: string; onClick: () => void }> = (props) => {
       <NavbarStyleRight>
         <AccountBadge
           style={{ height: "80%", width: "10em" }}
-          username={user.user.username}
-          displayname={user.user.displayName || ""}
-          email={user.user.email || ""}
+          username={user.username}
+          displayname={user.displayName || ""}
+          email={user.email || ""}
         />
       </NavbarStyleRight>
     </>
