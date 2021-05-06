@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { Bookmark, BookmarkDocument } from '../bookmark/schema/bookmark.schema';
 import { Tag, TagDocument } from '../bookmark/schema/tag.schema';
+import { SearchFilterTag } from './dtos/input/search-filter-tag.input';
 import { SearchInputDTO } from './dtos/input/search.input';
 import { SearchDTO } from './dtos/search.dto';
 
@@ -54,5 +55,23 @@ export class SearchService {
     ]);
 
     return { results };
+  }
+
+  async filterByTag(search: SearchFilterTag): Promise<SearchDTO> {
+    const tags = search.tags;
+    const results = await this.bookmarkModel.aggregate([
+      {
+        $match: {
+          owner: search.owner,
+          tags: {
+            $in: tags,
+          },
+        },
+      },
+    ]);
+
+    return {
+      results,
+    };
   }
 }
