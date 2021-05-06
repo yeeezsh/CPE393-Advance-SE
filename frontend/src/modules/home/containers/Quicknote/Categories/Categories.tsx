@@ -12,8 +12,8 @@ const Categories: React.FC = () => {
     {
       label: string;
       checked: boolean;
-      // inputVisible: false;
-      // inputValue: '';
+      inputVisible: boolean;
+      inputValue: '';
       // editInputIndex: -1,
       // editInputValue: '',
 
@@ -24,7 +24,7 @@ const Categories: React.FC = () => {
   const onCheck = (label: string) => {
     return (checked: boolean) => {
       setTags((s) =>
-        s.map((el: { label: string; checked: any; }) => {
+        s.map((el: { label: string; checked: any; inputVisible: any; inputValue: any; }) => {
           if (el.label === label) return { ...el, check: !el.checked };
           return el;
         })
@@ -32,32 +32,32 @@ const Categories: React.FC = () => {
     };
   };
 
-  // const showInput = () => {
-  //   // setTags((s) =>
-  //   //     s.map((el: {inputVisible: true; }) => {
-  //   //       return el;
-  //   //     })
-  //   //   );
-  //   setTags({...tags,inputVisible: true });
-  // };
+  const showInput = () => {
+    // setTags((s) =>
+    //     s.map((el: {inputVisible: true; }) => {
+    //       return el;
+    //     })
+    //   );
+    setTags({...tags,inputVisible: true });
+  };
 
 
-// const handleInputConfirm = (e:any) => {
-//     console.log('e',e.target.value);
-//     setTags({...tags, inputValue: e.target.value})
-//     setTags({...tags, inputVisible: false})
+const handleInputConfirm = (e:any) => {
+    console.log('e',e.target.value);
+    setTags({...tags, inputValue: e.target.value})
+    setTags({...tags, inputVisible: false})
 
-//     // const { inputValue } = this.state;
-//     // let { tags } = this.state;
-//     // if (inputValue && tags.indexOf(inputValue) === -1) {
-//     //   tags = [...tags, inputValue];
-//     // }
-//     // console.log(tags);
-//     // setState({
-//     //   inputVisible: false,
-//     //   inputValue: '',
-//     // });
-//   };
+    // const { inputValue } = this.state;
+    // let { tags } = this.state;
+    // if (inputValue && tags.indexOf(inputValue) === -1) {
+    //   tags = [...tags, inputValue];
+    // }
+    // console.log(tags);
+    // setState({
+    //   inputVisible: false,
+    //   inputValue: '',
+    // });
+  };
   // const showInput = () => {
   //   setTags({ inputVisible: true });
   // };
@@ -107,7 +107,7 @@ const Categories: React.FC = () => {
             <PlusOutlined /> New Tag
           </Tag>
         )} */}
-        <AddingCategories />
+        {/* <AddingCategories /> */}
 
         
       </div>

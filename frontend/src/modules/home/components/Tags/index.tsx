@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, Tag as AntdTag } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import onEnter from "../../../../common/utils/onEnterKey";
 
 const { CheckableTag } = AntdTag;
@@ -29,6 +29,8 @@ const Tags: React.FC<TagsProps> = (props) => {
     value: "",
   });
 
+
+
   const onNewtag = () => {
     setInput((i) => ({ ...i, visible: true }));
   };
@@ -40,6 +42,7 @@ const Tags: React.FC<TagsProps> = (props) => {
         { _id: Math.random().toLocaleString(), label, checked: true },
       ]);
     setInput((i) => ({ ...i, visible: false }));
+
   };
 
   const onDelete = (id: string) => {
@@ -54,18 +57,40 @@ const Tags: React.FC<TagsProps> = (props) => {
 
   return (
     <>
+      {/* <div> */}
+
+      {/* <strong style={{ marginLeft: "1rem"}}>Categories:</strong> */}
+      {/* </div> */}
+      <div>
       {tags.map((el) => (
         <CheckableTag
           onClick={() => onSelect(el._id)}
           checked={el.checked}
           style={{ minWidth: 40, textAlign: "center" }}
         >
-          {el.label}
-          <PlusOutlined
-            onClick={() => onDelete(el._id)}
-            style={{ marginLeft: "2em", cursor: "pointer" }}
-          />
+          {!el.checked && (
+            <>
+              <AntdTag>
+                {el.label}
+                <CloseOutlined
+                  onClick={() => onDelete(el._id)}
+                  style={{ marginLeft: "2em", cursor: "pointer" }}
+                />
+              </AntdTag>
+            </>
+          )}
+          {el.checked && (
+            <>
+              {el.label}
+              <CloseOutlined
+                onClick={() => onDelete(el._id)}
+                style={{ marginLeft: "2em", cursor: "pointer" }}
+              />
+            </>
+
+          )}
         </CheckableTag>
+
       ))}
       <AntdTag onClick={onNewtag}>
         {!input.visible && (
@@ -78,6 +103,7 @@ const Tags: React.FC<TagsProps> = (props) => {
           <Input size="small" onKeyPress={onEnter(onFinishNewtag)} />
         )}
       </AntdTag>
+      </div>
     </>
   );
 };

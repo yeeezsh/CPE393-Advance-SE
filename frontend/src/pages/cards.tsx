@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "../modules/home/containers/Cards/Cards";
+import Cards from "../modules/home/components/Cards/Cards";
 const CardsPage: React.FC = () => {
   return <div><Cards /></div>;
 };
