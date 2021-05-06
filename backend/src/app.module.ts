@@ -10,6 +10,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ConfigModule } from './config/config.module';
     AccountModule,
     AuthenticationModule,
     BookmarkModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
