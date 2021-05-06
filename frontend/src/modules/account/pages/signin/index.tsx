@@ -15,6 +15,7 @@ import { useUserLoginMutation } from "../../../../common/services/generate/gener
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../../common/store/user";
+import { FormFinishValue, FormLogin } from "./types";
 
 const { Title } = Typography;
 
@@ -34,6 +35,7 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const [statusError, setStatusError] = useState(0);
+  const [form] = Form.useForm<FormLogin>();
   const dispatch = useDispatch();
 
   const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
@@ -41,24 +43,26 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
   });
 
   useEffect(() => {
-    if (!error && data) {
-      dispatch(setUser(data.userLogin));
-      history.push("/");
-    } else if (error) {
+    if (error) {
       setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
       setErrorMsg(error?.graphQLErrors[0].message);
     }
+    if (!error && !loading) {
+      data && dispatch(setUser(data.userLogin));
+      history.push("/");
+    }
   }, [data, loading, error, history, dispatch]);
 
-  const onFinish = (values: any) => {
-    userLoginMutation({
-      variables: {
-        user: {
-          email: values.email,
-          password: values.password,
+  const onFinish: FormFinishValue = (values) => {
+    values &&
+      userLoginMutation({
+        variables: {
+          user: {
+            email: values.email,
+            password: values.password,
+          },
         },
-      },
-    });
+      });
   };
 
   const onClickSignUp = () => {
@@ -84,6 +88,7 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
           </Title>
 
           <Form
+            form={form}
             name="normal_login"
             initialValues={{ remember: true }}
             onFinish={onFinish}
