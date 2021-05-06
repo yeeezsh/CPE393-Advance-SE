@@ -2,8 +2,12 @@ import { shallow } from "enzyme";
 import AccountSignInPage from "./index";
 import * as generateTypes from "../../../../common/services/generate/generate-types";
 
+jest.mock("react-redux", () => ({
+  useDispatch: () => jest.fn(),
+}));
+
 describe("Pages/SignIn", () => {
-  it("Should render successfully", () => {
+  it("Should render successfully with default statusError=0", () => {
     const mockFn: any = () => {
       //this is intentional
     };
@@ -34,6 +38,6 @@ describe("Pages/SignIn", () => {
     const onError = jest.fn();
     shallow(<AccountSignInPage onError={onError} />);
 
-    expect(onError).toBeCalledWith(400);
+    expect(onError).toBeCalledWith(0);
   });
 });
