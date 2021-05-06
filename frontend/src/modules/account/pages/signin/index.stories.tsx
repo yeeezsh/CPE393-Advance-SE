@@ -1,7 +1,10 @@
 import { ApolloProvider } from "@apollo/client/react/context/ApolloProvider";
-import { Story, Meta } from "@storybook/react";
-import { apolloClient } from "../../../../common/services/apollo.client";
+import { Meta, Story } from "@storybook/react";
+import React from "react";
+import { Provider } from "react-redux";
 import AccountSignInPage from ".";
+import { apolloClient } from "../../../../common/services/apollo.client";
+import { store } from "../../../../common/store";
 import SignInPage from "../../../../pages/signInPage";
 
 export default {
@@ -11,9 +14,11 @@ export default {
 
 const SignInPageStory: Story = () => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <SignInPage />
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
+        <SignInPage />
+      </ApolloProvider>
+    </Provider>
   );
 };
 
