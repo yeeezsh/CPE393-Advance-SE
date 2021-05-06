@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { SystemTagType } from '../../@types/systemTag-type.type';
 import { BookmarkCreateInputDTO } from './bookmark-create.input';
 
 @InputType()
@@ -13,5 +14,5 @@ export class BookmarkEditInputDTO implements Partial<BookmarkCreateInputDTO> {
   note?: string;
 
   @Field(() => [String], { nullable: true })
-  tags?: string[];
+  tags?: Array<string | SystemTagType>;
 }
