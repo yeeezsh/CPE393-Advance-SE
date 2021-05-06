@@ -38,6 +38,7 @@ const bookmarkInputDigital = gql`
     }
   }
 `;
+
 const bookmarkInputArchive = gql`
   mutation {
     addBookmark(
