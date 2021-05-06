@@ -1,9 +1,9 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { BookmarkDTO } from './dtos/bookmark.dto';
+import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
+import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
-import { TagDeleteInputDTO } from './dtos/input/tag-delete.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
-import { TagSetArchiveInputDTO } from './dtos/input/tag-setArchive.input.dto';
 import { TagDTO } from './dtos/tag.dto';
 import { TagService } from './tag.service';
 
@@ -12,10 +12,17 @@ export class TagsResolver {
   constructor(private readonly tagService: TagService) {}
 
   @Mutation(() => TagDTO)
-  async addTag(
+  async createTag(
     @Args('TagCreateInputDTO') tagCreateInputDTO: TagCreateInputDTO,
   ): Promise<TagDTO> {
-    return this.tagService.addTag(tagCreateInputDTO);
+    return this.tagService.createTag(tagCreateInputDTO);
+  }
+
+  @Mutation(() => BookmarkDTO)
+  async addTagToBookmark(
+    @Args('TagAddToBookmarkDTO') tagAddBookmarkDTO: TagAddToBookmarkDTO,
+  ): Promise<BookmarkDTO> {
+    return this.tagService.addTagToBookmark(tagAddBookmarkDTO);
   }
 
   @Mutation(() => TagDTO)
@@ -25,16 +32,16 @@ export class TagsResolver {
     return this.tagService.editTag(tagEditInputDTO);
   }
 
-  @Mutation(() => TagDTO)
+  @Mutation(() => BookmarkDTO)
   async deleteTag(
-    @Args('TagDeleteInputDTO') tagDeleteInputDTO: TagDeleteInputDTO,
+    @Args('TagDeleteInputDTO') tagDeleteInputDTO: BookmarkGetInputDTO,
   ): Promise<BookmarkDTO> {
     return this.tagService.deleteTag(tagDeleteInputDTO);
   }
 
-  @Mutation(() => TagDTO)
+  @Mutation(() => BookmarkDTO)
   async setArchiveTag(
-    @Args('TagSetArchiveDTO') tagSetArchiveInputDTO: TagSetArchiveInputDTO,
+    @Args('TagSetArchiveDTO') tagSetArchiveInputDTO: BookmarkGetInputDTO,
   ): Promise<BookmarkDTO> {
     return this.tagService.setArchiveTag(tagSetArchiveInputDTO);
   }

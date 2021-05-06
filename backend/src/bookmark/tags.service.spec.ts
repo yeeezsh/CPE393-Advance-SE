@@ -5,7 +5,7 @@ import { TagType } from './@types/tag-type.type';
 import { BookmarkService } from './bookmark.service';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
-import { TagSetArchiveInputDTO } from './dtos/input/tag-setArchive.input.dto';
+import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
 import { TagService } from './tag.service';
 import {
   MOCK_BOOKMARK_DOCUMENT,
@@ -56,7 +56,7 @@ describe('Tags Service', () => {
       type: TagType.user,
     } as TagCreateInputDTO;
 
-    await service.addTag(MOCK_BOOKMARK_INPUT);
+    await service.createTag(MOCK_BOOKMARK_INPUT);
     const model = jest.spyOn(MOCK_TAG_VALUE, 'create');
     expect(model).toBeCalled();
   });
@@ -76,7 +76,7 @@ describe('Tags Service', () => {
   it('Should able to addTag when call setArchiveTag', async () => {
     const MOCK_TAG_SET_ARCHIVE_INPUT = {
       bookmarkId: Types.ObjectId().toHexString(),
-    } as TagSetArchiveInputDTO;
+    } as BookmarkGetInputDTO;
     const now = new Date();
 
     const MOCK_RETURN_BOOKMARK_DOC = {

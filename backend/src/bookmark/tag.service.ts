@@ -6,11 +6,12 @@ import { TagType } from './@types/tag-type.type';
 import { BookmarkService } from './bookmark.service';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
+import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
+import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
-import { TagDeleteInputDTO } from './dtos/input/tag-delete.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
-import { TagSetArchiveInputDTO } from './dtos/input/tag-setArchive.input.dto';
 import { TagDTO } from './dtos/tag.dto';
+import { TagBadIdException } from './exceptions/tag-bad-id.exceptions';
 import { Tag, TagDocument } from './schema/tag.schema';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class TagService {
     private bookmarkService: BookmarkService,
   ) {}
 
-  async addTag(create: TagCreateInputDTO): Promise<TagDTO> {
+  async createTag(create: TagCreateInputDTO): Promise<TagDTO> {
     const now = new Date();
     const doc = await this.tagModel.create({
       ...create,
@@ -28,6 +29,28 @@ export class TagService {
       updateAt: now,
     });
     return doc as TagDTO;
+  }
+
+  async addTagToBookmark(tagToAdd: TagAddToBookmarkDTO): Promise<BookmarkDTO> {
+    const bookmark = await this.bookmarkService.getABookmark(
+      tagToAdd.bookmarkId,
+    );
+    const tag = await this.tagModel.findById(tagToAdd._id);
+    if (!tag) throw new TagBadIdException();
+    const merge = [...bookmark.tags, tag._id];
+    const distinct = [...new Set(merge)];
+
+    const toUpdateBookmark = {
+      _id: bookmark._id,
+      original: bookmark.original,
+      note: bookmark.note,
+      tags: distinct,
+    } as BookmarkEditInputDTO;
+
+    const updatedBookmark = await this.bookmarkService.editBookmark(
+      toUpdateBookmark,
+    );
+    return updatedBookmark;
   }
 
   async editTag(update: TagEditInputDTO): Promise<TagDTO> {
@@ -45,11 +68,10 @@ export class TagService {
     return updated as TagDTO;
   }
 
-  async deleteTag(deleteInput: TagDeleteInputDTO): Promise<BookmarkDTO> {
+  async deleteTag(deleteInput: BookmarkGetInputDTO): Promise<BookmarkDTO> {
     const bookmark = await this.bookmarkService.getABookmark(
       deleteInput.bookmarkId,
     );
-
     const merge = [...bookmark.tags, SystemTagType.delete];
     const distinct = [...new Set(merge)];
 
@@ -64,7 +86,7 @@ export class TagService {
     return returnBookMark;
   }
 
-  async setArchiveTag(archive: TagSetArchiveInputDTO): Promise<BookmarkDTO> {
+  async setArchiveTag(archive: BookmarkGetInputDTO): Promise<BookmarkDTO> {
     const bookmark = await this.bookmarkService.getABookmark(
       archive.bookmarkId,
     );
@@ -79,7 +101,7 @@ export class TagService {
       tags: distinct,
     } as BookmarkEditInputDTO;
 
-    const returnBookMark = await this.bookmarkService.editBookmark(toUpdate);
-    return returnBookMark;
+    const editedBookmark = await this.bookmarkService.editBookmark(toUpdate);
+    return editedBookmark;
   }
 }
