@@ -47,7 +47,6 @@ const AccountSignInPage: React.FC = () => {
   }, [data, loading, error, history, dispatch]);
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
     userLoginMutation({
       variables: {
         user: {
