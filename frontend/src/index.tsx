@@ -7,7 +7,6 @@ import { store } from "./common/store";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Router from "./router";
-
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={apolloClient}>
