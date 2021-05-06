@@ -7,8 +7,8 @@ export class SearchTextInputDTO implements SearchInputDTO {
   owner: string;
 
   @Field(() => [String], { nullable: true })
-  tags?: string[] | undefined;
+  tags?: string[];
 
   @Field(() => String, { nullable: true })
-  text?: string | undefined;
+  text?: string;
 }
