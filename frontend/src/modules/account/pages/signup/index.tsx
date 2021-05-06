@@ -58,6 +58,15 @@ const AccountSignUpPage: React.FC<{
     history.push("/signin");
   };
 
+  const validatePassword = (_: any, value: string) => {
+    if (!value || form.getFieldValue("password") === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(
+      new Error("The two passwords that you entered do not match!")
+    );
+  };
+
   props.onError && props.onError(statusError);
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
@@ -135,19 +144,9 @@ const AccountSignUpPage: React.FC<{
                   required: true,
                   message: "Please input your Username",
                 },
-
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!"
-                      )
-                    );
-                  },
-                }),
+                {
+                  validator: validatePassword,
+                },
               ]}
             >
               <Input.Password placeholder="Re-enter password" />
