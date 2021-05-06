@@ -28,9 +28,12 @@ const componentLayout = {
   justifyContent: "center",
 };
 
-const AccountSignInPage: React.FC = () => {
+const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
+  props
+) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
+  const [statusError, setStatusError] = useState(0);
   const dispatch = useDispatch();
 
   const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
@@ -42,6 +45,7 @@ const AccountSignInPage: React.FC = () => {
       dispatch(setUser(data.userLogin));
       history.push("/");
     } else if (error) {
+      setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
       setErrorMsg(error?.graphQLErrors[0].message);
     }
   }, [data, loading, error, history, dispatch]);
@@ -61,6 +65,7 @@ const AccountSignInPage: React.FC = () => {
     history.push("/signup");
   };
 
+  props.onError && props.onError(statusError);
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
       <div className="site-card-border-less-wrapper" style={componentLayout}>
