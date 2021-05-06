@@ -38,20 +38,19 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
   const [form] = Form.useForm<FormLogin>();
   const dispatch = useDispatch();
 
-  const [userLoginMutation, { data, loading, error }] = useUserLoginMutation({
+  const [userLoginMutation, { data, error }] = useUserLoginMutation({
     errorPolicy: "all",
   });
 
   useEffect(() => {
-    if (error) {
+    if (!error && data) {
+      dispatch(setUser(data.userLogin));
+      history.push("/");
+    } else if (error) {
       setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
       setErrorMsg(error?.graphQLErrors[0].message);
     }
-    if (!error && !loading) {
-      data && dispatch(setUser(data.userLogin));
-      history.push("/");
-    }
-  }, [data, loading, error, history, dispatch]);
+  }, [data, error, history, dispatch]);
 
   const onFinish: FormFinishValue = (values) => {
     values &&
