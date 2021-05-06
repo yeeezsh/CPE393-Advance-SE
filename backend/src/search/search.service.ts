@@ -18,7 +18,8 @@ export class SearchService {
       {
         $match: {
           // select from owner only
-          owner: Types.ObjectId(search.owner),
+          // owner: Types.ObjectId(search.owner) || search.owner,
+          owner: search.owner,
         },
       },
       {
@@ -41,17 +42,17 @@ export class SearchService {
         // expensive ops
         $match: {
           $or: [
+            { note: { $regex: `${search.text}`, $options: 'i' } },
+            { tags: { $regex: `${search.text}`, $options: 'i' } },
             {
-              note: { $regex: `${search.text}`, $options: 'i' },
-              tags: { $regex: `${search.text}`, $options: 'i' },
               domain: { $regex: `${search.text}`, $options: 'i' },
-              original: { $regex: `${search.text}`, $options: 'i' },
             },
+            { original: { $regex: `${search.text}`, $options: 'i' } },
           ],
         },
       },
     ]);
-
+    console.log(results);
     return { results };
   }
 }
