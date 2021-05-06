@@ -11,7 +11,12 @@ import {
   MOCK_BOOKMARK_DOCUMENT,
   MOCK_BOOKMARK_MODEL,
 } from './tests/mock.bookmark.model';
-import { MOCK_TAG_MODEL, MOCK_TAG_VALUE } from './tests/mock.tag.model';
+import {
+  MOCK_TAG_DOCUMENT,
+  MOCK_TAG_MODEL,
+  MOCK_TAG_VALUE,
+} from './tests/mock.tag.model';
+import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 
 describe('Tags Service', () => {
   let service: TagService;
@@ -73,7 +78,42 @@ describe('Tags Service', () => {
     expect(model).toBeCalled();
   });
 
-  it('Should able to addTag when call setArchiveTag', async () => {
+  it('Should able to add archive/delete Tag when call setArchiveTag/ deleteTag', async () => {
+    const MOCK_TAG_SET_ARCHIVE_INPUT = {
+      bookmarkId: Types.ObjectId().toHexString(),
+    } as BookmarkGetInputDTO;
+    const now = new Date();
+
+    const MOCK_RETURN_BOOKMARK_DOC_ARCHIVE = {
+      _id: MOCK_BOOKMARK_ID,
+      owner: MOCK_OWNER_ID,
+      original: 'https://docs.google.com',
+      domain: 'docs.google.com',
+      note: '',
+      tags: ['tagA', 'tagB', SystemTagType.archive],
+      createAt: now,
+      updateAt: now,
+    };
+
+    const MOCK_RETURN_BOOKMARK_DOC_DELETE = {
+      _id: MOCK_BOOKMARK_ID,
+      owner: MOCK_OWNER_ID,
+      original: 'https://docs.google.com',
+      domain: 'docs.google.com',
+      note: '',
+      tags: ['tagA', 'tagB', SystemTagType.delete],
+      createAt: now,
+      updateAt: now,
+    };
+    const returnArchive = await service.setArchiveTag(
+      MOCK_TAG_SET_ARCHIVE_INPUT,
+    );
+    expect(returnArchive.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC_ARCHIVE.tags);
+    const returnDelete = await service.deleteTag(MOCK_TAG_SET_ARCHIVE_INPUT);
+    expect(returnDelete.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC_DELETE.tags);
+  });
+
+  it('Should able to distinct tag  when call setArchiveTag/deleteTag', async () => {
     const MOCK_TAG_SET_ARCHIVE_INPUT = {
       bookmarkId: Types.ObjectId().toHexString(),
     } as BookmarkGetInputDTO;
@@ -85,31 +125,53 @@ describe('Tags Service', () => {
       original: 'https://docs.google.com',
       domain: 'docs.google.com',
       note: '',
-      tags: ['tagA', 'tagB', SystemTagType.archive],
+      tags: ['tagA', 'tagB', SystemTagType.archive, SystemTagType.delete],
       createAt: now,
       updateAt: now,
     };
-    const returnVal = await service.setArchiveTag(MOCK_TAG_SET_ARCHIVE_INPUT);
-    expect(returnVal.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC.tags);
+
+    jest.spyOn(MOCK_BOOKMARK_SERVICE, 'getABookmark').mockReturnValue({
+      ...MOCK_BOOKMARK_DOCUMENT,
+      tags: ['tagA', 'tagB', SystemTagType.archive, SystemTagType.delete],
+      _id: MOCK_BOOKMARK_ID,
+      _owner: MOCK_OWNER_ID,
+    });
+    const returnArchive = await service.setArchiveTag(
+      MOCK_TAG_SET_ARCHIVE_INPUT,
+    );
+    const returnDelete = await service.deleteTag(MOCK_TAG_SET_ARCHIVE_INPUT);
+    expect(returnArchive.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC.tags);
+    expect(returnDelete.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC.tags);
   });
 
-  // it('Should able to return setArchiveTag when call setArchiveTag', async () => {
-  //   const MOCK_TAG_SET_ARCHIVE_INPUT = {
-  //     bookmarkId: Types.ObjectId().toHexString(),
-  //   } as TagSetArchiveInputDTO;
-  //   const now = new Date();
+  it('Should be able to add tag to bookmark when call addTagToBookmark', async () => {
+    const now = new Date();
 
-  //   const MOCK_RETURN_BOOKMARK_DOC = {
-  //     _id: MOCK_BOOKMARK_ID,
-  //     owner: MOCK_OWNER_ID,
-  //     original: 'https://docs.google.com',
-  //     domain: 'docs.google.com',
-  //     note: '',
-  //     tags: ['tagA', 'tagB', SystemTagType.archive],
-  //     createAt: now,
-  //     updateAt: now,
-  //   };
-  //   const returnVal = await service.setArchiveTag(MOCK_TAG_SET_ARCHIVE_INPUT);
-  //   expect(returnVal.tags).toEqual(MOCK_RETURN_BOOKMARK_DOC.tags);
-  // });
+    const MOCK_RETURN_BOOKMARK_DOC = {
+      _id: MOCK_BOOKMARK_ID,
+      owner: MOCK_OWNER_ID,
+      original: 'https://docs.google.com',
+      domain: 'docs.google.com',
+      note: '',
+      tags: [
+        'tagA',
+        'tagB',
+        SystemTagType.archive,
+        SystemTagType.delete,
+        MOCK_TAG_DOCUMENT._id,
+      ],
+      createAt: now,
+      updateAt: now,
+    };
+
+    const MOCK_TAG_TO_ADD_BOOKMARK = {
+      bookmarkId: MOCK_BOOKMARK_ID,
+      _id: MOCK_TAG_DOCUMENT._id,
+    } as TagAddToBookmarkDTO;
+
+    const returnValue = await service.addTagToBookmark(
+      MOCK_TAG_TO_ADD_BOOKMARK,
+    );
+    expect(MOCK_RETURN_BOOKMARK_DOC.tags).toEqual(returnValue.tags);
+  });
 });

@@ -22,6 +22,9 @@ export const MOCK_TAG_VALUE = {
   findByIdAndUpdate: jest
     .fn()
     .mockImplementation(() => Promise.resolve(MOCK_TAG_DOCUMENT)),
+  findById: jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(MOCK_TAG_DOCUMENT)),
 };
 
 export const MOCK_TAG_MODEL: Provider = {
