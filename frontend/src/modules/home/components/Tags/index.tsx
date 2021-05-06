@@ -3,6 +3,8 @@ import { Input, Tag as AntdTag } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import onEnter from "../../../../common/utils/onEnterKey";
 
+const { CheckableTag } = AntdTag;
+
 export type TagsProps = {};
 
 type TagType = {
@@ -13,7 +15,7 @@ type TagType = {
 
 const MOCK_TAGS: TagType = [
   { _id: "1", label: "t1", checked: false },
-  { _id: "2", label: "t2", checked: false },
+  { _id: "2", label: "t2", checked: true },
   { _id: "3", label: "t3", checked: false },
 ];
 
@@ -40,12 +42,30 @@ const Tags: React.FC<TagsProps> = (props) => {
     setInput((i) => ({ ...i, visible: false }));
   };
 
+  const onDelete = (id: string) => {
+    setTags((tags) => tags.filter((t) => t._id !== id));
+  };
+
+  const onSelect = (id: string) => {
+    setTags((tags) =>
+      tags.map((t) => (t._id === id ? { ...t, checked: !t.checked } : t))
+    );
+  };
+
   return (
     <>
       {tags.map((el) => (
-        <AntdTag closable style={{ minWidth: 40, textAlign: "center" }}>
+        <CheckableTag
+          onClick={() => onSelect(el._id)}
+          checked={el.checked}
+          style={{ minWidth: 40, textAlign: "center" }}
+        >
           {el.label}
-        </AntdTag>
+          <PlusOutlined
+            onClick={() => onDelete(el._id)}
+            style={{ marginLeft: "2em", cursor: "pointer" }}
+          />
+        </CheckableTag>
       ))}
       <AntdTag onClick={onNewtag}>
         {!input.visible && (
