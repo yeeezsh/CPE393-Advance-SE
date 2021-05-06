@@ -1,8 +1,11 @@
 import { PushpinOutlined } from "@ant-design/icons";
 import { Button, Form } from "antd";
-import React, {useState} from "react";
-import Categories from "./Categories/Categories";
-import UploadImage from "./Upload-image/UploadImage";
+import React, { useState } from "react";
+// import Categories from "./Categories/Categories";
+import { useCreateQuickNoteMutation } from "../../../../common/services/generate/generate-types";
+import UploadImage from "../../components/Upload-image/UploadImage";
+import Tags from '../../components/Tags/index';
+import onEnter from "../../../../common/utils/onEnterKey";
 
 const styles = {
   inputCard: {
@@ -33,16 +36,36 @@ const styles = {
   divStyle: {
     display: "flex",
     alignItems: "center",
-    margin: "2px",
+    marginLeft: "1rem",
   },
 };
 
 const QuickNote: React.FC = () => {
-  const initialState = {inputURL: ""};
+  const [
+    createQuickNoteMutation,
+    { data, loading, error },
+  ] = useCreateQuickNoteMutation({
+    errorPolicy: "all",
+  });
+  const initialState = { inputURL: "" };
   const [stateInput, setStateInput] = useState(initialState);
+
+  // const onFinish = (values: any) => {
+  //   createQuickNoteMutation({
+  //     variables: {
+  //       quicknote: {
+  //         url: stateInput.inputURL,
+  //         tags: ,
+  //         imageUpload: ,
+  //       },
+  //     },
+  //   });
+
   return (
     <>
-      <Form>
+      <Form
+      onFinish={onEnter(onFinish)}
+      >
         <div style={styles.inputCard}>
           <div style={styles.inputHeader}>
             {" "}
@@ -59,23 +82,35 @@ const QuickNote: React.FC = () => {
             type="text"
             placeholder="Take a note"
             value={stateInput.inputURL}
-            onChange={e =>{
-              setStateInput({...stateInput, inputURL: e.target.value})
+            onChange={e => {
+              setStateInput({ ...stateInput, inputURL: e.target.value })
             }}
+           
           />
-          <div style={{ height: "60px", width: "578px", marginLeft: "3px"}}>
-          <div style={{ float: "left", width: "400px" }}>
-              <div style={styles.divStyle}>
-                <Categories />
+          <div style={{ height: "100px", width: "578px", marginLeft: "3px" }}>
+            <div style={{ width: "570px" }}>
+
+              <div style={{ float: "left", width: "400px" }}>
+                <strong style={{ marginLeft: "1rem" }}>Categories:</strong>
+                <div style={styles.divStyle}>
+                  <Tags />
+                </div>
               </div>
-            </div>
-            <div style={{ float: "right" }}>
+              {/* <div style={{ float: "right" }}>
               <div style={styles.divStyle}>
                 <UploadImage />
               </div>
+              </div> */}
+              <div style={{ float: "right", width: "150px" }}>
+                <div style={styles.divStyle}>
+                  <UploadImage />
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
+
       </Form>
     </>
   );

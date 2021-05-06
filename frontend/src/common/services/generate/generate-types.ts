@@ -11,6 +11,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Array: string[];
+  DateTime: any;
 };
 
 export type AppModel = {
@@ -18,9 +20,35 @@ export type AppModel = {
   status: Scalars['Int'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+};
+
+export type MutationCreateQuickNoteArgs = {
+  CreateQuickNoteDto: CreateQuickNoteDto;
+};
+
 export type Query = {
   __typename?: 'Query';
   serverStatus: AppModel;
+  createQuickNote: QuickNoteDto;
+};
+
+
+
+export type CreateQuickNoteDto = {
+  url: Scalars['String'];
+  tags: Scalars['Array'];
+  imageUpload: Scalars['Array'];
+};
+
+export type QuickNoteDto = {
+  __typename?: 'QuickNoteDto';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  url: Scalars['String'];
+  tags: Scalars['Array'];
+  imageUpload: Scalars['Array'];
 };
 
 export type DemoQueryVariables = Exact<{ [key: string]: never; }>;
@@ -33,7 +61,17 @@ export type DemoQuery = (
     & Pick<AppModel, 'status'>
   ) }
 );
+export type CreateQuickNoteMutationVariables = Exact<{
+  quicknote: CreateQuickNoteDto;
+}>;
 
+export type CreateQuickNoteMutation = (
+  { __typename?: 'Mutation' }
+  & { createQuickNote: (
+    { __typename?: 'QuickNoteDto' }
+    & Pick<QuickNoteDto, '_id' | 'url' | 'tags' | 'imageUpload'>
+  ) }
+);
 
 export const DemoDocument = gql`
     query demo {
@@ -66,4 +104,40 @@ export function useDemoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DemoQ
         }
 export type DemoQueryHookResult = ReturnType<typeof useDemoQuery>;
 export type DemoLazyQueryHookResult = ReturnType<typeof useDemoLazyQuery>;
-export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;
+export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+export const CreateQuickNoteDocument = gql`
+    mutation create($quicknote: CreateQuickNoteDto!) {
+      createQuickNote(CreateQuickNoteDto: $quicknote) {
+    _id
+    url
+    tags
+    imageUpload
+  }
+}
+  `;
+
+  export type CreateQuickNoteMutationFn = Apollo.MutationFunction<CreateQuickNoteMutation, CreateQuickNoteMutationVariables>;
+  /**
+ * __useCreateQuickNoteMutation__
+ *
+ * To run a mutation, you first call `useCreateQuickNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateQuickNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createQuickNoteMutation, { data, loading, error }] = useCreateQuickNoteMutation({
+ *   variables: {
+ *      quicknote: // value for 'user'
+ *   },
+ * });
+ */
+export function useCreateQuickNoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateQuickNoteMutation, CreateQuickNoteMutationVariables>) {
+        return Apollo.useMutation<CreateQuickNoteMutation, CreateQuickNoteMutationVariables>(CreateQuickNoteDocument, baseOptions);
+      }
+export type CreateQuickNoteMutationHookResult = ReturnType<typeof useCreateQuickNoteMutation>;
+export type CreateQuickNoteMutationResult = Apollo.MutationResult<CreateQuickNoteMutation>;
+export type CreateQuickNoteMutationOptions = Apollo.BaseMutationOptions<CreateQuickNoteMutation, CreateQuickNoteMutationVariables>;

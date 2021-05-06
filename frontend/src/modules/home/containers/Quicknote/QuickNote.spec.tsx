@@ -12,7 +12,7 @@ jest.mock("react-redux", () => ({
   useDispatch: () => jest.fn(),
 }));
 
-describe("Page/Signup", () => {
+describe("Quicknote/QuickNote", () => {
   it("Should render successfully with default statusError=0", () => {
     const mockFn: any = () => {
       //this is intentional
@@ -30,7 +30,7 @@ describe("Page/Signup", () => {
       },
     ];
 
-    jest.spyOn(generateTypes, "useCreateAccountMutation").mockReturnValue([
+    jest.spyOn(generateTypes, "useCreateQuickNoteMutation").mockReturnValue([
       mockFn,
       {
         error: {
@@ -42,7 +42,7 @@ describe("Page/Signup", () => {
     ]);
 
     const onError = jest.fn();
-    shallow(<AccountSignUpPage onError={onError} />);
+    shallow(<QuickNote onError={onError} />);
     expect(onError).toBeCalledWith(0);
   });
 });
