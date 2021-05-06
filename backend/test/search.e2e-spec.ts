@@ -93,10 +93,16 @@ describe('Search (e2e)', () => {
       .post('/graphql')
       .send({
         query: print(bookmarkInputGoogle),
-      })
+      });
+
+    await request(app.getHttpServer())
+      .post('/graphql')
       .send({
         query: print(bookmarkInputDigital),
-      })
+      });
+
+    await request(app.getHttpServer())
+      .post('/graphql')
       .send({
         query: print(bookmarkInputArchive),
       });
@@ -124,9 +130,7 @@ describe('Search (e2e)', () => {
       })
       .expect((res) => {
         const data = res.body.data;
-        expect(data.allTextSearchBookmark.results[0].domain).toBe(
-          'archive.com',
-        );
+        expect(data.searchFilterText.results[0].domain).toBe('archive.com');
       });
   });
 });
