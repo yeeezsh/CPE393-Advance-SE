@@ -24,8 +24,7 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
   const [overlay, setOverlay] = useState<boolean>(props?.overlay || false);
 
   const ref = useRef(null);
-  // FIXME: work unexpected
-  useOnClickOutside(ref, () => setOverlay((o) => !o));
+  useOnClickOutside(ref, () => setOverlay(() => false));
 
   return (
     <>
