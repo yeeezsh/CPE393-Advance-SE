@@ -33,6 +33,7 @@ const styles = {
   divStyle: {
     display: "flex",
     alignItems: "center",
+    margin: "2px",
   },
 };
 
@@ -62,11 +63,15 @@ const QuickNote: React.FC = () => {
               setStateInput({...stateInput, inputURL: e.target.value})
             }}
           />
-          <div style={{ height: "35px", width: "578px" }}>
+          <div style={{ height: "60px", width: "578px", marginLeft: "3px"}}>
+          <div style={{ float: "left", width: "400px" }}>
+              <div style={styles.divStyle}>
+                <Categories />
+              </div>
+            </div>
             <div style={{ float: "right" }}>
               <div style={styles.divStyle}>
                 <UploadImage />
-                <Categories />
               </div>
             </div>
           </div>
