@@ -25,13 +25,17 @@ export class TagsResolver {
     return this.tagService.editTag(tagEditInputDTO);
   }
 
-  @Mutation(()=>TagDTO)
-  async deleteTag(@Args('TagDeleteInputDTO') tagDeleteInputDTO: TagDeleteInputDTO):Promise<void>{
+  @Mutation(() => TagDTO)
+  async deleteTag(
+    @Args('TagDeleteInputDTO') tagDeleteInputDTO: TagDeleteInputDTO,
+  ): Promise<BookmarkDTO> {
     return this.tagService.deleteTag(tagDeleteInputDTO);
   }
 
-  @Mutation(()=>TagDTO)
-  async setArchiveTag(@Args('TagSetArchiveDTO') tagSetArchiveInputDTO: TagSetArchiveInputDTO): Promise<BookmarkDTO>{
-    return this.tagService.archiveTag(tagSetArchiveInputDTO);
+  @Mutation(() => TagDTO)
+  async setArchiveTag(
+    @Args('TagSetArchiveDTO') tagSetArchiveInputDTO: TagSetArchiveInputDTO,
+  ): Promise<BookmarkDTO> {
+    return this.tagService.setArchiveTag(tagSetArchiveInputDTO);
   }
 }
