@@ -20,6 +20,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: nginx
+      args:
+        REACT_APP_GRAPHQL_ENDPOINT: 128.199.183.221
     logging:
       options:
         max-size: 50m
