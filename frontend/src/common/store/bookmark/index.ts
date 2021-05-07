@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BookmarkStore } from "./type";
 
 const initialState: BookmarkStore = {
-  selectedTag: "",
+  selectedTag: "recent",
 };
 
 const bookmarkSlice = createSlice({
