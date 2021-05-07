@@ -41,7 +41,7 @@ const ExpandCard: React.FC<
       props.onSave({
         _id: props._id,
         original: original,
-        tags: [],
+        note,
       });
 
     //   save the same

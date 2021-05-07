@@ -20,6 +20,7 @@ export class SearchService {
         $match: {
           // select from owner only
           // owner: Types.ObjectId(search.owner) || search.owner,
+          // FIXME: change on prod
           owner: search.owner,
         },
       },
@@ -58,6 +59,7 @@ export class SearchService {
   }
 
   async filterByTag(search: SearchFilterTag): Promise<SearchDTO> {
+    // FIXME: change on prod
     const tags = search.tags;
     const results = await this.bookmarkModel.aggregate([
       {

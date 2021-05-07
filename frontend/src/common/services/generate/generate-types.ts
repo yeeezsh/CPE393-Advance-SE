@@ -46,14 +46,21 @@ export type BookmarkEditInputDto = {
   tags?: Maybe<Array<Scalars['String']>>;
 };
 
+export type BookmarkGetInputDto = {
+  bookmarkId: Scalars['String'];
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
   addBookmark: BookmarkDto;
-  addTag: TagDto;
+  addTagToBookmark: BookmarkDto;
   createAccount: UserResponseDto;
+  createTag: TagDto;
+  deleteTag: BookmarkDto;
   editBookmark: BookmarkDto;
   editTag: TagDto;
+  setArchiveTag: BookmarkDto;
   userLogin: UserLoginResponseDto;
 };
 
@@ -63,13 +70,23 @@ export type MutationAddBookmarkArgs = {
 };
 
 
-export type MutationAddTagArgs = {
-  TagCreateInputDTO: TagCreateInputDto;
+export type MutationAddTagToBookmarkArgs = {
+  TagAddToBookmarkDTO: TagAddToBookmarkDto;
 };
 
 
 export type MutationCreateAccountArgs = {
   UserRegisterInputDTO: UserRegisterInputDto;
+};
+
+
+export type MutationCreateTagArgs = {
+  TagCreateInputDTO: TagCreateInputDto;
+};
+
+
+export type MutationDeleteTagArgs = {
+  BookmarkGetInputDTO: BookmarkGetInputDto;
 };
 
 
@@ -83,6 +100,11 @@ export type MutationEditTagArgs = {
 };
 
 
+export type MutationSetArchiveTagArgs = {
+  BookmarkGetInputDTO: BookmarkGetInputDto;
+};
+
+
 export type MutationUserLoginArgs = {
   UserLoginInputDTO: UserLoginInputDto;
 };
@@ -90,8 +112,10 @@ export type MutationUserLoginArgs = {
 export type Query = {
   __typename?: 'Query';
   allTextSearchBookmark: SearchDto;
+  getABookmark: BookmarkDto;
   getAccount: UserResponseDto;
   getRecentBookmark: Array<BookmarkDto>;
+  listAllTag: TagListDto;
   searchFilterText: SearchDto;
   serverStatus: AppModel;
 };
@@ -102,8 +126,13 @@ export type QueryAllTextSearchBookmarkArgs = {
 };
 
 
+export type QueryGetABookmarkArgs = {
+  bookmarkId: Scalars['String'];
+};
+
+
 export type QueryGetAccountArgs = {
-  id: Scalars['String'];
+  UserGetAccountInputDTO: Scalars['String'];
 };
 
 
@@ -111,6 +140,11 @@ export type QueryGetRecentBookmarkArgs = {
   limit?: Maybe<Scalars['Float']>;
   skip?: Maybe<Scalars['Float']>;
   userId: Scalars['String'];
+};
+
+
+export type QueryListAllTagArgs = {
+  owner: Scalars['String'];
 };
 
 
@@ -134,10 +168,14 @@ export type SearchTextInputDto = {
   text?: Maybe<Scalars['String']>;
 };
 
+export type TagAddToBookmarkDto = {
+  _id: Scalars['String'];
+  bookmarkId: Scalars['String'];
+};
+
 export type TagCreateInputDto = {
   label: Scalars['String'];
   owner: Scalars['String'];
-  type: TagType;
 };
 
 export type TagDto = {
@@ -146,21 +184,18 @@ export type TagDto = {
   createAt?: Maybe<Scalars['DateTime']>;
   label: Scalars['String'];
   owner: Scalars['String'];
-  type: TagType;
   updateAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type TagEditInputDto = {
   _id: Scalars['String'];
   label?: Maybe<Scalars['String']>;
-  owner: Scalars['String'];
-  type: TagType;
 };
 
-export enum TagType {
-  System = 'system',
-  User = 'user'
-}
+export type TagListDto = {
+  __typename?: 'TagListDTO';
+  result: Array<TagDto>;
+};
 
 export type UserLoginInputDto = {
   email: Scalars['String'];
@@ -226,6 +261,77 @@ export type CreateAccountMutation = (
   & { createAccount: (
     { __typename?: 'UserResponseDTO' }
     & Pick<UserResponseDto, '_id' | 'displayName' | 'email' | 'username'>
+  ) }
+);
+
+export type GetBookmarkByTagsQueryVariables = Exact<{
+  opts: SearchFilterTag;
+}>;
+
+
+export type GetBookmarkByTagsQuery = (
+  { __typename?: 'Query' }
+  & { searchFilterText: (
+    { __typename?: 'SearchDTO' }
+    & { results: Array<(
+      { __typename?: 'BookmarkDTO' }
+      & Pick<BookmarkDto, '_id' | 'domain' | 'original' | 'owner' | 'tags' | 'note'>
+    )> }
+  ) }
+);
+
+export type GetTagsByOwnerQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetTagsByOwnerQuery = (
+  { __typename?: 'Query' }
+  & { listAllTag: (
+    { __typename?: 'TagListDTO' }
+    & { result: Array<(
+      { __typename?: 'TagDTO' }
+      & Pick<TagDto, '_id' | 'label' | 'createAt'>
+    )> }
+  ) }
+);
+
+export type EditBookmarkByIdMutationVariables = Exact<{
+  bookmark: BookmarkEditInputDto;
+}>;
+
+
+export type EditBookmarkByIdMutation = (
+  { __typename?: 'Mutation' }
+  & { editBookmark: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'createAt'>
+  ) }
+);
+
+export type GetRecentBookmarkQueryVariables = Exact<{
+  owner: Scalars['String'];
+}>;
+
+
+export type GetRecentBookmarkQuery = (
+  { __typename?: 'Query' }
+  & { getRecentBookmark: Array<(
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'createAt'>
+  )> }
+);
+
+export type AddBookmarkMutationVariables = Exact<{
+  bookmark: BookmarkCreateInputDto;
+}>;
+
+
+export type AddBookmarkMutation = (
+  { __typename?: 'Mutation' }
+  & { addBookmark: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id'>
   ) }
 );
 
@@ -348,6 +454,192 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const GetBookmarkByTagsDocument = gql`
+    query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBookmarkByTagsQuery__
+ *
+ * To run a query within a React component, call `useGetBookmarkByTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBookmarkByTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBookmarkByTagsQuery({
+ *   variables: {
+ *      opts: // value for 'opts'
+ *   },
+ * });
+ */
+export function useGetBookmarkByTagsQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+        return Apollo.useQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+      }
+export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+          return Apollo.useLazyQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+        }
+export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
+export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
+export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;
+export const GetTagsByOwnerDocument = gql`
+    query getTagsByOwner($userId: String!) {
+  listAllTag(owner: $userId) {
+    result {
+      _id
+      label
+      createAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTagsByOwnerQuery__
+ *
+ * To run a query within a React component, call `useGetTagsByOwnerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsByOwnerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsByOwnerQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetTagsByOwnerQuery(baseOptions: Apollo.QueryHookOptions<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>) {
+        return Apollo.useQuery<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>(GetTagsByOwnerDocument, baseOptions);
+      }
+export function useGetTagsByOwnerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>) {
+          return Apollo.useLazyQuery<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>(GetTagsByOwnerDocument, baseOptions);
+        }
+export type GetTagsByOwnerQueryHookResult = ReturnType<typeof useGetTagsByOwnerQuery>;
+export type GetTagsByOwnerLazyQueryHookResult = ReturnType<typeof useGetTagsByOwnerLazyQuery>;
+export type GetTagsByOwnerQueryResult = Apollo.QueryResult<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>;
+export const EditBookmarkByIdDocument = gql`
+    mutation editBookmarkById($bookmark: BookmarkEditInputDTO!) {
+  editBookmark(BookmarkEditInputDTO: $bookmark) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+    `;
+export type EditBookmarkByIdMutationFn = Apollo.MutationFunction<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>;
+
+/**
+ * __useEditBookmarkByIdMutation__
+ *
+ * To run a mutation, you first call `useEditBookmarkByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditBookmarkByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editBookmarkByIdMutation, { data, loading, error }] = useEditBookmarkByIdMutation({
+ *   variables: {
+ *      bookmark: // value for 'bookmark'
+ *   },
+ * });
+ */
+export function useEditBookmarkByIdMutation(baseOptions?: Apollo.MutationHookOptions<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>) {
+        return Apollo.useMutation<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>(EditBookmarkByIdDocument, baseOptions);
+      }
+export type EditBookmarkByIdMutationHookResult = ReturnType<typeof useEditBookmarkByIdMutation>;
+export type EditBookmarkByIdMutationResult = Apollo.MutationResult<EditBookmarkByIdMutation>;
+export type EditBookmarkByIdMutationOptions = Apollo.BaseMutationOptions<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>;
+export const GetRecentBookmarkDocument = gql`
+    query getRecentBookmark($owner: String!) {
+  getRecentBookmark(userId: $owner) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+    `;
+
+/**
+ * __useGetRecentBookmarkQuery__
+ *
+ * To run a query within a React component, call `useGetRecentBookmarkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecentBookmarkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecentBookmarkQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *   },
+ * });
+ */
+export function useGetRecentBookmarkQuery(baseOptions: Apollo.QueryHookOptions<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>) {
+        return Apollo.useQuery<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>(GetRecentBookmarkDocument, baseOptions);
+      }
+export function useGetRecentBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>) {
+          return Apollo.useLazyQuery<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>(GetRecentBookmarkDocument, baseOptions);
+        }
+export type GetRecentBookmarkQueryHookResult = ReturnType<typeof useGetRecentBookmarkQuery>;
+export type GetRecentBookmarkLazyQueryHookResult = ReturnType<typeof useGetRecentBookmarkLazyQuery>;
+export type GetRecentBookmarkQueryResult = Apollo.QueryResult<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>;
+export const AddBookmarkDocument = gql`
+    mutation addBookmark($bookmark: BookmarkCreateInputDTO!) {
+  addBookmark(BookmarkCreateInputDTO: $bookmark) {
+    _id
+  }
+}
+    `;
+export type AddBookmarkMutationFn = Apollo.MutationFunction<AddBookmarkMutation, AddBookmarkMutationVariables>;
+
+/**
+ * __useAddBookmarkMutation__
+ *
+ * To run a mutation, you first call `useAddBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBookmarkMutation, { data, loading, error }] = useAddBookmarkMutation({
+ *   variables: {
+ *      bookmark: // value for 'bookmark'
+ *   },
+ * });
+ */
+export function useAddBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<AddBookmarkMutation, AddBookmarkMutationVariables>) {
+        return Apollo.useMutation<AddBookmarkMutation, AddBookmarkMutationVariables>(AddBookmarkDocument, baseOptions);
+      }
+export type AddBookmarkMutationHookResult = ReturnType<typeof useAddBookmarkMutation>;
+export type AddBookmarkMutationResult = Apollo.MutationResult<AddBookmarkMutation>;
+export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<AddBookmarkMutation, AddBookmarkMutationVariables>;
 export const SearchDocument = gql`
     query search($word: SearchTextInputDTO!) {
   allTextSearchBookmark(SearchTextInputDTO: $word) {
