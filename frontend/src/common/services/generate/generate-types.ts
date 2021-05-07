@@ -229,6 +229,22 @@ export type CreateAccountMutation = (
   ) }
 );
 
+export type SearchQueryVariables = Exact<{
+  word: SearchTextInputDto;
+}>;
+
+
+export type SearchQuery = (
+  { __typename?: 'Query' }
+  & { allTextSearchBookmark: (
+    { __typename?: 'SearchDTO' }
+    & { results: Array<(
+      { __typename?: 'BookmarkDTO' }
+      & Pick<BookmarkDto, '_id' | 'createAt' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'updateAt'>
+    )> }
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -332,3 +348,45 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const SearchDocument = gql`
+    query search($word: SearchTextInputDTO!) {
+  allTextSearchBookmark(SearchTextInputDTO: $word) {
+    results {
+      _id
+      createAt
+      domain
+      note
+      original
+      owner
+      tags
+      updateAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      word: // value for 'word'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, baseOptions);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, baseOptions);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
