@@ -56,3 +56,15 @@ mutation editBookmarkById($bookmark: BookmarkEditInputDTO!) {
     createAt
   }
 }
+
+query getRecentBookmark($owner: String!) {
+  getRecentBookmark(userId: $owner) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}

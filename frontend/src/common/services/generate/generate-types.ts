@@ -309,6 +309,19 @@ export type EditBookmarkByIdMutation = (
   ) }
 );
 
+export type GetRecentBookmarkQueryVariables = Exact<{
+  owner: Scalars['String'];
+}>;
+
+
+export type GetRecentBookmarkQuery = (
+  { __typename?: 'Query' }
+  & { getRecentBookmark: Array<(
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'createAt'>
+  )> }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -527,3 +540,42 @@ export function useEditBookmarkByIdMutation(baseOptions?: Apollo.MutationHookOpt
 export type EditBookmarkByIdMutationHookResult = ReturnType<typeof useEditBookmarkByIdMutation>;
 export type EditBookmarkByIdMutationResult = Apollo.MutationResult<EditBookmarkByIdMutation>;
 export type EditBookmarkByIdMutationOptions = Apollo.BaseMutationOptions<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>;
+export const GetRecentBookmarkDocument = gql`
+    query getRecentBookmark($owner: String!) {
+  getRecentBookmark(userId: $owner) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+    `;
+
+/**
+ * __useGetRecentBookmarkQuery__
+ *
+ * To run a query within a React component, call `useGetRecentBookmarkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecentBookmarkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecentBookmarkQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *   },
+ * });
+ */
+export function useGetRecentBookmarkQuery(baseOptions: Apollo.QueryHookOptions<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>) {
+        return Apollo.useQuery<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>(GetRecentBookmarkDocument, baseOptions);
+      }
+export function useGetRecentBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>) {
+          return Apollo.useLazyQuery<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>(GetRecentBookmarkDocument, baseOptions);
+        }
+export type GetRecentBookmarkQueryHookResult = ReturnType<typeof useGetRecentBookmarkQuery>;
+export type GetRecentBookmarkLazyQueryHookResult = ReturnType<typeof useGetRecentBookmarkLazyQuery>;
+export type GetRecentBookmarkQueryResult = Apollo.QueryResult<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>;
