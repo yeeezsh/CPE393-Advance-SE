@@ -1,141 +1,69 @@
-import React, {useState} from 'react'
-import { Card, Modal, Button } from 'antd';
-// import Quicknote from '../Quicknote/QuickNote';
-// import Categories from '../Quicknote/Categories/Categories';
-import UploadImage from '../Upload-image/UploadImage';
-import Tags from '../Tags/index';
-import Form from 'antd/lib/form/Form';
+
+import { Button, Card, Input, Row, Tag } from "antd";
+import React, { useState } from "react";
+import Tags, { TagType } from "../Tags/index";
 
 const { Meta } = Card;
+const { TextArea } = Input;
 
-const styles  = {
-    card: {
-        height: "200px",
-        width: "300px",
-        margin: "15px",
-        padding: "3px",
-    },
-    showModal: {
-        height: "600px",
-        width: "440px",
-        padding: "5px",
-        alignContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-    },
-    image: {
-        height: "65%",
-        /* width: ; */
-        width: "100%",
-        margin: "15px",
-    },
-    text: {
-        height: "80px",
-        width: "300px",
-    },
-    divStyle: {
-        display: "flex",
-        alignItems: "center",
-        marginTop: "0.5rem",
-    },
-        inputField: {
-        height: "100px",
-        width: "400px",
-        padding: "10px",
-        border: "none",
-        fontFamily: "Arial",
-        fontSize: "20px",
-        outline: "none",
-      },
+export interface CardProps {
+  domain: string;
+  tags: TagType;
+  note: string;
 }
 
+const VisibleCard: React.FC<CardProps & { onClick: () => void }> = (props) => (
+  <div onClick={props.onClick}>
+    <Meta title={props.domain} description={props.note} />
+    <div style={{ height: "12px" }} />
 
-const Cards: React.FC = () => {
+    {/* tags */}
+    {props.tags.map((el) => (
+      <Tag key={el._id} style={{ minWidth: "3em", textAlign: "center" }}>
+        {el.label}
+      </Tag>
+    ))}
+  </div>
+);
 
-    const [title,setTitle] = useState<{
-        url: string;
-        tags: string[];
-      }>({
-        url: "URL from query",
-        tags: [],
-      });
-    const [visible, setVisible] = useState(false);
-    const [loading, setLoading] = useState(false);
+const ExpandCard: React.FC<
+  CardProps & { visible: boolean; onSave: () => void }
+> = (props) => {
+  return (
+    <div>
+      <Input value={props.domain} />
+      <div style={{ height: "12px" }} />
 
-    const showModal = () => {
-        setVisible(true);
-    };
-    const handleOk = () => {
-        // submit the data edited
-        // setLoading(true);
-            setVisible(false);
-            // setLoading(false);
-    };
-    const handleCancel = () => {
-        setVisible(false);
-    };
-    
-    
-    return (
-        <>
-        <div style={styles.card}>
-            <Card
-                hoverable
-                // style={{ width: 240 }}
-                onClick = {showModal}
-                cover={<img alt="example" src="https://wit279.files.wordpress.com/2012/10/nature-wallpaper-full-hd-1920_1080-0722.jpg" />}
-            >
-                <Meta title={title.url} description={title.tags} />
-            </Card>,
-        </div>
+      <TextArea rows={2} value={props.note} />
 
-        <Modal
-          visible={visible}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="submit" type="primary" loading={loading} onClick={handleOk=>{"data"}}>
-            Submit
-          </Button>,
-            <Button key="back" onClick={handleCancel}>
-              Cancel
-            </Button>,
-          ]}
-        >   
-            <div style={styles.showModal}>
-                {/* <div className= "image"> */}
-                <img style={styles.image} alt="example"  src="https://wit279.files.wordpress.com/2012/10/nature-wallpaper-full-hd-1920_1080-0722.jpg" />
-                {/* </div> */}
-                <Form>
-                <input
-                    style={styles.inputField}
-                    type="text"
-                    value={title.url}
-                    onChange={e => {
-                    setTitle({ ...title, url: e.target.value })
-                    }}
-                />
-                <div style={{ float: "left" }}>
-                <strong style={{marginLeft: "1rem" }}>Categories:</strong>
+      {/* tags */}
+      <Tags tags={props.tags} />
+      <div style={{ height: "4px" }} />
 
-                <div style={styles.divStyle}>
-                  
-                    <Tags />
-                </div>
-                <div style={styles.divStyle}>
-                    {/* <UploadImage /> */}
-                    {/* <Categories /> */}
-                    {/* <Tags /> */}
-                </div>
-                </div>
+      <Row justify="end">
+        <Button onClick={() => props.onSave()}>Save</Button>
+      </Row>
+    </div>
+  );
+};
 
-                </Form>
-            </div>
+const Cards: React.FC<CardProps> = (props) => {
+  const [expand, setExpand] = useState<boolean>(false);
 
-          
-        </Modal>
+  const onSave = () => {
+    setExpand(false);
+    console.log("on save", expand);
+  };
 
-        </>
+  const onClick = () => {
+    setExpand(() => true);
+  };
 
-    );
+  return (
+    <Card hoverable>
+      {!expand && <VisibleCard {...props} onClick={onClick} />}
+      {expand && <ExpandCard {...props} visible={expand} onSave={onSave} />}
+    </Card>
+  );
 };
 export default Cards;

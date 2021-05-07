@@ -5,9 +5,11 @@ import onEnter from "../../../../common/utils/onEnterKey";
 
 const { CheckableTag } = AntdTag;
 
-export type TagsProps = {};
+export interface TagsProps {
+  tags?: TagType;
+}
 
-type TagType = {
+export type TagType = {
   _id: string;
   label: string;
   checked: boolean;
@@ -20,7 +22,7 @@ const MOCK_TAGS: TagType = [
 ];
 
 const Tags: React.FC<TagsProps> = (props) => {
-  const [tags, setTags] = useState<TagType>(MOCK_TAGS);
+  const [tags, setTags] = useState<TagType>(props.tags || MOCK_TAGS);
   const [input, setInput] = useState<{
     visible: boolean;
     value: string;
@@ -28,8 +30,6 @@ const Tags: React.FC<TagsProps> = (props) => {
     visible: false,
     value: "",
   });
-
-
 
   const onNewtag = () => {
     setInput((i) => ({ ...i, visible: true }));
@@ -42,7 +42,6 @@ const Tags: React.FC<TagsProps> = (props) => {
         { _id: Math.random().toLocaleString(), label, checked: true },
       ]);
     setInput((i) => ({ ...i, visible: false }));
-
   };
 
   const onDelete = (id: string) => {
@@ -57,52 +56,47 @@ const Tags: React.FC<TagsProps> = (props) => {
 
   return (
     <>
-      {/* <div> */}
-
-      {/* <strong style={{ marginLeft: "1rem"}}>Categories:</strong> */}
-      {/* </div> */}
       <div>
-      {tags.map((el) => (
-        <CheckableTag
-          onClick={() => onSelect(el._id)}
-          checked={el.checked}
-          style={{ minWidth: 40, textAlign: "center" }}
-        >
-          {!el.checked && (
-            <>
-              <AntdTag>
+        {tags.map((el) => (
+          <CheckableTag
+            key={el._id}
+            onClick={() => onSelect(el._id)}
+            checked={el.checked}
+            style={{ minWidth: 40, textAlign: "center" }}
+          >
+            {!el.checked && (
+              <>
+                <AntdTag>
+                  {el.label}
+                  <CloseOutlined
+                    onClick={() => onDelete(el._id)}
+                    style={{ marginLeft: "2em", cursor: "pointer" }}
+                  />
+                </AntdTag>
+              </>
+            )}
+            {el.checked && (
+              <>
                 {el.label}
                 <CloseOutlined
                   onClick={() => onDelete(el._id)}
                   style={{ marginLeft: "2em", cursor: "pointer" }}
                 />
-              </AntdTag>
-            </>
-          )}
-          {el.checked && (
+              </>
+            )}
+          </CheckableTag>
+        ))}
+        <AntdTag onClick={onNewtag}>
+          {!input.visible && (
             <>
-              {el.label}
-              <CloseOutlined
-                onClick={() => onDelete(el._id)}
-                style={{ marginLeft: "2em", cursor: "pointer" }}
-              />
+              <PlusOutlined /> New Tag
             </>
-
           )}
-        </CheckableTag>
 
-      ))}
-      <AntdTag onClick={onNewtag}>
-        {!input.visible && (
-          <>
-            <PlusOutlined /> New Tag
-          </>
-        )}
-
-        {input.visible && (
-          <Input size="small" onKeyPress={onEnter(onFinishNewtag)} />
-        )}
-      </AntdTag>
+          {input.visible && (
+            <Input size="small" onKeyPress={onEnter(onFinishNewtag)} />
+          )}
+        </AntdTag>
       </div>
     </>
   );

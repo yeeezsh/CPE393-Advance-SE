@@ -38,7 +38,7 @@ describe("Quicknote/QuickNote", () => {
     ]);
 
     const onError = jest.fn();
-    shallow(<QuickNote onError={onError} />);
+    // shallow(<QuickNote onError={onError} />);
     expect(onError).toBeCalledWith(0);
   });
 });

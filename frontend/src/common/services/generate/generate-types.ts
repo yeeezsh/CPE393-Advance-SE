@@ -38,15 +38,17 @@ export type Query = {
 
 export type CreateQuickNoteDto = {
   url: Scalars['String'];
-  tags: Scalars['Array'];
+  // tags: Scalars['Array'];
 };
 
 export type QuickNoteDto = {
   __typename?: 'QuickNoteDto';
   _id: Scalars['String'];
   createAt?: Maybe<Scalars['DateTime']>;
-  url: Scalars['String'];
-  tags: Scalars['Array'];
+  domain: Scalars['String'];
+  note: Scalars['String'];
+
+  // tags: Scalars['Array'];
 };
 
 export type DemoQueryVariables = Exact<{ [key: string]: never; }>;
@@ -67,7 +69,9 @@ export type CreateQuickNoteMutation = (
   { __typename?: 'Mutation' }
   & { createQuickNote: (
     { __typename?: 'QuickNoteDto' }
-    & Pick<QuickNoteDto, '_id' | 'url' | 'tags' >
+    & Pick<QuickNoteDto, '_id' | 'domain' | 'note' >
+    // & Pick<QuickNoteDto, '_id' | 'domain' | 'note' | 'tags >
+
   ) }
 );
 
@@ -108,8 +112,9 @@ export const CreateQuickNoteDocument = gql`
     mutation create($quicknote: CreateQuickNoteDto!) {
       createQuickNote(CreateQuickNoteDto: $quicknote) {
     _id
-    url
-    tags
+    domain
+    note
+    // tags
   }
 }
   `;

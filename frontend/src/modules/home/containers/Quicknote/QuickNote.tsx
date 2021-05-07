@@ -25,7 +25,7 @@ const styles = {
     padding: "15px",
   },
   inputField: {
-    height: "100px",
+    height: "50px",
     width: "580px",
     padding: "10px",
     border: "none",
@@ -40,35 +40,45 @@ const styles = {
   },
 };
 
-const QuickNote: React.FC = () => {
-  const [
-    createQuickNoteMutation,
-    { data, loading, error },
-  ] = useCreateQuickNoteMutation({
-    errorPolicy: "all",
-  });
+const QuickNote: React.FC= () =>{
+// <{
+//   onError?: (status: number) => void;
+// }> = (props) => {
+  // const [
+  //   createQuickNoteMutation,
+  //   { data, loading, error },
+  // ] = useCreateQuickNoteMutation({
+  //   errorPolicy: "all",
+  // });
   const [stateInput, setStateInput] = useState<{
-    inputURL: string;
-    tags: [];
-  }>({
-    inputURL: "",
-    tags: [],
-  });
+    domain: string;
+    note: string;
 
-  // const onFinish = (values: any) => {
-  //   createQuickNoteMutation({
-  //     variables: {
-  //       quicknote: {
-  //         url: stateInput.inputURL,
-  //         tags: stateInput.tags,
-  //       },
-  //     },
-  //   });
+    // tags: [];
+  }>({
+    domain: "",
+    note: "",
+
+    // tags: [],
+  });
+  const [form] = Form.useForm();
+  const onFinish = (values: any) => {
+    console.log('value',values);
+    // createQuickNoteMutation({
+    //   variables: {
+    //     quicknote: {
+    //       domain: stateInput.domain,
+    //       note: stateInput.note,
+    //     },
+    //   },
+    };
 
   return (
     <>
       <Form
-      // onFinish={onEnter(onFinish)}
+      form={form}
+      name="quicknote"
+      onFinish={(onFinish)}
       >
         <div style={styles.inputCard}>
           <div style={styles.inputHeader}>
@@ -81,16 +91,33 @@ const QuickNote: React.FC = () => {
               </Button>
             </div>
           </div>
+          <Form.Item
+            name ="domain"
+          >
+          <input
+            style={styles.inputField}
+            type="text"
+            placeholder="Adding URLs"
+            value={stateInput.domain}
+            onChange={e => {
+              setStateInput({ ...stateInput, domain: e.target.value })
+            }}
+
+          />
+          </Form.Item>
+          <Form.Item
+            name ="note"
+          >
           <input
             style={styles.inputField}
             type="text"
             placeholder="Take a note"
-            value={stateInput.inputURL}
+            value={stateInput.note}
             onChange={e => {
-              setStateInput({ ...stateInput, inputURL: e.target.value })
+              setStateInput({ ...stateInput, note: e.target.value })
             }}
-
           />
+          </Form.Item>
           <div style={{ height: "100px", width: "578px", marginLeft: "3px" }}>
             <div style={{ width: "570px" }}>
 
@@ -102,16 +129,6 @@ const QuickNote: React.FC = () => {
 
                 </div>
               </div>
-              {/* <div style={{ float: "right" }}>
-              <div style={styles.divStyle}>
-                <UploadImage />
-              </div>
-              </div> */}
-              {/* <div style={{ float: "right", width: "150px" }}>
-                <div style={styles.divStyle}>
-                  <UploadImage />
-                </div>
-              </div> */}
             </div>
           </div>
 

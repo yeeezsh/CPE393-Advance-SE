@@ -2,13 +2,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Quicknote {
   _id: string;
-  url: string;
-  tags: string[];
-  imageUpload: string[];
+  domain: string;
+  note: string;
+
+//   tags: string[];
+//   imageUpload: string[];
 }
 
 const initialState = {
-  quicknote: { _id: "", url: "", tags: [], imageUpload: [] } as Quicknote,
+  quicknote: { _id: "", domain: "", note: ""} as Quicknote,
+//   quicknote: { _id: "", domain: "", note: "", tags: [] } as Quicknote,
+
 };
 
 const userSlice = createSlice({
