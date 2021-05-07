@@ -4,6 +4,7 @@ import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
 import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
+import { TagListDTO } from './dtos/tag-list.dto';
 import { TagDTO } from './dtos/tag.dto';
 import { TagService } from './tag.service';
 
@@ -46,8 +47,8 @@ export class TagsResolver {
     return this.tagService.setArchiveTag(tagSetArchiveInputDTO);
   }
 
-  @Query(() => [TagDTO])
-  async listAllTag(@Args('owner') owner: string): Promise<TagDTO[]> {
+  @Query(() => TagListDTO)
+  async listAllTag(@Args('owner') owner: string): Promise<TagListDTO> {
     return this.tagService.listAllTag(owner);
   }
 }

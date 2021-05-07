@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SystemTagType } from './@types/systemTag-type.type';
-import { TagType } from './@types/tag-type.type';
 import { BookmarkService } from './bookmark.service';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
@@ -10,6 +9,7 @@ import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
 import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
+import { TagListDTO } from './dtos/tag-list.dto';
 import { TagDTO } from './dtos/tag.dto';
 import { TagBadIdException } from './exceptions/tag-bad-id.exceptions';
 import { Tag, TagDocument } from './schema/tag.schema';
@@ -60,7 +60,6 @@ export class TagService {
       {
         ...update,
         updateAt: now,
-        type: TagType.user,
       },
       { new: true },
     );
@@ -105,8 +104,8 @@ export class TagService {
     return editedBookmark;
   }
 
-  async listAllTag(owner: string): Promise<TagDTO[]> {
-    const results = await this.tagModel.find({ owner });
-    return results as TagDTO[];
+  async listAllTag(owner: string): Promise<TagListDTO> {
+    const result = await this.tagModel.find({ owner });
+    return { result } as TagListDTO;
   }
 }

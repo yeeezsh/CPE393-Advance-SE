@@ -57,7 +57,7 @@ type Query {
   getABookmark(bookmarkId: String!): BookmarkDTO!
   getAccount(id: String!): UserResponseDTO!
   getRecentBookmark(limit: Float = 100, skip: Float = 0, userId: String!): [BookmarkDTO!]!
-  listAllTag(owner: String!): [TagDTO!]!
+  listAllTag(owner: String!): TagListDTO!
   searchFilterText(SearchFilterTag: SearchFilterTag!): SearchDTO!
   serverStatus: AppModel!
 }
@@ -85,7 +85,6 @@ input TagAddToBookmarkDTO {
 input TagCreateInputDTO {
   label: String!
   owner: String!
-  type: TagType!
 }
 
 type TagDTO {
@@ -93,20 +92,16 @@ type TagDTO {
   createAt: DateTime
   label: String!
   owner: String!
-  type: TagType!
   updateAt: DateTime
 }
 
 input TagEditInputDTO {
   _id: String!
   label: String
-  owner: String!
-  type: TagType!
 }
 
-enum TagType {
-  system
-  user
+type TagListDTO {
+  result: [TagDTO!]!
 }
 
 input UserLoginInputDTO {
