@@ -23,8 +23,6 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
   const [overlay, setOverlay] = useState<boolean>(props?.overlay || false);
 
   const ref = useRef(null);
-  // TODO: Fix bug that cannot click on logout button
-  // useOnClickOutside(ref, () => setOverlay(() => false));
 
   return (
     <>
