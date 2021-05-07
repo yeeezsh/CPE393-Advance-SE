@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
 import { SystemTagType } from './@types/systemTag-type.type';
-import { TagType } from './@types/tag-type.type';
 import { BookmarkService } from './bookmark.service';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
@@ -58,7 +57,6 @@ describe('Tags Service', () => {
     const MOCK_BOOKMARK_INPUT = {
       owner: Types.ObjectId().toHexString(),
       label: 'default',
-      type: TagType.user,
     } as TagCreateInputDTO;
 
     await service.createTag(MOCK_BOOKMARK_INPUT);
@@ -68,9 +66,7 @@ describe('Tags Service', () => {
 
   it('Should able to call findByIdAndUpdate when using editBookmark', async () => {
     const MOCK_BOOKMARK_INPUT = {
-      owner: Types.ObjectId().toHexString(),
       label: 'test lable',
-      type: TagType.user,
     } as TagEditInputDTO;
 
     await service.editTag(MOCK_BOOKMARK_INPUT);
