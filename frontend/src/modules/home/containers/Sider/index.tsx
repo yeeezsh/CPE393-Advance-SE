@@ -1,4 +1,8 @@
-import { BookOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  BookOutlined,
+  DeleteOutlined,
+  FieldTimeOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +28,13 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
       style={{ width: 100, marginTop: 50, background: "white" }}
     >
       <Menu theme="light" mode="inline">
+        <Menu.Item
+          key="recent"
+          icon={<FieldTimeOutlined />}
+          onClick={() => onSelect("delete")}
+        >
+          Recent
+        </Menu.Item>
         {data?.listAllTag.result.map((el) => (
           <Menu.Item
             key={el._id}
