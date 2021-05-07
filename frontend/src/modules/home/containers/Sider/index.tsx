@@ -31,7 +31,7 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
         <Menu.Item
           key="recent"
           icon={<FieldTimeOutlined />}
-          onClick={() => onSelect("delete")}
+          onClick={() => onSelect("recent")}
         >
           Recent
         </Menu.Item>
