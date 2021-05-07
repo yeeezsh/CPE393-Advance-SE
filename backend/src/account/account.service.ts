@@ -35,4 +35,10 @@ export class AccountService {
     if (!user) throw new UserForbiddenException();
     return user;
   }
+
+  async getAccount(id: string): Promise<UserDocument> {
+    const user = await this.userModel.findById(id);
+    if (!user) throw new UserForbiddenException();
+    return user;
+  }
 }

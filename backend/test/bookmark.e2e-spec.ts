@@ -95,4 +95,27 @@ describe('', () => {
         expect(data.editBookmark.note).toBe('test note');
       });
   });
+
+  it('should able to get one bookmark when getABookmark is called', () => {
+    const getABookmarkInput = gql`
+     query {
+        getABookmark(bookmarkId: ${`"${id}"`}
+        ){
+          _id
+          owner
+          domain
+            original
+        }
+      }
+    `;
+
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({ query: print(getABookmarkInput) })
+      .expect((res) => {
+        const data = res.body.data;
+        console.log(data);
+        expect(data.getABookmark._id).toBe(id);
+      });
+  });
 });

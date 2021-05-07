@@ -30,6 +30,13 @@ export class BookmarkService {
     return doc as BookmarkDTO[];
   }
 
+  async getABookmark(bookmarkId: string): Promise<BookmarkDTO> {
+    const doc = await this.urlModel.findById(bookmarkId);
+    if (!doc) throw new BookmarkBadIdException();
+
+    return doc as BookmarkDTO;
+  }
+
   async addBookmark(create: BookmarkCreateInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
     const { original, domain } = urlParse(create.original);
@@ -45,9 +52,7 @@ export class BookmarkService {
 
   async editBookmark(update: BookmarkEditInputDTO): Promise<BookmarkDTO> {
     const now = new Date();
-    const bookmark = (await this.urlModel.findById(
-      update._id,
-    )) as BookmarkDocument;
+    const bookmark = await this.urlModel.findById(update._id);
     if (!bookmark) throw new BookmarkBadIdException();
 
     const parse = update.original && urlParse(update.original);
