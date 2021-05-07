@@ -46,14 +46,21 @@ export type BookmarkEditInputDto = {
   tags?: Maybe<Array<Scalars['String']>>;
 };
 
+export type BookmarkGetInputDto = {
+  bookmarkId: Scalars['String'];
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
   addBookmark: BookmarkDto;
-  addTag: TagDto;
+  addTagToBookmark: BookmarkDto;
   createAccount: UserResponseDto;
+  createTag: TagDto;
+  deleteTag: BookmarkDto;
   editBookmark: BookmarkDto;
   editTag: TagDto;
+  setArchiveTag: BookmarkDto;
   userLogin: UserLoginResponseDto;
 };
 
@@ -63,13 +70,23 @@ export type MutationAddBookmarkArgs = {
 };
 
 
-export type MutationAddTagArgs = {
-  TagCreateInputDTO: TagCreateInputDto;
+export type MutationAddTagToBookmarkArgs = {
+  TagAddToBookmarkDTO: TagAddToBookmarkDto;
 };
 
 
 export type MutationCreateAccountArgs = {
   UserRegisterInputDTO: UserRegisterInputDto;
+};
+
+
+export type MutationCreateTagArgs = {
+  TagCreateInputDTO: TagCreateInputDto;
+};
+
+
+export type MutationDeleteTagArgs = {
+  BookmarkGetInputDTO: BookmarkGetInputDto;
 };
 
 
@@ -83,6 +100,11 @@ export type MutationEditTagArgs = {
 };
 
 
+export type MutationSetArchiveTagArgs = {
+  BookmarkGetInputDTO: BookmarkGetInputDto;
+};
+
+
 export type MutationUserLoginArgs = {
   UserLoginInputDTO: UserLoginInputDto;
 };
@@ -90,8 +112,10 @@ export type MutationUserLoginArgs = {
 export type Query = {
   __typename?: 'Query';
   allTextSearchBookmark: SearchDto;
+  getABookmark: BookmarkDto;
   getAccount: UserResponseDto;
   getRecentBookmark: Array<BookmarkDto>;
+  listAllTag: TagListDto;
   searchFilterText: SearchDto;
   serverStatus: AppModel;
 };
@@ -102,8 +126,13 @@ export type QueryAllTextSearchBookmarkArgs = {
 };
 
 
+export type QueryGetABookmarkArgs = {
+  bookmarkId: Scalars['String'];
+};
+
+
 export type QueryGetAccountArgs = {
-  id: Scalars['String'];
+  UserGetAccountInputDTO: Scalars['String'];
 };
 
 
@@ -111,6 +140,11 @@ export type QueryGetRecentBookmarkArgs = {
   limit?: Maybe<Scalars['Float']>;
   skip?: Maybe<Scalars['Float']>;
   userId: Scalars['String'];
+};
+
+
+export type QueryListAllTagArgs = {
+  owner: Scalars['String'];
 };
 
 
@@ -134,10 +168,14 @@ export type SearchTextInputDto = {
   text?: Maybe<Scalars['String']>;
 };
 
+export type TagAddToBookmarkDto = {
+  _id: Scalars['String'];
+  bookmarkId: Scalars['String'];
+};
+
 export type TagCreateInputDto = {
   label: Scalars['String'];
   owner: Scalars['String'];
-  type: TagType;
 };
 
 export type TagDto = {
@@ -146,21 +184,18 @@ export type TagDto = {
   createAt?: Maybe<Scalars['DateTime']>;
   label: Scalars['String'];
   owner: Scalars['String'];
-  type: TagType;
   updateAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type TagEditInputDto = {
   _id: Scalars['String'];
   label?: Maybe<Scalars['String']>;
-  owner: Scalars['String'];
-  type: TagType;
 };
 
-export enum TagType {
-  System = 'system',
-  User = 'user'
-}
+export type TagListDto = {
+  __typename?: 'TagListDTO';
+  result: Array<TagDto>;
+};
 
 export type UserLoginInputDto = {
   email: Scalars['String'];
@@ -226,6 +261,22 @@ export type CreateAccountMutation = (
   & { createAccount: (
     { __typename?: 'UserResponseDTO' }
     & Pick<UserResponseDto, '_id' | 'displayName' | 'email' | 'username'>
+  ) }
+);
+
+export type GetBookmarkByTagsQueryVariables = Exact<{
+  opts: SearchFilterTag;
+}>;
+
+
+export type GetBookmarkByTagsQuery = (
+  { __typename?: 'Query' }
+  & { searchFilterText: (
+    { __typename?: 'SearchDTO' }
+    & { results: Array<(
+      { __typename?: 'BookmarkDTO' }
+      & Pick<BookmarkDto, '_id' | 'domain' | 'original' | 'owner' | 'tags' | 'note'>
+    )> }
   ) }
 );
 
@@ -332,3 +383,43 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const GetBookmarkByTagsDocument = gql`
+    query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBookmarkByTagsQuery__
+ *
+ * To run a query within a React component, call `useGetBookmarkByTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBookmarkByTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBookmarkByTagsQuery({
+ *   variables: {
+ *      opts: // value for 'opts'
+ *   },
+ * });
+ */
+export function useGetBookmarkByTagsQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+        return Apollo.useQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+      }
+export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+          return Apollo.useLazyQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+        }
+export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
+export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
+export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;

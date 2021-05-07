@@ -21,3 +21,16 @@ mutation createAccount($user: UserRegisterInputDTO!) {
     username
   }
 }
+
+query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+    }
+  }
+}
