@@ -47,7 +47,7 @@ export class TagService {
       tags: distinct,
     } as BookmarkEditInputDTO;
 
-    return await this.bookmarkService.editBookmark(toUpdateBookmark);
+    return this.bookmarkService.editBookmark(toUpdateBookmark);
   }
 
   async editTag(update: TagEditInputDTO): Promise<TagDTO> {
@@ -78,7 +78,7 @@ export class TagService {
       tags: distinct,
     } as BookmarkEditInputDTO;
 
-    return await this.bookmarkService.editBookmark(toUpdate);
+    return this.bookmarkService.editBookmark(toUpdate);
   }
 
   async setArchiveTag(archive: BookmarkGetInputDTO): Promise<BookmarkDTO> {
@@ -96,7 +96,7 @@ export class TagService {
       tags: distinct,
     } as BookmarkEditInputDTO;
 
-    return await this.bookmarkService.editBookmark(toUpdate);
+    return this.bookmarkService.editBookmark(toUpdate);
   }
 
   async listAllTag(owner: string): Promise<TagListDTO> {
