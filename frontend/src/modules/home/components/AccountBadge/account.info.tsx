@@ -63,6 +63,7 @@ const AccountInfo: React.FC<AccountInfoProps> = (props) => {
   const history = useHistory();
   const onClick = () => {
     dispatch(deleteUser());
+    localStorage.removeItem("user");
     history.replace("/signin");
   };
 
