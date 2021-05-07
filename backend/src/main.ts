@@ -9,11 +9,16 @@ import { ConfigModule } from './config/config.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  const { port }: ConfigAppServiceType = app
+  const { port, origin }: ConfigAppServiceType = app
     .select(ConfigModule)
     .get(ConfigAppService)
     .get();
 
+  app.enableCors({
+    origin: [origin],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   app.use(cookieParser());
 
   await app.listen(port);
