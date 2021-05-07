@@ -16,7 +16,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../../common/store/user";
 import { FormFinishValue, FormLogin } from "./types";
-import { User } from "../../../../common/store/user/types";
 
 const { Title } = Typography;
 
@@ -46,7 +45,7 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
   useEffect(() => {
     if (!error && data) {
       const duplicated = localStorage.getItem("user");
-      localStorage.removeItem("user");
+      if (duplicated) localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(data.userLogin));
       dispatch(setUser(data.userLogin));
       history.push("/");
