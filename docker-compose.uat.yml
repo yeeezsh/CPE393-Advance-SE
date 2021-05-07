@@ -26,7 +26,7 @@ services:
       options:
         max-size: 50m
   backend:
-    container_name: backend
+    container_name: backend-393
     restart: always
     depends_on:
       - cpe393-advance-se-mongos
