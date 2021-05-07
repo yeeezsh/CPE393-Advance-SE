@@ -3,7 +3,7 @@ import { Button, Form } from "antd";
 import React, { useState } from "react";
 // import Categories from "./Categories/Categories";
 import { useCreateQuickNoteMutation } from "../../../../common/services/generate/generate-types";
-import UploadImage from "../../components/Upload-image/UploadImage";
+// import UploadImage from "../../components/Upload-image/UploadImage";
 import Tags from '../../components/Tags/index';
 import onEnter from "../../../../common/utils/onEnterKey";
 
@@ -47,16 +47,20 @@ const QuickNote: React.FC = () => {
   ] = useCreateQuickNoteMutation({
     errorPolicy: "all",
   });
-  const initialState = { inputURL: "" };
-  const [stateInput, setStateInput] = useState(initialState);
+  const [stateInput, setStateInput] = useState<{
+    inputURL: string;
+    tags: [];
+  }>({
+    inputURL: "",
+    tags: [],
+  });
 
   // const onFinish = (values: any) => {
   //   createQuickNoteMutation({
   //     variables: {
   //       quicknote: {
   //         url: stateInput.inputURL,
-  //         tags: ,
-  //         imageUpload: ,
+  //         tags: stateInput.tags,
   //       },
   //     },
   //   });
@@ -64,7 +68,7 @@ const QuickNote: React.FC = () => {
   return (
     <>
       <Form
-      onFinish={onEnter(onFinish)}
+      // onFinish={onEnter(onFinish)}
       >
         <div style={styles.inputCard}>
           <div style={styles.inputHeader}>
@@ -85,7 +89,7 @@ const QuickNote: React.FC = () => {
             onChange={e => {
               setStateInput({ ...stateInput, inputURL: e.target.value })
             }}
-           
+
           />
           <div style={{ height: "100px", width: "578px", marginLeft: "3px" }}>
             <div style={{ width: "570px" }}>
@@ -93,7 +97,9 @@ const QuickNote: React.FC = () => {
               <div style={{ float: "left", width: "400px" }}>
                 <strong style={{ marginLeft: "1rem" }}>Categories:</strong>
                 <div style={styles.divStyle}>
+                  {/* <Tags inputTag {...stateInput, => setStateInput(inputTags)}/> */}
                   <Tags />
+
                 </div>
               </div>
               {/* <div style={{ float: "right" }}>
@@ -101,11 +107,11 @@ const QuickNote: React.FC = () => {
                 <UploadImage />
               </div>
               </div> */}
-              <div style={{ float: "right", width: "150px" }}>
+              {/* <div style={{ float: "right", width: "150px" }}>
                 <div style={styles.divStyle}>
                   <UploadImage />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

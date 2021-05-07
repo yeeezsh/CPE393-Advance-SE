@@ -122,7 +122,7 @@ const Cards: React.FC = () => {
                     <Tags />
                 </div>
                 <div style={styles.divStyle}>
-                    <UploadImage />
+                    {/* <UploadImage /> */}
                     {/* <Categories /> */}
                     {/* <Tags /> */}
                 </div>

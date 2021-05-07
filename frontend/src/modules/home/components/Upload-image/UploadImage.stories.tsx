@@ -5,8 +5,14 @@ import { Story, Meta } from "@storybook/react";
 import UploadImage from "./UploadImage";
 
 export default {
-  title: "Home/Component/container/QuickNote/Upload-image",
+  title: "Module/Home/Components/Upload-image",
   component: UploadImage,
 } as Meta;
 
-const Template: Story = () => <UploadImage />;
+const UploadImageStory: Story = () => (
+<>
+<UploadImage />
+</>
+);
+
+export const Default = UploadImageStory.bind({});

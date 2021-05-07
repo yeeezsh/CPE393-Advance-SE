@@ -2,14 +2,10 @@
 import { shallow } from "enzyme";
 import QuickNote from "./QuickNote";
 
-jest.mock("react-redux", () => ({
-    useDispatch: () => jest.fn(),
-}));
-
 import * as generateTypes from "../../../../common/services/generate/generate-types";
 
 jest.mock("react-redux", () => ({
-  useDispatch: () => jest.fn(),
+    useDispatch: () => jest.fn(),
 }));
 
 describe("Quicknote/QuickNote", () => {

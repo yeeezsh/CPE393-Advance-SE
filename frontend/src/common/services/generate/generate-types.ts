@@ -39,7 +39,6 @@ export type Query = {
 export type CreateQuickNoteDto = {
   url: Scalars['String'];
   tags: Scalars['Array'];
-  imageUpload: Scalars['Array'];
 };
 
 export type QuickNoteDto = {
@@ -48,7 +47,6 @@ export type QuickNoteDto = {
   createAt?: Maybe<Scalars['DateTime']>;
   url: Scalars['String'];
   tags: Scalars['Array'];
-  imageUpload: Scalars['Array'];
 };
 
 export type DemoQueryVariables = Exact<{ [key: string]: never; }>;
@@ -69,7 +67,7 @@ export type CreateQuickNoteMutation = (
   { __typename?: 'Mutation' }
   & { createQuickNote: (
     { __typename?: 'QuickNoteDto' }
-    & Pick<QuickNoteDto, '_id' | 'url' | 'tags' | 'imageUpload'>
+    & Pick<QuickNoteDto, '_id' | 'url' | 'tags' >
   ) }
 );
 
@@ -112,7 +110,6 @@ export const CreateQuickNoteDocument = gql`
     _id
     url
     tags
-    imageUpload
   }
 }
   `;

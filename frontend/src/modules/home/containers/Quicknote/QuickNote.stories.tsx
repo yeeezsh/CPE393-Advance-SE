@@ -5,7 +5,7 @@ import QuickNote from "./QuickNote";
 
 
 export default {
-  title: "Module/Home/Components/QuickNote",
+  title: "Module/Home/Container/QuickNote",
   component: QuickNote,
 } as Meta;
 
