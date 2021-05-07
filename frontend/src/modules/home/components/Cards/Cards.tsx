@@ -1,8 +1,9 @@
-import { Button, Card, Input, Tag } from "antd";
+import { Button, Card, Input, Row, Tag } from "antd";
 import React, { useState } from "react";
 import Tags, { TagType } from "../Tags/index";
 
 const { Meta } = Card;
+const { TextArea } = Input;
 
 export interface CardProps {
   domain: string;
@@ -32,9 +33,15 @@ const ExpandCard: React.FC<
       <Input value={props.domain} />
       <div style={{ height: "12px" }} />
 
+      <TextArea rows={2} value={props.note} />
+
       {/* tags */}
       <Tags tags={props.tags} />
-      <Button onClick={() => props.onSave()}>Save</Button>
+      <div style={{ height: "4px" }} />
+
+      <Row justify="end">
+        <Button onClick={() => props.onSave()}>Save</Button>
+      </Row>
     </div>
   );
 };
