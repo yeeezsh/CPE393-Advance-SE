@@ -1,8 +1,8 @@
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { BookmarkService } from './bookmark.service';
+import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
-import { BookmarkDTO } from './dtos/bookmark.dto';
-import { BookmarkService } from './bookmark.service';
 
 @Resolver(() => BookmarkDTO)
 export class BookmarkResolver {
@@ -16,6 +16,14 @@ export class BookmarkResolver {
   ): Promise<BookmarkDTO[]> {
     return this.bookmarkService.getRecentBookmark(userId, skip, limit);
   }
+
+  @Query(() => BookmarkDTO)
+  async getABookmark(
+    @Args('bookmarkId') bookmarkId: string,
+  ): Promise<BookmarkDTO> {
+    return this.bookmarkService.getABookmark(bookmarkId);
+  }
+
   @Mutation(() => BookmarkDTO)
   async addBookmark(
     @Args(BookmarkCreateInputDTO.name)
