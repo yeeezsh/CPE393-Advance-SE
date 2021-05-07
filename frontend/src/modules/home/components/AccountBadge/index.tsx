@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import CharacterBadge from "../../../../common/components/CharacterBadge";
-import useOnClickOutside from "../../../../common/hooks/useOnClickOutside";
 import AccountInfo from "./account.info";
 import Overlay, { OverlayProps } from "./overlay";
 import { AccountBadgeStyle, UsernameBadgeStyle } from "./styled";
@@ -24,7 +23,6 @@ const AccountBadge: React.FC<AccountBadgeProps> = (props) => {
   const [overlay, setOverlay] = useState<boolean>(props?.overlay || false);
 
   const ref = useRef(null);
-  useOnClickOutside(ref, () => setOverlay(() => false));
 
   return (
     <>

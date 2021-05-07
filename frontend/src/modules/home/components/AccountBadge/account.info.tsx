@@ -1,8 +1,10 @@
 import { Divider } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "../../../../common/components/Button";
 import CharacterBadge from "../../../../common/components/CharacterBadge";
+import { deleteUser } from "../../../../common/store/user";
 
 const EmailStyle = styled.p`
   display: flex;
@@ -31,7 +33,7 @@ const ManageButton: React.FC = () => (
   </Button>
 );
 
-const LogoutButton: React.FC = () => (
+const LogoutButton: React.FC<{ onClick: () => void }> = (props) => (
   <Button
     style={{
       justifyContent: "center",
@@ -42,6 +44,7 @@ const LogoutButton: React.FC = () => (
     }}
     rounded
     type="primary"
+    onClick={props.onClick}
   >
     Logout
   </Button>
@@ -55,6 +58,11 @@ export type AccountInfoProps = {
 
 const AccountInfo: React.FC<AccountInfoProps> = (props) => {
   const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
+  const dispatch = useDispatch();
+  const onClick = () => {
+    console.log("click!!!");
+    dispatch(deleteUser());
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -66,7 +74,7 @@ const AccountInfo: React.FC<AccountInfoProps> = (props) => {
       <ManageButton />
       <Line />
       <div style={{ height: 102 }} />
-      <LogoutButton />
+      <LogoutButton {...props} onClick={onClick} />
     </div>
   );
 };
