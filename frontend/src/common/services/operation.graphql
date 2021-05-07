@@ -4,21 +4,6 @@ query demo {
   }
 }
 
-query search($word: SearchTextInputDTO!) {
-  allTextSearchBookmark(SearchTextInputDTO: $word) {
-    results {
-      _id
-      createAt
-      domain
-      note
-      original
-      owner
-      tags
-      updateAt
-    }
-  }
-}
-
 mutation userLogin($user: UserLoginInputDTO!) {
   userLogin(UserLoginInputDTO: $user) {
     _id
@@ -34,5 +19,20 @@ mutation createAccount($user: UserRegisterInputDTO!) {
     displayName
     email
     username
+  }
+}
+
+query search($word: SearchTextInputDTO!) {
+  allTextSearchBookmark(SearchTextInputDTO: $word) {
+    results {
+      _id
+      createAt
+      domain
+      note
+      original
+      owner
+      tags
+      updateAt
+    }
   }
 }
