@@ -1,6 +1,7 @@
 import { Divider } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../../common/components/Button";
 import CharacterBadge from "../../../../common/components/CharacterBadge";
@@ -59,9 +60,11 @@ export type AccountInfoProps = {
 const AccountInfo: React.FC<AccountInfoProps> = (props) => {
   const firstCharacter = props.username.slice(0, 1).toLocaleUpperCase();
   const dispatch = useDispatch();
+  const history = useHistory();
   const onClick = () => {
-    console.log("click!!!");
     dispatch(deleteUser());
+    localStorage.removeItem("user");
+    history.replace("/signin");
   };
 
   return (

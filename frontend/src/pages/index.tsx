@@ -1,18 +1,20 @@
 import React from "react";
 import HomePage from "../modules/home/pages/home";
-import { useSelector } from "react-redux";
-import { Store } from "../common/store";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { setUser } from "../common/store/user";
 
 export interface IndexPageProps {
   enableAuth?: boolean;
 }
 
 const IndexPage: React.FC<IndexPageProps> = ({ enableAuth = true }) => {
-  const isAuth = useSelector((state: Store) => state.user.isAuth);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const user = localStorage.getItem("user");
 
-  if (!isAuth && enableAuth) history.replace("/signin");
+  if (enableAuth && !user) history.replace("/signin");
+  user && dispatch(setUser(JSON.parse(user)));
 
   return <HomePage />;
 };

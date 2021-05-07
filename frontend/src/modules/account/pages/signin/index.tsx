@@ -7,7 +7,6 @@ import {
   Input,
   Row,
   Typography,
-  Checkbox,
   Alert,
 } from "antd";
 import React, { useEffect, useState } from "react";
@@ -44,6 +43,9 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
 
   useEffect(() => {
     if (!error && data) {
+      const duplicated = localStorage.getItem("user");
+      if (duplicated) localStorage.removeItem("user");
+      localStorage.setItem("user", JSON.stringify(data.userLogin));
       dispatch(setUser(data.userLogin));
       history.push("/");
     } else if (error) {
@@ -121,12 +123,6 @@ const AccountSignInPage: React.FC<{ onError?: (status: number) => void }> = (
                 type="password"
                 placeholder="Password"
               />
-            </Form.Item>
-
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
             </Form.Item>
 
             <Form.Item>
