@@ -22,7 +22,7 @@ const MOCK_TAGS: TagType = [
 ];
 
 const Tags: React.FC<TagsProps> = (props) => {
-  const [tags, setTags] = useState<TagType>(props.tags || MOCK_TAGS);
+  const [tagsData, setTagsData] = useState<TagType>(props.tags || MOCK_TAGS);
   const [input, setInput] = useState<{
     visible: boolean;
     value: string;
@@ -37,7 +37,7 @@ const Tags: React.FC<TagsProps> = (props) => {
 
   const onFinishNewtag = (label?: string) => {
     label &&
-      setTags((t) => [
+      setTagsData((t) => [
         ...t,
         { _id: Math.random().toLocaleString(), label, checked: true },
       ]);
@@ -45,11 +45,11 @@ const Tags: React.FC<TagsProps> = (props) => {
   };
 
   const onDelete = (id: string) => {
-    setTags((tags) => tags.filter((t) => t._id !== id));
+    setTagsData((tags) => tags.filter((t) => t._id !== id));
   };
 
   const onSelect = (id: string) => {
-    setTags((tags) =>
+    setTagsData((tags) =>
       tags.map((t) => (t._id === id ? { ...t, checked: !t.checked } : t))
     );
   };
@@ -57,7 +57,7 @@ const Tags: React.FC<TagsProps> = (props) => {
   return (
     <>
       <div>
-        {tags.map((el) => (
+        {tagsData.map((el) => (
           <CheckableTag
             key={el._id}
             onClick={() => onSelect(el._id)}
