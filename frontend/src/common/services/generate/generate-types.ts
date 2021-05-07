@@ -322,6 +322,19 @@ export type GetRecentBookmarkQuery = (
   )> }
 );
 
+export type AddBookmarkMutationVariables = Exact<{
+  bookmark: BookmarkCreateInputDto;
+}>;
+
+
+export type AddBookmarkMutation = (
+  { __typename?: 'Mutation' }
+  & { addBookmark: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id'>
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -579,3 +592,35 @@ export function useGetRecentBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetRecentBookmarkQueryHookResult = ReturnType<typeof useGetRecentBookmarkQuery>;
 export type GetRecentBookmarkLazyQueryHookResult = ReturnType<typeof useGetRecentBookmarkLazyQuery>;
 export type GetRecentBookmarkQueryResult = Apollo.QueryResult<GetRecentBookmarkQuery, GetRecentBookmarkQueryVariables>;
+export const AddBookmarkDocument = gql`
+    mutation addBookmark($bookmark: BookmarkCreateInputDTO!) {
+  addBookmark(BookmarkCreateInputDTO: $bookmark) {
+    _id
+  }
+}
+    `;
+export type AddBookmarkMutationFn = Apollo.MutationFunction<AddBookmarkMutation, AddBookmarkMutationVariables>;
+
+/**
+ * __useAddBookmarkMutation__
+ *
+ * To run a mutation, you first call `useAddBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBookmarkMutation, { data, loading, error }] = useAddBookmarkMutation({
+ *   variables: {
+ *      bookmark: // value for 'bookmark'
+ *   },
+ * });
+ */
+export function useAddBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<AddBookmarkMutation, AddBookmarkMutationVariables>) {
+        return Apollo.useMutation<AddBookmarkMutation, AddBookmarkMutationVariables>(AddBookmarkDocument, baseOptions);
+      }
+export type AddBookmarkMutationHookResult = ReturnType<typeof useAddBookmarkMutation>;
+export type AddBookmarkMutationResult = Apollo.MutationResult<AddBookmarkMutation>;
+export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<AddBookmarkMutation, AddBookmarkMutationVariables>;

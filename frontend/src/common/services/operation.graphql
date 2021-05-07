@@ -68,3 +68,9 @@ query getRecentBookmark($owner: String!) {
     createAt
   }
 }
+
+mutation addBookmark($bookmark: BookmarkCreateInputDTO!) {
+  addBookmark(BookmarkCreateInputDTO: $bookmark) {
+    _id
+  }
+}
