@@ -15,6 +15,7 @@ export type TagType = {
   checked: boolean;
 }[];
 
+// FIXME: listAllTag query instead
 const MOCK_TAGS: TagType = [
   { _id: "1", label: "t1", checked: false },
   { _id: "2", label: "t2", checked: true },
