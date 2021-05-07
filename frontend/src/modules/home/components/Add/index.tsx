@@ -12,6 +12,7 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
   const userId = useSelector((s: Store) => s.user.user._id);
   const [original, setOriginal] = useState("");
   const [note, setNote] = useState("");
+  const [error, setError] = useState<boolean>(false);
   const [addBookmarkMutation] = useAddBookmarkMutation({
     variables: {
       bookmark: {
@@ -24,26 +25,36 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
   });
 
   const onAdd = () => {
-    addBookmarkMutation({
-      variables: {
-        bookmark: {
-          owner: userId,
-          note,
-          original,
-          tags: [],
+    if (original.length === 0 || !original) {
+      setError(true);
+    } else {
+      setError(false);
+
+      addBookmarkMutation({
+        variables: {
+          bookmark: {
+            owner: userId,
+            note,
+            original,
+            tags: [],
+          },
         },
-      },
-    });
-    props.onAdd();
+      });
+      props.onAdd();
+    }
   };
 
   return (
     <div>
+      {error && <span style={{ color: "red" }}>Please fill</span>}
       <Input
         prefix={<LinkOutlined />}
         value={original}
         placeholder="http://"
-        onChange={(e) => setOriginal(() => e.target.value)}
+        onChange={(e) => {
+          setOriginal(() => e.target.value);
+          setError(false);
+        }}
       />
       <div style={{ height: "12px" }} />
 
