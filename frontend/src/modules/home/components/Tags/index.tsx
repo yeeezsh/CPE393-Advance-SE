@@ -59,6 +59,7 @@ const Tags: React.FC<TagsProps> = (props) => {
       <div>
         {tags.map((el) => (
           <CheckableTag
+            key={el._id}
             onClick={() => onSelect(el._id)}
             checked={el.checked}
             style={{ minWidth: 40, textAlign: "center" }}
