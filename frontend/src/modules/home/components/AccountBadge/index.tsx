@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import CharacterBadge from "../../../../common/components/CharacterBadge";
-import useOnClickOutside from "../../../../common/hooks/useOnClickOutside";
 import AccountInfo from "./account.info";
 import Overlay, { OverlayProps } from "./overlay";
 import { AccountBadgeStyle, UsernameBadgeStyle } from "./styled";
