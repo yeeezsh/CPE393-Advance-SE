@@ -1,11 +1,39 @@
 import { Card, Input, Modal, Tag } from "antd";
+import { LinkOutlined } from "@ant-design/icons";
+
 import React, { useState } from "react";
 import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
 
 const { Meta } = Card;
 const { TextArea } = Input;
-
+const styles = {
+  inputHeader: {
+    fontFamily: "Arial",
+    fontSize: "15px",
+    borderRadius: "2px 2px 0 0",
+    borderBottom: "1px solid #dddfe2 ",
+    padding: "15px",
+  },
+  inputField: {
+    height: "75px",
+    width: "470px",
+    padding: "10px",
+    border: "none",
+    fontFamily: "Arial",
+    fontSize: "15px",
+    outline: "none",
+  },
+  inputUrl: {
+    height: "40px",
+    width: "420px",
+    padding: "10px",
+    border: "none",
+    fontFamily: "Arial",
+    fontSize: "15px",
+    outline: "none",
+  },
+};
 export interface CardProps {
   domain: string;
   original: string;
@@ -60,15 +88,20 @@ const ExpandCard: React.FC<
       onCancel={() => onSave(false)}
       onOk={() => onSave(true)}
     >
-      <Input
+      <div style={styles.inputHeader}>
+      <LinkOutlined />
+
+      <input
+        style={styles.inputUrl}
         value={original}
         onChange={(e) => setOriginal(() => e.target.value)}
       />
       <span style={{ fontWeight: "lighter" }}>{props.original}</span>
+      </div>
       <div style={{ height: "12px" }} />
 
-      <TextArea
-        rows={2}
+      <textarea
+        style={styles.inputField}
         value={note}
         onChange={(e) => setNote(() => e.target.value)}
       />
