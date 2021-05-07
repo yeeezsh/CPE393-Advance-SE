@@ -12,7 +12,7 @@ services:
     container_name: frontend
     restart: always
     depends_on:
-      - cpe393-advance-se-be
+      - backend
     environment:
       NODE_ENV: "development"
       TZ: Asia/Bangkok
