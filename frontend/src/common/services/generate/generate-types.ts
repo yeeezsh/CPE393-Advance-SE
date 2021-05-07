@@ -20,16 +20,66 @@ export type AppModel = {
   status: Scalars['Int'];
 };
 
+export type BookmarkCreateInputDto = {
+  note: Scalars['String'];
+  original: Scalars['String'];
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type BookmarkDto = {
+  __typename?: 'BookmarkDTO';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  domain: Scalars['String'];
+  note: Scalars['String'];
+  original: Scalars['String'];
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  updateAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type BookmarkEditInputDto = {
+  _id: Scalars['String'];
+  note?: Maybe<Scalars['String']>;
+  original?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Scalars['String']>>;
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addBookmark: BookmarkDto;
+  addTag: TagDto;
   createAccount: UserResponseDto;
+  editBookmark: BookmarkDto;
+  editTag: TagDto;
   userLogin: UserLoginResponseDto;
+};
+
+
+export type MutationAddBookmarkArgs = {
+  BookmarkCreateInputDTO: BookmarkCreateInputDto;
+};
+
+
+export type MutationAddTagArgs = {
+  TagCreateInputDTO: TagCreateInputDto;
 };
 
 
 export type MutationCreateAccountArgs = {
   UserRegisterInputDTO: UserRegisterInputDto;
+};
+
+
+export type MutationEditBookmarkArgs = {
+  BookmarkEditInputDTO: BookmarkEditInputDto;
+};
+
+
+export type MutationEditTagArgs = {
+  TagEditInputDTO: TagEditInputDto;
 };
 
 
@@ -39,14 +89,78 @@ export type MutationUserLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  allTextSearchBookmark: SearchDto;
   getAccount: UserResponseDto;
+  getRecentBookmark: Array<BookmarkDto>;
+  searchFilterText: SearchDto;
   serverStatus: AppModel;
+};
+
+
+export type QueryAllTextSearchBookmarkArgs = {
+  SearchTextInputDTO: SearchTextInputDto;
 };
 
 
 export type QueryGetAccountArgs = {
   id: Scalars['String'];
 };
+
+
+export type QueryGetRecentBookmarkArgs = {
+  limit?: Maybe<Scalars['Float']>;
+  skip?: Maybe<Scalars['Float']>;
+  userId: Scalars['String'];
+};
+
+
+export type QuerySearchFilterTextArgs = {
+  SearchFilterTag: SearchFilterTag;
+};
+
+export type SearchDto = {
+  __typename?: 'SearchDTO';
+  results: Array<BookmarkDto>;
+};
+
+export type SearchFilterTag = {
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type SearchTextInputDto = {
+  owner: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']>>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TagCreateInputDto = {
+  label: Scalars['String'];
+  owner: Scalars['String'];
+  type: TagType;
+};
+
+export type TagDto = {
+  __typename?: 'TagDTO';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  label: Scalars['String'];
+  owner: Scalars['String'];
+  type: TagType;
+  updateAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TagEditInputDto = {
+  _id: Scalars['String'];
+  label?: Maybe<Scalars['String']>;
+  owner: Scalars['String'];
+  type: TagType;
+};
+
+export enum TagType {
+  System = 'system',
+  User = 'user'
+}
 
 export type UserLoginInputDto = {
   email: Scalars['String'];
