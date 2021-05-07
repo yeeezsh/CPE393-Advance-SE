@@ -5,7 +5,7 @@ import {
   BookmarkEditInputDto,
   useEditBookmarkByIdMutation,
   useGetBookmarkByTagsQuery,
-  useGetRecentBookmarkQuery,
+  useGetRecentBookmarkLazyQuery,
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import Add from "../../components/Add";
@@ -14,13 +14,6 @@ import Cards from "../../components/Cards/Cards";
 const BookmarkContainer: React.FC = () => {
   const userId = useSelector((s: Store) => s.user.user._id);
   const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
-
-  const fetchNewRecent = () =>
-    fetchMore({
-      variables: {
-        owner: userId,
-      },
-    });
 
   const { data, loading } = useGetBookmarkByTagsQuery({
     variables: {
@@ -31,10 +24,11 @@ const BookmarkContainer: React.FC = () => {
     },
   });
 
-  const { data: recent, fetchMore } = useGetRecentBookmarkQuery({
+  const [recentTrigger, { data: recent }] = useGetRecentBookmarkLazyQuery({
     variables: {
       owner: userId,
     },
+    fetchPolicy: "network-only",
   });
 
   const [editBookmarkByIdMutation] = useEditBookmarkByIdMutation({
@@ -57,13 +51,13 @@ const BookmarkContainer: React.FC = () => {
   };
 
   const onAdd = () => {
-    fetchNewRecent();
+    recentTrigger({ variables: { owner: userId } });
   };
 
   // on init
   useEffect(() => {
-    fetchNewRecent();
-  }, []);
+    recentTrigger({ variables: { owner: userId } });
+  }, [recentTrigger, userId]);
 
   return (
     <div style={{ paddingTop: "16px" }}>
