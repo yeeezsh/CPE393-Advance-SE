@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
-import { TagType } from '../@types/tag-type.type';
 
 export type TagDocument = Tag & Document;
 
@@ -20,13 +19,6 @@ export class Tag {
     unique: true,
   })
   label: string;
-
-  @Prop({
-    index: true,
-    enum: TagType,
-    required: true,
-  })
-  type: TagType;
 
   @Prop({ required: true, default: Date.now })
   createAt: Date;
