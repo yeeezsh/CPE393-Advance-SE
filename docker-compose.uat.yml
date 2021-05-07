@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
       target: nginx
       args:
-        REACT_APP_GRAPHQL_ENDPOINT: 128.199.183.221
+        REACT_APP_GRAPHQL_ENDPOINT: http://128.199.183.221
     logging:
       options:
         max-size: 50m
