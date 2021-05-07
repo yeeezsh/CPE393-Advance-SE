@@ -4,11 +4,15 @@ import { useSelector } from "react-redux";
 import { Store } from "../common/store";
 import { useHistory } from "react-router";
 
-const IndexPage: React.FC = () => {
+export interface IndexPageProps {
+  enableAuth?: boolean;
+}
+
+const IndexPage: React.FC<IndexPageProps> = ({ enableAuth = true }) => {
   const isAuth = useSelector((state: Store) => state.user.isAuth);
   const history = useHistory();
 
-  if (!isAuth) history.replace("/signin");
+  if (!isAuth && enableAuth) history.replace("/signin");
 
   return <HomePage />;
 };
