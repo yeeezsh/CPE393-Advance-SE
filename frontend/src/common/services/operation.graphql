@@ -74,3 +74,17 @@ mutation addBookmark($bookmark: BookmarkCreateInputDTO!) {
     _id
   }
 }
+query search($word: SearchTextInputDTO!) {
+  allTextSearchBookmark(SearchTextInputDTO: $word) {
+    results {
+      _id
+      createAt
+      domain
+      note
+      original
+      owner
+      tags
+      updateAt
+    }
+  }
+}

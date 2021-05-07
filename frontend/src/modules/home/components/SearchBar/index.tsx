@@ -1,11 +1,10 @@
-import { Input } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import onEnterKey from "../../../../common/utils/onEnterKey";
-
-export type SearchbarProps = {
-  onSearch?: (s: string) => void;
-};
+import { useDispatch, useSelector } from "react-redux";
+import { Store } from "../../../../common/store";
+import { instantSearchActions } from "../../../../common/store/instantSearch";
+import { useSearchQuery } from "../../../../common/services/generate/generate-types";
+import { Input } from "antd";
 
 const SearchIcon: React.FC = () => (
   <div style={{ marginRight: 8 }}>
@@ -13,10 +12,28 @@ const SearchIcon: React.FC = () => (
   </div>
 );
 
-export const Searchbar: React.FC<SearchbarProps> = (props) => {
-  const onSearch = (e?: string) => {
-    props.onSearch && e && props.onSearch(e);
-  };
+export const Searchbar: React.FC = () => {
+  const dispatch = useDispatch();
+  const onSearch = useSelector((s: Store) => s.instantSearch.word);
+  const { data, loading } = useSearchQuery({
+    variables: {
+      word: {
+        owner: "",
+        text: "",
+        tags: [],
+      },
+    },
+  });
+
+  useEffect(() => {
+    dispatch(
+      instantSearchActions.onData({
+        data: data?.allTextSearchBookmark.results || [],
+        loading,
+      })
+    );
+    // }
+  }, [onSearch, data, loading, dispatch]);
 
   return (
     <Input
@@ -24,7 +41,9 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
       placeholder="Search"
       size="large"
       prefix={<SearchIcon />}
-      onKeyPress={onEnterKey(onSearch)}
+      onChange={(e) =>
+        dispatch(instantSearchActions.onSearch({ word: e.target.value }))
+      }
     />
   );
 };
