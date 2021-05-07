@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User } from '../../account/schema/user.schema';
+import { SystemTagType } from '../@types/systemTag-type.type';
 import { Tag } from './tag.schema';
 
 export type BookmarkDocument = Bookmark & Document;
@@ -33,7 +34,7 @@ export class Bookmark {
     index: true,
     default: [],
   })
-  tags: string[];
+  tags: Array<string | SystemTagType>;
 
   @Prop({ required: true, default: Date.now })
   createAt: Date;

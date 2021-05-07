@@ -31,6 +31,10 @@ input BookmarkEditInputDTO {
   tags: [String!]
 }
 
+input BookmarkGetInputDTO {
+  bookmarkId: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -38,17 +42,22 @@ scalar DateTime
 
 type Mutation {
   addBookmark(BookmarkCreateInputDTO: BookmarkCreateInputDTO!): BookmarkDTO!
-  addTag(TagCreateInputDTO: TagCreateInputDTO!): TagDTO!
+  addTagToBookmark(TagAddToBookmarkDTO: TagAddToBookmarkDTO!): BookmarkDTO!
   createAccount(UserRegisterInputDTO: UserRegisterInputDTO!): UserResponseDTO!
+  createTag(TagCreateInputDTO: TagCreateInputDTO!): TagDTO!
+  deleteTag(BookmarkGetInputDTO: BookmarkGetInputDTO!): BookmarkDTO!
   editBookmark(BookmarkEditInputDTO: BookmarkEditInputDTO!): BookmarkDTO!
   editTag(TagEditInputDTO: TagEditInputDTO!): TagDTO!
+  setArchiveTag(BookmarkGetInputDTO: BookmarkGetInputDTO!): BookmarkDTO!
   userLogin(UserLoginInputDTO: UserLoginInputDTO!): UserLoginResponseDTO!
 }
 
 type Query {
   allTextSearchBookmark(SearchTextInputDTO: SearchTextInputDTO!): SearchDTO!
-  getAccount(id: String!): UserResponseDTO!
+  getABookmark(bookmarkId: String!): BookmarkDTO!
+  getAccount(UserGetAccountInputDTO: String!): UserResponseDTO!
   getRecentBookmark(limit: Float = 100, skip: Float = 0, userId: String!): [BookmarkDTO!]!
+  listAllTag(owner: String!): TagListDTO!
   searchFilterText(SearchFilterTag: SearchFilterTag!): SearchDTO!
   serverStatus: AppModel!
 }
@@ -68,10 +77,14 @@ input SearchTextInputDTO {
   text: String
 }
 
+input TagAddToBookmarkDTO {
+  _id: String!
+  bookmarkId: String!
+}
+
 input TagCreateInputDTO {
   label: String!
   owner: String!
-  type: TagType!
 }
 
 type TagDTO {
@@ -79,20 +92,16 @@ type TagDTO {
   createAt: DateTime
   label: String!
   owner: String!
-  type: TagType!
   updateAt: DateTime
 }
 
 input TagEditInputDTO {
   _id: String!
   label: String
-  owner: String!
-  type: TagType!
 }
 
-enum TagType {
-  system
-  user
+type TagListDTO {
+  result: [TagDTO!]!
 }
 
 input UserLoginInputDTO {
