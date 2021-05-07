@@ -34,3 +34,13 @@ query getBookmarkByTags($opts: SearchFilterTag!) {
     }
   }
 }
+
+query getTagsByOwner($userId: String!) {
+  listAllTag(owner: $userId) {
+    result {
+      _id
+      label
+      createAt
+    }
+  }
+}

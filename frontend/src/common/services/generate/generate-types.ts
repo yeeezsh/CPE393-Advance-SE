@@ -280,6 +280,22 @@ export type GetBookmarkByTagsQuery = (
   ) }
 );
 
+export type GetTagsByOwnerQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetTagsByOwnerQuery = (
+  { __typename?: 'Query' }
+  & { listAllTag: (
+    { __typename?: 'TagListDTO' }
+    & { result: Array<(
+      { __typename?: 'TagDTO' }
+      & Pick<TagDto, '_id' | 'label' | 'createAt'>
+    )> }
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -423,3 +439,40 @@ export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
 export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
 export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;
+export const GetTagsByOwnerDocument = gql`
+    query getTagsByOwner($userId: String!) {
+  listAllTag(owner: $userId) {
+    result {
+      _id
+      label
+      createAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTagsByOwnerQuery__
+ *
+ * To run a query within a React component, call `useGetTagsByOwnerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsByOwnerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsByOwnerQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetTagsByOwnerQuery(baseOptions: Apollo.QueryHookOptions<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>) {
+        return Apollo.useQuery<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>(GetTagsByOwnerDocument, baseOptions);
+      }
+export function useGetTagsByOwnerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>) {
+          return Apollo.useLazyQuery<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>(GetTagsByOwnerDocument, baseOptions);
+        }
+export type GetTagsByOwnerQueryHookResult = ReturnType<typeof useGetTagsByOwnerQuery>;
+export type GetTagsByOwnerLazyQueryHookResult = ReturnType<typeof useGetTagsByOwnerLazyQuery>;
+export type GetTagsByOwnerQueryResult = Apollo.QueryResult<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>;
