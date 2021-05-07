@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   BookmarkEditInputDto,
@@ -8,11 +8,19 @@ import {
   useGetRecentBookmarkQuery,
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
+import Add from "../../components/Add";
 import Cards from "../../components/Cards/Cards";
 
 const BookmarkContainer: React.FC = () => {
   const userId = useSelector((s: Store) => s.user.user._id);
   const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
+
+  const fetchNewRecent = () =>
+    fetchMore({
+      variables: {
+        owner: userId,
+      },
+    });
 
   const { data, loading } = useGetBookmarkByTagsQuery({
     variables: {
@@ -23,7 +31,7 @@ const BookmarkContainer: React.FC = () => {
     },
   });
 
-  const { data: recent } = useGetRecentBookmarkQuery({
+  const { data: recent, fetchMore } = useGetRecentBookmarkQuery({
     variables: {
       owner: userId,
     },
@@ -48,8 +56,23 @@ const BookmarkContainer: React.FC = () => {
     });
   };
 
+  const onAdd = () => {
+    fetchNewRecent();
+  };
+
+  // on init
+  useEffect(() => {
+    fetchNewRecent();
+  }, []);
+
   return (
     <div style={{ paddingTop: "16px" }}>
+      <Row justify="center">
+        <Col span={12} style={{ background: "grey" }}>
+          <Add onAdd={onAdd} />
+        </Col>
+      </Row>
+
       {loading && <p>loading ...</p>}
       <Row>
         {/* only recent */}
