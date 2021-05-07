@@ -14,11 +14,11 @@ async function bootstrap() {
     .get(ConfigAppService)
     .get();
 
-  app.enableCors({
-    origin: [origin],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-  });
+  // app.enableCors({
+  //   origin: [origin],
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  //   credentials: true,
+  // });
   app.use(cookieParser());
 
   await app.listen(port);
