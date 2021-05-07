@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { Bookmark, BookmarkDocument } from '../bookmark/schema/bookmark.schema';
+import { Tag, TagDocument } from '../bookmark/schema/tag.schema';
 import { SearchFilterTag } from './dtos/input/search-filter-tag.input';
 import { SearchInputDTO } from './dtos/input/search.input';
 import { SearchDTO } from './dtos/search.dto';
@@ -10,6 +11,7 @@ import { SearchDTO } from './dtos/search.dto';
 export class SearchService {
   constructor(
     @InjectModel(Bookmark.name) private bookmarkModel: Model<BookmarkDocument>,
+    @InjectModel(Tag.name) private tagModel: Model<TagDocument>,
   ) {}
 
   async allTextSearch(search: SearchInputDTO): Promise<SearchDTO> {
@@ -18,7 +20,7 @@ export class SearchService {
         $match: {
           // select from owner only
           // owner: Types.ObjectId(search.owner) || search.owner,
-          owner: Types.ObjectId(search.owner),
+          owner: search.owner,
         },
       },
       {
@@ -56,7 +58,7 @@ export class SearchService {
   }
 
   async filterByTag(search: SearchFilterTag): Promise<SearchDTO> {
-    const tags = search.tags.map((el) => Types.ObjectId(el));
+    const tags = search.tags;
     const results = await this.bookmarkModel.aggregate([
       {
         $match: {
