@@ -36,11 +36,20 @@ const ExpandCard: React.FC<
   const [note, setNote] = useState(props.note);
 
   const onSave = (s: boolean) => {
+    //   save with new
     s &&
       props.onSave({
         _id: props._id,
         original: original,
         tags: [],
+      });
+
+    //   save the same
+    !s &&
+      props.onSave({
+        _id: props._id,
+        original: props.original,
+        note: props.note,
       });
   };
 
