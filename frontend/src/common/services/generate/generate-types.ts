@@ -296,6 +296,19 @@ export type GetTagsByOwnerQuery = (
   ) }
 );
 
+export type EditBookmarkByIdMutationVariables = Exact<{
+  bookmark: BookmarkEditInputDto;
+}>;
+
+
+export type EditBookmarkByIdMutation = (
+  { __typename?: 'Mutation' }
+  & { editBookmark: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'createAt'>
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -476,3 +489,41 @@ export function useGetTagsByOwnerLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetTagsByOwnerQueryHookResult = ReturnType<typeof useGetTagsByOwnerQuery>;
 export type GetTagsByOwnerLazyQueryHookResult = ReturnType<typeof useGetTagsByOwnerLazyQuery>;
 export type GetTagsByOwnerQueryResult = Apollo.QueryResult<GetTagsByOwnerQuery, GetTagsByOwnerQueryVariables>;
+export const EditBookmarkByIdDocument = gql`
+    mutation editBookmarkById($bookmark: BookmarkEditInputDTO!) {
+  editBookmark(BookmarkEditInputDTO: $bookmark) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+    `;
+export type EditBookmarkByIdMutationFn = Apollo.MutationFunction<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>;
+
+/**
+ * __useEditBookmarkByIdMutation__
+ *
+ * To run a mutation, you first call `useEditBookmarkByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditBookmarkByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editBookmarkByIdMutation, { data, loading, error }] = useEditBookmarkByIdMutation({
+ *   variables: {
+ *      bookmark: // value for 'bookmark'
+ *   },
+ * });
+ */
+export function useEditBookmarkByIdMutation(baseOptions?: Apollo.MutationHookOptions<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>) {
+        return Apollo.useMutation<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>(EditBookmarkByIdDocument, baseOptions);
+      }
+export type EditBookmarkByIdMutationHookResult = ReturnType<typeof useEditBookmarkByIdMutation>;
+export type EditBookmarkByIdMutationResult = Apollo.MutationResult<EditBookmarkByIdMutation>;
+export type EditBookmarkByIdMutationOptions = Apollo.BaseMutationOptions<EditBookmarkByIdMutation, EditBookmarkByIdMutationVariables>;

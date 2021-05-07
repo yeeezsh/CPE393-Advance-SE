@@ -44,3 +44,15 @@ query getTagsByOwner($userId: String!) {
     }
   }
 }
+
+mutation editBookmarkById($bookmark: BookmarkEditInputDTO!) {
+  editBookmark(BookmarkEditInputDTO: $bookmark) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
