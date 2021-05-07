@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tag, TagSchema } from './schema/tag.schema';
 import { TagService } from './tag.service';
-import { TagsResolver } from './tags.resolve';
+import { TagsResolver } from './tags.resolver';
 import { BookmarkResolver } from './bookmark.resolver';
 import { BookmarkService } from './bookmark.service';
 import { Bookmark, BookmarkSchema } from './schema/bookmark.schema';
