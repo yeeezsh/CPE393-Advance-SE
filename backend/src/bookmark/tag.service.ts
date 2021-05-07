@@ -104,4 +104,9 @@ export class TagService {
     const editedBookmark = await this.bookmarkService.editBookmark(toUpdate);
     return editedBookmark;
   }
+
+  async listAllTag(owner: string): Promise<TagDTO[]> {
+    const results = await this.tagModel.find({ owner });
+    return results as TagDTO[];
+  }
 }
