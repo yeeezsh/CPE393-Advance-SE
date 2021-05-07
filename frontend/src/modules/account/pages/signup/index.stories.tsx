@@ -1,8 +1,10 @@
 import { ApolloProvider } from "@apollo/client/react/context/ApolloProvider";
 import { Meta, Story } from "@storybook/react";
 import React from "react";
+import { Provider } from "react-redux";
 import AccountSignUpPage from ".";
 import { apolloClient } from "../../../../common/services/apollo.client";
+import { store } from "../../../../common/store";
 import SignUpPage from "../../../../pages/signUpPage";
 
 export default {
@@ -12,9 +14,11 @@ export default {
 
 const SignUpPageStory: Story = () => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <SignUpPage />
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
+        <SignUpPage />
+      </ApolloProvider>
+    </Provider>
   );
 };
 
