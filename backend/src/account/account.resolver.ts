@@ -22,12 +22,8 @@ export class AccountResolver {
 
   @UseGuards(JwtAuthGuard)
   @Query(() => UserResponseDTO)
-  async getAccount(@Args('id') userId: string) {
-    return {
-      _id: '1',
-      displayName: 'k',
-      email: '1',
-      username: '1',
-    } as UserResponseDTO;
+  async getAccount(@Args('UserGetAccountInputDTO') id: string) {
+    const user = await this.accountService.getAccount(id);
+    return user as UserResponseDTO;
   }
 }
