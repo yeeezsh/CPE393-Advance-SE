@@ -22,6 +22,58 @@ mutation createAccount($user: UserRegisterInputDTO!) {
   }
 }
 
+query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+    }
+  }
+}
+
+query getTagsByOwner($userId: String!) {
+  listAllTag(owner: $userId) {
+    result {
+      _id
+      label
+      createAt
+    }
+  }
+}
+
+mutation editBookmarkById($bookmark: BookmarkEditInputDTO!) {
+  editBookmark(BookmarkEditInputDTO: $bookmark) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+
+query getRecentBookmark($owner: String!) {
+  getRecentBookmark(userId: $owner) {
+    _id
+    domain
+    note
+    original
+    owner
+    tags
+    createAt
+  }
+}
+
+mutation addBookmark($bookmark: BookmarkCreateInputDTO!) {
+  addBookmark(BookmarkCreateInputDTO: $bookmark) {
+    _id
+  }
+}
 query search($word: SearchTextInputDTO!) {
   allTextSearchBookmark(SearchTextInputDTO: $word) {
     results {

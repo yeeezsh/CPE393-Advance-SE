@@ -1,16 +1,21 @@
 export default (
-  original: string,
+  original?: string,
 ): {
-  domain: string | null;
+  domain: string;
   original: string;
 } => {
-  let domain = null;
+  if (!original)
+    return {
+      domain: '',
+      original: '',
+    };
+  let domain = undefined;
   const domainPattern = /^.*(?:(?:http(?:|s):\/\/|(?:www\.)))(.*(?:\/)|(?:.*))/;
   const domainMatch = original.match(domainPattern);
   if (domainMatch) [, domain] = domainMatch;
 
   return {
-    domain,
+    domain: domain || original,
     original,
   };
 };

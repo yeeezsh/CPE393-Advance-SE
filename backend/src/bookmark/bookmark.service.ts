@@ -55,8 +55,8 @@ export class BookmarkService {
     const bookmark = await this.urlModel.findById(update._id);
     if (!bookmark) throw new BookmarkBadIdException();
 
-    const parse = update.original && urlParse(update.original);
-    bookmark.domain = (parse && parse?.domain) || bookmark.domain;
+    const parse = urlParse(update.original);
+    bookmark.domain = parse?.domain || bookmark.domain;
     bookmark.original = update.original || bookmark.original;
     bookmark.tags = update.tags || bookmark.tags;
     bookmark.note = update.note || bookmark.note;
