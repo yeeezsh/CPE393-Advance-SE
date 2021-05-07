@@ -43,8 +43,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: dev
-    ports:
-      - "5000:3000"
     volumes:
       - "./backend/src:/src/"
       - "./backend/schema.gql:/schema.gql"
