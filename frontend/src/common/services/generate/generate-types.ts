@@ -20,16 +20,66 @@ export type AppModel = {
   status: Scalars['Int'];
 };
 
+export type BookmarkCreateInputDto = {
+  note: Scalars['String'];
+  original: Scalars['String'];
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type BookmarkDto = {
+  __typename?: 'BookmarkDTO';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  domain: Scalars['String'];
+  note: Scalars['String'];
+  original: Scalars['String'];
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  updateAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type BookmarkEditInputDto = {
+  _id: Scalars['String'];
+  note?: Maybe<Scalars['String']>;
+  original?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Scalars['String']>>;
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addBookmark: BookmarkDto;
+  addTag: TagDto;
   createAccount: UserResponseDto;
+  editBookmark: BookmarkDto;
+  editTag: TagDto;
   userLogin: UserLoginResponseDto;
+};
+
+
+export type MutationAddBookmarkArgs = {
+  BookmarkCreateInputDTO: BookmarkCreateInputDto;
+};
+
+
+export type MutationAddTagArgs = {
+  TagCreateInputDTO: TagCreateInputDto;
 };
 
 
 export type MutationCreateAccountArgs = {
   UserRegisterInputDTO: UserRegisterInputDto;
+};
+
+
+export type MutationEditBookmarkArgs = {
+  BookmarkEditInputDTO: BookmarkEditInputDto;
+};
+
+
+export type MutationEditTagArgs = {
+  TagEditInputDTO: TagEditInputDto;
 };
 
 
@@ -39,14 +89,78 @@ export type MutationUserLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  allTextSearchBookmark: SearchDto;
   getAccount: UserResponseDto;
+  getRecentBookmark: Array<BookmarkDto>;
+  searchFilterText: SearchDto;
   serverStatus: AppModel;
+};
+
+
+export type QueryAllTextSearchBookmarkArgs = {
+  SearchTextInputDTO: SearchTextInputDto;
 };
 
 
 export type QueryGetAccountArgs = {
   id: Scalars['String'];
 };
+
+
+export type QueryGetRecentBookmarkArgs = {
+  limit?: Maybe<Scalars['Float']>;
+  skip?: Maybe<Scalars['Float']>;
+  userId: Scalars['String'];
+};
+
+
+export type QuerySearchFilterTextArgs = {
+  SearchFilterTag: SearchFilterTag;
+};
+
+export type SearchDto = {
+  __typename?: 'SearchDTO';
+  results: Array<BookmarkDto>;
+};
+
+export type SearchFilterTag = {
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type SearchTextInputDto = {
+  owner: Scalars['String'];
+  tags?: Maybe<Array<Scalars['String']>>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TagCreateInputDto = {
+  label: Scalars['String'];
+  owner: Scalars['String'];
+  type: TagType;
+};
+
+export type TagDto = {
+  __typename?: 'TagDTO';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  label: Scalars['String'];
+  owner: Scalars['String'];
+  type: TagType;
+  updateAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TagEditInputDto = {
+  _id: Scalars['String'];
+  label?: Maybe<Scalars['String']>;
+  owner: Scalars['String'];
+  type: TagType;
+};
+
+export enum TagType {
+  System = 'system',
+  User = 'user'
+}
 
 export type UserLoginInputDto = {
   email: Scalars['String'];
@@ -86,6 +200,22 @@ export type DemoQuery = (
   & { serverStatus: (
     { __typename?: 'AppModel' }
     & Pick<AppModel, 'status'>
+  ) }
+);
+
+export type SearchQueryVariables = Exact<{
+  word: SearchTextInputDto;
+}>;
+
+
+export type SearchQuery = (
+  { __typename?: 'Query' }
+  & { allTextSearchBookmark: (
+    { __typename?: 'SearchDTO' }
+    & { results: Array<(
+      { __typename?: 'BookmarkDTO' }
+      & Pick<BookmarkDto, '_id' | 'createAt' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'updateAt'>
+    )> }
   ) }
 );
 
@@ -148,6 +278,48 @@ export function useDemoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DemoQ
 export type DemoQueryHookResult = ReturnType<typeof useDemoQuery>;
 export type DemoLazyQueryHookResult = ReturnType<typeof useDemoLazyQuery>;
 export type DemoQueryResult = Apollo.QueryResult<DemoQuery, DemoQueryVariables>;
+export const SearchDocument = gql`
+    query search($word: SearchTextInputDTO!) {
+  allTextSearchBookmark(SearchTextInputDTO: $word) {
+    results {
+      _id
+      createAt
+      domain
+      note
+      original
+      owner
+      tags
+      updateAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      word: // value for 'word'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, baseOptions);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, baseOptions);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
 export const UserLoginDocument = gql`
     mutation userLogin($user: UserLoginInputDTO!) {
   userLogin(UserLoginInputDTO: $user) {
