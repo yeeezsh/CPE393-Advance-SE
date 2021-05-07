@@ -1,5 +1,6 @@
-import { Button, Card, Input, Row, Tag } from "antd";
+import { Card, Input, Modal, Tag } from "antd";
 import React, { useState } from "react";
+import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
 
 const { Meta } = Card;
@@ -7,8 +8,11 @@ const { TextArea } = Input;
 
 export interface CardProps {
   domain: string;
-  tags: TagType;
+  original: string;
   note: string;
+  _id: string;
+  tags: TagType;
+  onEdit?: (data: BookmarkEditInputDto) => void;
 }
 
 const VisibleCard: React.FC<CardProps & { onClick: () => void }> = (props) => (
@@ -26,32 +30,53 @@ const VisibleCard: React.FC<CardProps & { onClick: () => void }> = (props) => (
 );
 
 const ExpandCard: React.FC<
-  CardProps & { visible: boolean; onSave: () => void }
+  CardProps & { visible: boolean; onSave: (save: BookmarkEditInputDto) => void }
 > = (props) => {
+  const [original, setOriginal] = useState(props.domain);
+  const [note, setNote] = useState(props.note);
+
+  const onSave = (s: boolean) => {
+    s &&
+      props.onSave({
+        _id: props._id,
+        original: original,
+        tags: [],
+      });
+  };
+
   return (
-    <div>
-      <Input value={props.domain} />
+    <Modal
+      closeIcon={<div />}
+      visible={props.visible}
+      onCancel={() => onSave(false)}
+      onOk={() => onSave(true)}
+    >
+      <Input
+        value={original}
+        onChange={(e) => setOriginal(() => e.target.value)}
+      />
+      <span style={{ fontWeight: "lighter" }}>{props.original}</span>
       <div style={{ height: "12px" }} />
 
-      <TextArea rows={2} value={props.note} />
+      <TextArea
+        rows={2}
+        value={note}
+        onChange={(e) => setNote(() => e.target.value)}
+      />
 
       {/* tags */}
-      <Tags tags={props.tags} />
       <div style={{ height: "4px" }} />
-
-      <Row justify="end">
-        <Button onClick={() => props.onSave()}>Save</Button>
-      </Row>
-    </div>
+      <Tags tags={props.tags} />
+    </Modal>
   );
 };
 
 const Cards: React.FC<CardProps> = (props) => {
   const [expand, setExpand] = useState<boolean>(false);
 
-  const onSave = () => {
+  const onEdit = (data: BookmarkEditInputDto) => {
     setExpand(false);
-    console.log("on save", expand);
+    props.onEdit && props.onEdit(data);
   };
 
   const onClick = () => {
@@ -61,7 +86,7 @@ const Cards: React.FC<CardProps> = (props) => {
   return (
     <Card hoverable>
       {!expand && <VisibleCard {...props} onClick={onClick} />}
-      {expand && <ExpandCard {...props} visible={expand} onSave={onSave} />}
+      {expand && <ExpandCard {...props} visible={expand} onSave={onEdit} />}
     </Card>
   );
 };

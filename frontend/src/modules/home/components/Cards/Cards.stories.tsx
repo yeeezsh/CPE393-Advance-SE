@@ -23,6 +23,7 @@ export const Default = CardsStory.bind({});
 Default.args = {
   domain: "google.com",
   tags: MOCK_TAGS,
+  original: "https://google.com",
   note:
     "test very very very very very very very very very very very very very very very very very long note",
 } as CardProps;
