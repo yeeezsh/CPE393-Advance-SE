@@ -8,6 +8,7 @@ import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { ConfigAppService } from './config/config.app.service';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { SearchModule } from './search/search.module';
@@ -19,12 +20,16 @@ import { SearchModule } from './search/search.module';
       imports: [ConfigModule],
       useClass: ConfigDatabaseService,
     }),
-    GraphQLModule.forRoot({
-      useGlobalPrefix: true,
-      autoSchemaFile: join(process.cwd(), 'schema.gql'),
-      sortSchema: true,
-      cors: { origin: true, credentials: true },
-      context: ({ req }) => ({ ...req }),
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigAppService],
+      useFactory: (config: ConfigAppService) => ({
+        useGlobalPrefix: true,
+        autoSchemaFile: join(process.cwd(), 'schema.gql'),
+        sortSchema: true,
+        cors: { origin: config.get().origin, credentials: true },
+        context: ({ req }) => ({ ...req }),
+      }),
     }),
     AccountModule,
     AuthenticationModule,

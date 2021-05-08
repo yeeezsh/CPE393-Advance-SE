@@ -27,7 +27,7 @@ services:
     environment:
       NODE_ENV: "development"
       TZ: Asia/Bangkok
-      ORIGIN: http(|s):\/\/localhost:3000
+      ORIGIN: "*"
       DATABASE_CONNECTION: "mongodb://cpe393-advance-se-mongos/online-url"
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: CPE393@OnlineURL.MongoDB
