@@ -21,7 +21,8 @@ import { SearchModule } from './search/search.module';
       useClass: ConfigDatabaseService,
     }),
     GraphQLModule.forRootAsync({
-      inject: [ConfigModule],
+      imports: [ConfigModule],
+      inject: [ConfigAppService],
       useFactory: (config: ConfigAppService) => ({
         useGlobalPrefix: true,
         autoSchemaFile: join(process.cwd(), 'schema.gql'),
