@@ -1,29 +1,42 @@
-import React, { useState } from "react";
-import { Input, Tag as AntdTag } from "antd";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
+import { Input, message, Tag as AntdTag } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useCreateTagMutation,
+  useGetTagsByOwnerLazyQuery,
+} from "../../../../common/services/generate/generate-types";
+import { Store } from "../../../../common/store";
+import { TagAction } from "../../../../common/store/tags";
 import onEnter from "../../../../common/utils/onEnterKey";
 
 const { CheckableTag } = AntdTag;
 
 export interface TagsProps {
   tags?: TagType;
+  selected?: string[];
+  onAddNewTag?: () => void;
 }
 
 export type TagType = {
   _id: string;
   label: string;
   checked: boolean;
+  createAt: Date;
 }[];
 
-// FIXME: listAllTag query instead
-export const MOCK_TAGS: TagType = [
-  { _id: "1", label: "t1", checked: false },
-  { _id: "2", label: "t2", checked: true },
-  { _id: "3", label: "t3", checked: false },
-];
-
 const Tags: React.FC<TagsProps> = (props) => {
-  const [tagsData, setTagsData] = useState<TagType>(props.tags || MOCK_TAGS);
+  const dispatch = useDispatch();
+  const userId = useSelector((s: Store) => s.user.user._id);
+  const [
+    dataTagTrigger,
+    { data: dataTags, loading },
+  ] = useGetTagsByOwnerLazyQuery({
+    variables: { userId },
+    fetchPolicy: "network-only",
+  });
+  const tagsStore = useSelector((s: Store) => s.tags.tags);
+
   const [input, setInput] = useState<{
     visible: boolean;
     value: string;
@@ -32,40 +45,65 @@ const Tags: React.FC<TagsProps> = (props) => {
     value: "",
   });
 
+  const [tagCreateTag, { error }] = useCreateTagMutation({
+    variables: {
+      tag: {
+        owner: userId,
+        label: "",
+      },
+    },
+  });
+
+  // init data
+  useEffect(() => {
+    dataTagTrigger({ variables: { userId } });
+  }, [dataTagTrigger, userId]);
+  useEffect(() => {
+    dataTags?.listAllTag.result &&
+      dispatch(TagAction.updateTag({ data: dataTags?.listAllTag.result }));
+  }, [dataTagTrigger, dataTags?.listAllTag.result, dispatch]);
+
   const onNewtag = () => {
     setInput((i) => ({ ...i, visible: true }));
   };
 
-  const onFinishNewtag = (label?: string) => {
-    label &&
-      setTagsData((t) => [
-        ...t,
-        { _id: Math.random().toLocaleString(), label, checked: true },
-      ]);
+  const onFinishNewtag = async (label?: string) => {
     setInput((i) => ({ ...i, visible: false }));
+    if (!label) return;
+
+    const tagCreated = await tagCreateTag({
+      variables: { tag: { owner: userId, label } },
+    });
+
+    tagCreated.data &&
+      dispatch(TagAction.appendTag({ data: tagCreated.data.createTag }));
+    props.onAddNewTag && props.onAddNewTag();
   };
 
-  const onDelete = (id: string) => {
-    setTagsData((tags) => tags.filter((t) => t._id !== id));
-  };
+  const onSelect = (id: string) => {};
 
-  const onSelect = (id: string) => {
-    setTagsData((tags) =>
-      tags.map((t) => (t._id === id ? { ...t, checked: !t.checked } : t))
-    );
-  };
+  if (error) {
+    message.error("Duplicated label");
+  }
 
   return (
     <>
       <div>
-        {tagsData.map((el) => (
+        {loading && <span>Loading ...</span>}
+
+        {tagsStore.map((el) => (
           <CheckableTag
             key={el._id}
             onClick={() => onSelect(el._id)}
-            checked={el.checked}
+            checked={false}
+            // checked={el.checked}
             style={{ minWidth: 40, textAlign: "center" }}
           >
-            {!el.checked && (
+            <>
+              <AntdTag style={{ width: "100%" }}>{el.label}</AntdTag>
+            </>
+
+            {/* {!el.checked && (
               <>
                 <AntdTag>
                   {el.label}
@@ -75,8 +113,8 @@ const Tags: React.FC<TagsProps> = (props) => {
                   />
                 </AntdTag>
               </>
-            )}
-            {el.checked && (
+            )} */}
+            {/* {el.checked && (
               <>
                 {el.label}
                 <CloseOutlined
@@ -84,7 +122,7 @@ const Tags: React.FC<TagsProps> = (props) => {
                   style={{ marginLeft: "2em", cursor: "pointer" }}
                 />
               </>
-            )}
+            )} */}
           </CheckableTag>
         ))}
         <AntdTag onClick={onNewtag}>
@@ -95,7 +133,11 @@ const Tags: React.FC<TagsProps> = (props) => {
           )}
 
           {input.visible && (
-            <Input size="small" onKeyPress={onEnter(onFinishNewtag)} />
+            <Input
+              autoFocus={true}
+              size="small"
+              onKeyPress={onEnter(onFinishNewtag)}
+            />
           )}
         </AntdTag>
       </div>
