@@ -1,7 +1,13 @@
 import { LinkOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
-import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  BookmarkEditInputDto,
+  useGetBookmarkLazyQuery,
+} from "../../../../common/services/generate/generate-types";
+import { Store } from "../../../../common/store";
+import { BookmarkAction } from "../../../../common/store/bookmark";
 import Tags, { TagType } from "../Tags/index";
 import {
   CardInputUrlStyle,
@@ -37,10 +43,12 @@ const VisibleCard: React.FC<CardProps & { onClick: () => void }> = (props) => (
 const ExpandCard: React.FC<
   CardProps & { visible: boolean; onSave: (save: BookmarkEditInputDto) => void }
 > = (props) => {
+  const dispatch = useDispatch();
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
 
   const onSave = (s: boolean) => {
+    dispatch(BookmarkAction.setUnSelectingBookmark());
     //   save with new
     s &&
       props.onSave({
@@ -59,6 +67,7 @@ const ExpandCard: React.FC<
   };
 
   const onCancel = () => {
+    dispatch(BookmarkAction.setUnSelectingBookmark());
     onSave(false);
   };
 
@@ -68,6 +77,7 @@ const ExpandCard: React.FC<
 
   return (
     <Modal
+      style={{ zIndex: 2 }}
       closeIcon={<div />}
       visible={props.visible}
       onCancel={onCancel}
@@ -104,6 +114,9 @@ const ExpandCard: React.FC<
 
 const Cards: React.FC<CardProps> = (props) => {
   const [expand, setExpand] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const owner = useSelector((s: Store) => s.user.user._id);
+  // const [getBookmark] = useGetBookmarkLazyQuery()
 
   const onEdit = (data: BookmarkEditInputDto) => {
     setExpand(false);
@@ -112,6 +125,18 @@ const Cards: React.FC<CardProps> = (props) => {
 
   const onClick = () => {
     setExpand(() => true);
+    dispatch(
+      BookmarkAction.setSetlectBookmark({
+        selecting: {
+          _id: props._id,
+          domain: props.domain,
+          note: props.note,
+          original: props.original,
+          owner,
+          tags: props.tags,
+        },
+      })
+    );
   };
 
   return (
