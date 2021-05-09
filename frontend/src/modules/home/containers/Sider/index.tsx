@@ -7,7 +7,7 @@ import { Layout, Menu } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Store } from "../../../../common/store";
-import { actions } from "../../../../common/store/bookmark";
+import { BookmarkAction } from "../../../../common/store/bookmark";
 const { Sider: SiderAnt } = Layout;
 
 const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
@@ -16,11 +16,11 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
   const tags = useSelector((s: Store) => s.tags.tags);
 
   const onSelect = (tag: string) => {
-    dispatch(actions.setSelectedTag({ tag }));
+    dispatch(BookmarkAction.setSelectedTag({ tag }));
   };
 
   useEffect(() => {
-    dispatch(actions.setSelectedTag({ tag: "recent" }));
+    dispatch(BookmarkAction.setSelectedTag({ tag: "recent" }));
   }, [dispatch]);
 
   return (
