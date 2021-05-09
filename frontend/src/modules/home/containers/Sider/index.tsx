@@ -6,7 +6,6 @@ import {
 import { Layout, Menu } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetTagsByOwnerQuery } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { actions } from "../../../../common/store/bookmark";
 const { Sider: SiderAnt } = Layout;
@@ -14,8 +13,7 @@ const { Sider: SiderAnt } = Layout;
 const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((s: Store) => s.user.user._id);
-  const { data } = useGetTagsByOwnerQuery({ variables: { userId } });
+  const tags = useSelector((s: Store) => s.tags.tags);
 
   const onSelect = (tag: string) => {
     dispatch(actions.setSelectedTag({ tag }));
@@ -40,7 +38,7 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
         >
           Recent
         </Menu.Item>
-        {data?.listAllTag.result.map((el) => (
+        {tags.map((el) => (
           <Menu.Item
             key={el._id}
             icon={<BookOutlined />}
