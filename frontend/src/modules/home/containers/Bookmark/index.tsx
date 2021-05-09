@@ -2,6 +2,7 @@ import { Col, Row } from "antd";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
+  BookmarkDto,
   BookmarkEditInputDto,
   useEditBookmarkByIdMutation,
   useGetBookmarkByTagsQuery,
@@ -11,9 +12,31 @@ import { Store } from "../../../../common/store";
 import Add from "../../components/Add";
 import Cards from "../../components/Cards/Cards";
 
-const BookmarkContainer: React.FC = () => {
+const BookmarkCard: React.FC<{
+  el: BookmarkDto;
+  onEdit: (data: BookmarkEditInputDto) => void;
+}> = (props) => (
+  <Col span={8} key={props.el._id}>
+    <Cards
+      _id={props.el._id}
+      domain={props.el.domain}
+      original={props.el.original}
+      note={props.el.note}
+      tags={props.el.tags.map((t: string) => ({
+        _id: "",
+        label: t,
+        checked: true,
+      }))}
+      onEdit={props.onEdit}
+    />
+  </Col>
+);
+
+const BookmarkContainer: React.FC = (props) => {
   const userId = useSelector((s: Store) => s.user.user._id);
   const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
+  const searchingWord = useSelector((s: Store) => s.instantSearch.word);
+  const searchResults = useSelector((s: Store) => s.instantSearch.results);
 
   const { data, loading } = useGetBookmarkByTagsQuery({
     variables: {
@@ -67,37 +90,25 @@ const BookmarkContainer: React.FC = () => {
 
       {loading && <p>loading ...</p>}
       <Row>
-        {/* only recent */}
-        {bookmarkTags === "recent" &&
+        {/* show cards only recent */}
+        {!searchingWord &&
+          bookmarkTags === "recent" &&
           recent?.getRecentBookmark.map((el) => (
-            <Col span={8} key={el._id}>
-              <Cards
-                _id={el._id}
-                domain={el.domain}
-                original={el.original}
-                note={el.note}
-                tags={el.tags.map((t) => ({
-                  _id: "",
-                  label: t,
-                  checked: true,
-                }))}
-                onEdit={onEdit}
-              />
-            </Col>
+            <BookmarkCard {...props} el={el} onEdit={onEdit} />
           ))}
 
-        {data?.searchFilterText.results.map((el) => (
-          <Col span={8} key={el._id}>
-            <Cards
-              _id={el._id}
-              domain={el.domain}
-              original={el.original}
-              note={el.note}
-              tags={el.tags.map((t) => ({ _id: "", label: t, checked: true }))}
-              onEdit={onEdit}
-            />
-          </Col>
-        ))}
+        {/* show cards by selected tag */}
+        {!searchingWord &&
+          data?.searchFilterText.results.map((el) => (
+            <BookmarkCard {...props} el={el} onEdit={onEdit} />
+          ))}
+
+        {/* show cards from searching results */}
+        {searchingWord &&
+          searchResults &&
+          searchResults.map((el) => (
+            <BookmarkCard {...props} el={el} onEdit={onEdit} />
+          ))}
       </Row>
     </div>
   );

@@ -3,7 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Store } from "../../../../common/store";
 import { instantSearchActions } from "../../../../common/store/instantSearch";
-import { useSearchQuery } from "../../../../common/services/generate/generate-types";
+import { useSearchLazyQuery } from "../../../../common/services/generate/generate-types";
 import { Input } from "antd";
 
 const SearchIcon: React.FC = () => (
@@ -14,11 +14,13 @@ const SearchIcon: React.FC = () => (
 
 export const Searchbar: React.FC = () => {
   const dispatch = useDispatch();
+  const userId = useSelector((s: Store) => s.user.user._id);
   const onSearch = useSelector((s: Store) => s.instantSearch.word);
-  const { data, loading } = useSearchQuery({
+  const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
+  const [searchTrigger, { data, loading }] = useSearchLazyQuery({
     variables: {
       word: {
-        owner: "",
+        owner: userId,
         text: "",
         tags: [],
       },
@@ -34,6 +36,19 @@ export const Searchbar: React.FC = () => {
     );
     // }
   }, [onSearch, data, loading, dispatch]);
+
+  useEffect(() => {
+    searchTrigger({
+      variables: {
+        word: {
+          owner: userId,
+          text: onSearch,
+          tags: [bookmarkTags],
+        },
+      },
+    });
+    console.log("bookmark:" + bookmarkTags);
+  }, [searchTrigger, userId, onSearch, bookmarkTags]);
 
   return (
     <Input
