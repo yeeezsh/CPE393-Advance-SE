@@ -99,7 +99,7 @@ const BookmarkContainer: React.FC = (props) => {
 
       <Row>
         {/* only recent */}
-        {selectedBookmarkTags === "recent" &&
+        {/* {selectedBookmarkTags === "recent" &&
           allTags &&
           recent?.getRecentBookmark.map((el) => {
             const mappedTags = el.tags.map((el) => {
@@ -124,7 +124,7 @@ const BookmarkContainer: React.FC = (props) => {
                 />
               </Col>
             );
-          })}
+          })} */}
 
         {/* search display */}
         {data?.searchFilterText.results.map((el) => {
