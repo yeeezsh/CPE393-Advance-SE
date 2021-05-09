@@ -4,12 +4,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAddBookmarkMutation } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
-import {
-  InputCard,
-  InputHeader,
-  InputStyle,
-  InputTextfield,
-} from "../../containers/Bookmark/styled";
+import { InputCard, InputHeader, InputStyle, InputTextfield } from "./styled";
 import Tags from "../Tags";
 
 const Add: React.FC<{ onAdd: () => void }> = (props) => {

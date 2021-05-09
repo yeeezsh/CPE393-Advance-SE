@@ -1,12 +1,11 @@
-import { Card, Input, Modal, Tag } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
-
+import { Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
 import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
 
 const { Meta } = Card;
-const { TextArea } = Input;
+
 const styles = {
   inputHeader: {
     fontFamily: "Arial",
