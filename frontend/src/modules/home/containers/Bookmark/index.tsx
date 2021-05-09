@@ -126,23 +126,32 @@ const BookmarkContainer: React.FC = (props) => {
             );
           })}
 
-        {data?.searchFilterText.results.map((el) => (
-          <Col span={8} key={el._id}>
-            <Cards
-              _id={el._id}
-              domain={el.domain}
-              original={el.original}
-              note={el.note}
-              tags={el.tags.map((t) => ({
-                _id: "",
-                label: t,
-                checked: true,
-                createAt: new Date(),
-              }))}
-              onEdit={onEdit}
-            />
-          </Col>
-        ))}
+        {/* search display */}
+        {data?.searchFilterText.results.map((el) => {
+          const mappedTags = el.tags.map((el) => {
+            const foundTag = allTags.find((f) => f._id === el);
+            return {
+              _id: el,
+              checked: true,
+              label: foundTag?.label,
+              createAt: foundTag?.createAt,
+            };
+          }) as TagType;
+
+          return (
+            <Col span={8} key={el._id}>
+              <Cards
+                _id={el._id}
+                domain={el.domain}
+                original={el.original}
+                note={el.note}
+                tags={mappedTags}
+                onEdit={onEdit}
+              />
+            </Col>
+          );
+        })}
+
         {/* show cards only recent */}
         {!searchingWord &&
           bookmarkTags === "recent" &&
