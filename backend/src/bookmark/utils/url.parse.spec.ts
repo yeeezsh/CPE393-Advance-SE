@@ -23,7 +23,12 @@ describe('Url parse util', () => {
   it('Should parse with subdomain & query string, param correctly', () => {
     const sample = 'https://docs.google.co.th/hello?test=true';
     const { domain } = urlParse(sample);
-    // FIXME: with it should not include \/
-    expect(domain).toBe('docs.google.co.th/');
+    expect(domain).toBe('docs.google.co.th');
+  });
+
+  it('Should parse with multiple subdomain & query string, param correctly', () => {
+    const sample = 'https://github.com/yee2542/CPE393-Advance-SE/pull/42';
+    const { domain } = urlParse(sample);
+    expect(domain).toBe('github.com');
   });
 });

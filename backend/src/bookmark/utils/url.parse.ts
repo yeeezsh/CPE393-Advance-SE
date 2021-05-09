@@ -10,7 +10,7 @@ export default (
       original: '',
     };
   let domain = undefined;
-  const domainPattern = /^.*(?:(?:http(?:|s):\/\/|(?:www\.)))(.*(?:\/)|(?:.*))/;
+  const domainPattern = /^.*(?:(?:http(?:|s):\/\/|(?:www\.)))([^/]*).*/;
   const domainMatch = original.match(domainPattern);
   if (domainMatch) [, domain] = domainMatch;
 
