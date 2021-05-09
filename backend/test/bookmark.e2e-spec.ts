@@ -52,7 +52,7 @@ describe('', () => {
       .send({ query: print(bookmarkInput) })
       .expect((res) => {
         const data = res.body.data;
-        expect(data.addBookmark.domain).toBe('docs.google.com/');
+        expect(data.addBookmark.domain).toBe('docs.google.com');
       });
   });
 
@@ -62,7 +62,7 @@ describe('', () => {
       .send({ query: print(bookmarkQueryByUser) })
       .expect((res) => {
         const data = res.body.data;
-        expect(data.getRecentBookmark[0].domain).toBe('docs.google.com/');
+        expect(data.getRecentBookmark[0].domain).toBe('docs.google.com');
         id = data.getRecentBookmark[0]._id;
       });
   });
