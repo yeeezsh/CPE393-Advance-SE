@@ -1,5 +1,5 @@
 import { LinkOutlined } from "@ant-design/icons";
-import { Card, Modal, Tag } from "antd";
+import { Button, Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
 import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
@@ -58,12 +58,29 @@ const ExpandCard: React.FC<
       });
   };
 
+  const onCancel = () => {
+    onSave(false);
+  };
+
+  const onOk = () => {
+    onSave(true);
+  };
+
   return (
     <Modal
       closeIcon={<div />}
       visible={props.visible}
-      onCancel={() => onSave(false)}
-      onOk={() => onSave(true)}
+      onCancel={onCancel}
+      onOk={onOk}
+      footer={[
+        <Button style={{ marginRight: "50%" }} type="primary" danger>
+          Delete
+        </Button>,
+        <Button onClick={onCancel}>Cancel</Button>,
+        <Button type="primary" onClick={onOk}>
+          Save
+        </Button>,
+      ]}
     >
       <InputHeaderStyle>
         <LinkOutlined />
