@@ -20,6 +20,9 @@ const tagSlice = createSlice({
     updateTag(state, action: PayloadAction<{ data: DataTagStore }>) {
       state.tags = action.payload.data;
     },
+    appendTag(state, action: PayloadAction<{ data: DataTagStore[0] }>) {
+      state.tags.push(action.payload.data);
+    },
   },
 });
 
