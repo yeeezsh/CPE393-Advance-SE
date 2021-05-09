@@ -89,14 +89,14 @@ const ExpandCard: React.FC<
       onOk={() => onSave(true)}
     >
       <div style={styles.inputHeader}>
-      <LinkOutlined />
+        <LinkOutlined />
 
-      <input
-        style={styles.inputUrl}
-        value={original}
-        onChange={(e) => setOriginal(() => e.target.value)}
-      />
-      <span style={{ fontWeight: "lighter" }}>{props.original}</span>
+        <input
+          style={styles.inputUrl}
+          value={original}
+          onChange={(e) => setOriginal(() => e.target.value)}
+        />
+        <span style={{ fontWeight: "lighter" }}>{props.original}</span>
       </div>
       <div style={{ height: "12px" }} />
 
@@ -127,7 +127,7 @@ const Cards: React.FC<CardProps> = (props) => {
 
   return (
     <Card hoverable>
-      {!expand && <VisibleCard {...props} onClick={onClick} />}
+      <VisibleCard {...props} onClick={onClick} />
       {expand && <ExpandCard {...props} visible={expand} onSave={onEdit} />}
     </Card>
   );
