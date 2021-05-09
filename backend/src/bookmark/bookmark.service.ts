@@ -57,7 +57,10 @@ export class BookmarkService {
 
     const parse = urlParse(update.original);
     bookmark.domain = parse?.domain || bookmark.domain;
-    bookmark.original = update.original || bookmark.original;
+    // preveting from fe orginal replacing domain
+    if (update.original !== bookmark.domain) {
+      bookmark.original = update.original || bookmark.original;
+    }
     bookmark.tags = update.tags || bookmark.tags;
     bookmark.note = update.note || bookmark.note;
     bookmark.updateAt = now;
