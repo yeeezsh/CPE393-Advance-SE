@@ -3,36 +3,14 @@ import { Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
 import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
+import {
+  CardInputUrlStyle,
+  CardTextAreaStyle,
+  InputHeaderStyle,
+} from "./styled";
 
 const { Meta } = Card;
 
-const styles = {
-  inputHeader: {
-    fontFamily: "Arial",
-    fontSize: "15px",
-    borderRadius: "2px 2px 0 0",
-    borderBottom: "1px solid #dddfe2 ",
-    padding: "15px",
-  },
-  inputField: {
-    height: "75px",
-    width: "470px",
-    padding: "10px",
-    border: "none",
-    fontFamily: "Arial",
-    fontSize: "15px",
-    outline: "none",
-  },
-  inputUrl: {
-    height: "40px",
-    width: "420px",
-    padding: "10px",
-    border: "none",
-    fontFamily: "Arial",
-    fontSize: "15px",
-    outline: "none",
-  },
-};
 export interface CardProps {
   domain: string;
   original: string;
@@ -87,25 +65,20 @@ const ExpandCard: React.FC<
       onCancel={() => onSave(false)}
       onOk={() => onSave(true)}
     >
-      <div style={styles.inputHeader}>
+      <InputHeaderStyle>
         <LinkOutlined />
-
-        <input
-          style={styles.inputUrl}
+        <CardInputUrlStyle
           value={original}
           onChange={(e) => setOriginal(() => e.target.value)}
         />
         <span style={{ fontWeight: "lighter" }}>{props.original}</span>
-      </div>
+      </InputHeaderStyle>
       <div style={{ height: "12px" }} />
 
-      <textarea
-        style={styles.inputField}
+      <CardTextAreaStyle
         value={note}
         onChange={(e) => setNote(() => e.target.value)}
       />
-
-      {/* tags */}
       <div style={{ height: "4px" }} />
       <Tags tags={props.tags} />
     </Modal>
