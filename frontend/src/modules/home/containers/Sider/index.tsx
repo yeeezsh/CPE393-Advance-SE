@@ -4,7 +4,7 @@ import {
   FieldTimeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetTagsByOwnerQuery } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
@@ -20,6 +20,11 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
   const onSelect = (tag: string) => {
     dispatch(actions.setSelectedTag({ tag }));
   };
+
+  useEffect(() => {
+    dispatch(actions.setSelectedTag({ tag: "recent" }));
+  }, [dispatch]);
+
   return (
     <SiderAnt
       trigger={null}
