@@ -16,6 +16,7 @@ export const Searchbar: React.FC = () => {
   const dispatch = useDispatch();
   const userId = useSelector((s: Store) => s.user.user._id);
   const onSearch = useSelector((s: Store) => s.instantSearch.word);
+  const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
   const [searchTrigger, { data, loading }] = useSearchLazyQuery({
     variables: {
       word: {
@@ -37,17 +38,17 @@ export const Searchbar: React.FC = () => {
   }, [onSearch, data, loading, dispatch]);
 
   useEffect(() => {
-    console.log("search");
     searchTrigger({
       variables: {
         word: {
           owner: userId,
           text: onSearch,
-          tags: [onSearch],
+          tags: [bookmarkTags],
         },
       },
     });
-  }, [searchTrigger, onSearch]);
+    console.log("bookmark:" + bookmarkTags);
+  }, [searchTrigger, onSearch, bookmarkTags]);
 
   return (
     <Input
