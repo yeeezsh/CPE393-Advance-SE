@@ -351,6 +351,19 @@ export type SearchQuery = (
   ) }
 );
 
+export type CreateTagMutationVariables = Exact<{
+  tag: TagCreateInputDto;
+}>;
+
+
+export type CreateTagMutation = (
+  { __typename?: 'Mutation' }
+  & { createTag: (
+    { __typename?: 'TagDTO' }
+    & Pick<TagDto, '_id' | 'label'>
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -682,3 +695,36 @@ export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Sea
 export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
 export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
 export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
+export const CreateTagDocument = gql`
+    mutation createTag($tag: TagCreateInputDTO!) {
+  createTag(TagCreateInputDTO: $tag) {
+    _id
+    label
+  }
+}
+    `;
+export type CreateTagMutationFn = Apollo.MutationFunction<CreateTagMutation, CreateTagMutationVariables>;
+
+/**
+ * __useCreateTagMutation__
+ *
+ * To run a mutation, you first call `useCreateTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTagMutation, { data, loading, error }] = useCreateTagMutation({
+ *   variables: {
+ *      tag: // value for 'tag'
+ *   },
+ * });
+ */
+export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateTagMutation, CreateTagMutationVariables>) {
+        return Apollo.useMutation<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, baseOptions);
+      }
+export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
+export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
+export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;

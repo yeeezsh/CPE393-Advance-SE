@@ -88,3 +88,10 @@ query search($word: SearchTextInputDTO!) {
     }
   }
 }
+
+mutation createTag($tag: TagCreateInputDTO!) {
+  createTag(TagCreateInputDTO: $tag) {
+    _id
+    label
+  }
+}
