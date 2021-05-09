@@ -62,9 +62,7 @@ const BookmarkContainer: React.FC = () => {
   return (
     <div style={{ paddingTop: "16px" }}>
       <Row justify="center">
-        <Col span={12} style={{ background: "grey" }}>
-          <Add onAdd={onAdd} />
-        </Col>
+        <Add onAdd={onAdd} />
       </Row>
 
       {loading && <p>loading ...</p>}

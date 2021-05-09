@@ -1,10 +1,15 @@
-import { Card, Input, Modal, Tag } from "antd";
+import { LinkOutlined } from "@ant-design/icons";
+import { Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
 import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import Tags, { TagType } from "../Tags/index";
+import {
+  CardInputUrlStyle,
+  CardTextAreaStyle,
+  InputHeaderStyle,
+} from "./styled";
 
 const { Meta } = Card;
-const { TextArea } = Input;
 
 export interface CardProps {
   domain: string;
@@ -60,20 +65,20 @@ const ExpandCard: React.FC<
       onCancel={() => onSave(false)}
       onOk={() => onSave(true)}
     >
-      <Input
-        value={original}
-        onChange={(e) => setOriginal(() => e.target.value)}
-      />
-      <span style={{ fontWeight: "lighter" }}>{props.original}</span>
+      <InputHeaderStyle>
+        <LinkOutlined />
+        <CardInputUrlStyle
+          value={original}
+          onChange={(e) => setOriginal(() => e.target.value)}
+        />
+        <span style={{ fontWeight: "lighter" }}>{props.original}</span>
+      </InputHeaderStyle>
       <div style={{ height: "12px" }} />
 
-      <TextArea
-        rows={2}
+      <CardTextAreaStyle
         value={note}
         onChange={(e) => setNote(() => e.target.value)}
       />
-
-      {/* tags */}
       <div style={{ height: "4px" }} />
       <Tags tags={props.tags} />
     </Modal>
@@ -94,7 +99,7 @@ const Cards: React.FC<CardProps> = (props) => {
 
   return (
     <Card hoverable>
-      {!expand && <VisibleCard {...props} onClick={onClick} />}
+      <VisibleCard {...props} onClick={onClick} />
       {expand && <ExpandCard {...props} visible={expand} onSave={onEdit} />}
     </Card>
   );
