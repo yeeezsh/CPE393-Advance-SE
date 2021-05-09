@@ -48,7 +48,7 @@ export const Searchbar: React.FC = () => {
       },
     });
     console.log("bookmark:" + bookmarkTags);
-  }, [searchTrigger, onSearch, bookmarkTags]);
+  }, [searchTrigger, userId, onSearch, bookmarkTags]);
 
   return (
     <Input
