@@ -2,10 +2,7 @@ import { LinkOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BookmarkEditInputDto,
-  useGetBookmarkLazyQuery,
-} from "../../../../common/services/generate/generate-types";
+import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
 import Tags, { TagType } from "../Tags/index";
