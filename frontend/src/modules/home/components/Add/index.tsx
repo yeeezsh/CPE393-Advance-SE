@@ -1,5 +1,5 @@
 import { LinkOutlined, PushpinOutlined } from "@ant-design/icons";
-import { Button, Input, Row } from "antd";
+import { Button, Row } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAddBookmarkMutation } from "../../../../common/services/generate/generate-types";
@@ -77,12 +77,9 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
           value={note}
           onChange={(e) => setNote(() => e.target.value)}
         />
+
         {/* tags */}
-        <div style={{ marginLeft: "0.5rem" }}>
-          <Tags
-          //   tags={props.tags}
-          />
-        </div>
+        <Tags />
       </InputCard>
     </Row>
   );
