@@ -67,9 +67,7 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
 
       {/* tags */}
       <div style={{ height: "4px" }} />
-      <Tags
-      //   tags={props.tags}
-      />
+      <Tags />
       <Row justify="end">
         <Button type="primary" onClick={onAdd}>
           Add
