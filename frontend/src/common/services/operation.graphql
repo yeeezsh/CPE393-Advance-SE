@@ -95,3 +95,14 @@ mutation createTag($tag: TagCreateInputDTO!) {
     label
   }
 }
+
+query getBookmark($id: String!) {
+  getABookmark(bookmarkId: $id) {
+    _id
+    owner
+    domain
+    note
+    original
+    tags
+  }
+}

@@ -364,6 +364,19 @@ export type CreateTagMutation = (
   ) }
 );
 
+export type GetBookmarkQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetBookmarkQuery = (
+  { __typename?: 'Query' }
+  & { getABookmark: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'owner' | 'domain' | 'note' | 'original' | 'tags'>
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -728,3 +741,41 @@ export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<Cr
 export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
 export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
 export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;
+export const GetBookmarkDocument = gql`
+    query getBookmark($id: String!) {
+  getABookmark(bookmarkId: $id) {
+    _id
+    owner
+    domain
+    note
+    original
+    tags
+  }
+}
+    `;
+
+/**
+ * __useGetBookmarkQuery__
+ *
+ * To run a query within a React component, call `useGetBookmarkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBookmarkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBookmarkQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBookmarkQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkQuery, GetBookmarkQueryVariables>) {
+        return Apollo.useQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(GetBookmarkDocument, baseOptions);
+      }
+export function useGetBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkQuery, GetBookmarkQueryVariables>) {
+          return Apollo.useLazyQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(GetBookmarkDocument, baseOptions);
+        }
+export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>;
+export type GetBookmarkLazyQueryHookResult = ReturnType<typeof useGetBookmarkLazyQuery>;
+export type GetBookmarkQueryResult = Apollo.QueryResult<GetBookmarkQuery, GetBookmarkQueryVariables>;
