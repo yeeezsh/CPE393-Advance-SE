@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { BookmarkDTO } from './dtos/bookmark.dto';
+import { BookmarkClearInput } from './dtos/input/bookmark-clear.input.dto';
 import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
 import { BookmarkBadIdException } from './exceptions/bookmark-bad-id.exceptions';
@@ -67,5 +68,15 @@ export class BookmarkService {
 
     const saved = await bookmark.save();
     return saved as BookmarkDTO;
+  }
+
+  async clearTrash(command: BookmarkClearInput): Promise<string> {
+    await this.urlModel.deleteMany({
+      owner: command.owner,
+      tags: {
+        $in: ['delete'],
+      },
+    });
+    return 'deleted';
   }
 }

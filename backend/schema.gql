@@ -6,6 +6,10 @@ type AppModel {
   status: Int!
 }
 
+input BookmarkClearInput {
+  owner: String!
+}
+
 input BookmarkCreateInputDTO {
   note: String!
   original: String!
@@ -55,6 +59,7 @@ scalar DateTime
 type Mutation {
   addBookmark(BookmarkCreateInputDTO: BookmarkCreateInputDTO!): BookmarkDTO!
   addTagToBookmark(TagAddToBookmarkDTO: TagAddToBookmarkDTO!): BookmarkDTO!
+  clearTrash(BookmarkClearInput: BookmarkClearInput!): String!
   createAccount(UserRegisterInputDTO: UserRegisterInputDTO!): UserResponseDTO!
   createTag(TagCreateInputDTO: TagCreateInputDTO!): TagDTO!
   deleteTag(BookmarkGetInputDTO: BookmarkGetInputDTO!): BookmarkDTO!
