@@ -33,9 +33,7 @@ export class BookmarkService {
               },
             },
           },
-          {
-            $where: 'this.tags.length === 0',
-          },
+          { tags: { $eq: [] } },
         ],
       })
       .sort({ updateAt: -1 })
