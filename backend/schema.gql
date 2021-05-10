@@ -65,6 +65,7 @@ type Mutation {
   deleteTag(BookmarkGetInputDTO: BookmarkGetInputDTO!): BookmarkDTO!
   editBookmark(BookmarkEditInputDTO: BookmarkEditInputDTO!): BookmarkDTO!
   editTag(TagEditInputDTO: TagEditInputDTO!): TagDTO!
+  restoreFromTrash(bookmarkId: String!): String!
   setArchiveTag(BookmarkGetInputDTO: BookmarkGetInputDTO!): BookmarkDTO!
   userLogin(UserLoginInputDTO: UserLoginInputDTO!): UserLoginResponseDTO!
 }

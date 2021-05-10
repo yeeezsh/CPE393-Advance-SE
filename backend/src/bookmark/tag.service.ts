@@ -11,7 +11,9 @@ import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
 import { TagListDTO } from './dtos/input/tag-list.dto';
 import { TagDTO } from './dtos/tag.dto';
+import { BookmarkBadIdException } from './exceptions/bookmark-bad-id.exceptions';
 import { TagBadIdException } from './exceptions/tag-bad-id.exceptions';
+import { Bookmark, BookmarkDocument } from './schema/bookmark.schema';
 import { Tag, TagDocument } from './schema/tag.schema';
 
 @Injectable()
@@ -19,6 +21,7 @@ export class TagService {
   constructor(
     @InjectModel(Tag.name) private tagModel: Model<TagDocument>,
     private bookmarkService: BookmarkService,
+    @InjectModel(Bookmark.name) private bookmarkModel: Model<BookmarkDocument>,
   ) {}
 
   async createTag(create: TagCreateInputDTO): Promise<TagDTO> {
@@ -79,6 +82,16 @@ export class TagService {
     } as BookmarkEditInputDTO;
 
     return this.bookmarkService.editBookmark(toUpdate);
+  }
+
+  async restoreFromTrash(id: string) {
+    const bookmark = (await this.bookmarkModel.findById(
+      id,
+    )) as BookmarkDocument;
+    if (!bookmark) throw new BookmarkBadIdException();
+    bookmark.tags = [...bookmark.tags.filter((el) => el !== 'delete')];
+    await bookmark.save();
+    return 'restored';
   }
 
   async setArchiveTag(archive: BookmarkGetInputDTO): Promise<BookmarkDTO> {
