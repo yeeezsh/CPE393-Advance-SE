@@ -13,6 +13,7 @@ import {
 import { Store } from "../../../../common/store";
 import Add from "../../components/Add";
 import Cards from "../../components/Cards/Cards";
+import { useHistory } from "react-router";
 
 const BookmarkCard: React.FC<{
   el: BookmarkDto;
@@ -45,6 +46,7 @@ const BookmarkCard: React.FC<{
 
 const BookmarkContainer: React.FC = (props) => {
   const { confirm } = Modal;
+  const history = useHistory();
   const userId = useSelector((s: Store) => s.user.user._id);
   const selectedBookmarkTags = useSelector(
     (s: Store) => s.bookmark.selectedTag
@@ -111,6 +113,7 @@ const BookmarkContainer: React.FC = (props) => {
         userId: userId,
       },
     });
+    window.location.reload(true);
   };
 
   const showConfirm = () => {
