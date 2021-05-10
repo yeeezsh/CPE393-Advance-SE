@@ -39,6 +39,19 @@ export type BookmarkDto = {
   updateAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type BookmarkDtoSearch = {
+  __typename?: 'BookmarkDTOSearch';
+  _id: Scalars['String'];
+  createAt?: Maybe<Scalars['DateTime']>;
+  domain: Scalars['String'];
+  note: Scalars['String'];
+  original: Scalars['String'];
+  owner: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  unwindTags: Array<Scalars['String']>;
+  updateAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type BookmarkEditInputDto = {
   _id: Scalars['String'];
   note?: Maybe<Scalars['String']>;
@@ -154,7 +167,7 @@ export type QuerySearchFilterTextArgs = {
 
 export type SearchDto = {
   __typename?: 'SearchDTO';
-  results: Array<BookmarkDto>;
+  results: Array<BookmarkDtoSearch>;
 };
 
 export type SearchFilterTag = {
@@ -264,22 +277,6 @@ export type CreateAccountMutation = (
   ) }
 );
 
-export type GetBookmarkByTagsQueryVariables = Exact<{
-  opts: SearchFilterTag;
-}>;
-
-
-export type GetBookmarkByTagsQuery = (
-  { __typename?: 'Query' }
-  & { searchFilterText: (
-    { __typename?: 'SearchDTO' }
-    & { results: Array<(
-      { __typename?: 'BookmarkDTO' }
-      & Pick<BookmarkDto, '_id' | 'domain' | 'original' | 'owner' | 'tags' | 'note'>
-    )> }
-  ) }
-);
-
 export type GetTagsByOwnerQueryVariables = Exact<{
   userId: Scalars['String'];
 }>;
@@ -345,8 +342,8 @@ export type SearchQuery = (
   & { allTextSearchBookmark: (
     { __typename?: 'SearchDTO' }
     & { results: Array<(
-      { __typename?: 'BookmarkDTO' }
-      & Pick<BookmarkDto, '_id' | 'createAt' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'updateAt'>
+      { __typename?: 'BookmarkDTOSearch' }
+      & Pick<BookmarkDtoSearch, '_id' | 'createAt' | 'domain' | 'note' | 'original' | 'owner' | 'tags' | 'updateAt' | 'unwindTags'>
     )> }
   ) }
 );
@@ -374,6 +371,22 @@ export type GetBookmarkQuery = (
   & { getABookmark: (
     { __typename?: 'BookmarkDTO' }
     & Pick<BookmarkDto, '_id' | 'owner' | 'domain' | 'note' | 'original' | 'tags'>
+  ) }
+);
+
+export type GetBookmarkByTagsQueryVariables = Exact<{
+  opts: SearchFilterTag;
+}>;
+
+
+export type GetBookmarkByTagsQuery = (
+  { __typename?: 'Query' }
+  & { searchFilterText: (
+    { __typename?: 'SearchDTO' }
+    & { results: Array<(
+      { __typename?: 'BookmarkDTOSearch' }
+      & Pick<BookmarkDtoSearch, '_id' | 'domain' | 'original' | 'owner' | 'tags' | 'note' | 'unwindTags'>
+    )> }
   ) }
 );
 
@@ -480,46 +493,6 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
-export const GetBookmarkByTagsDocument = gql`
-    query getBookmarkByTags($opts: SearchFilterTag!) {
-  searchFilterText(SearchFilterTag: $opts) {
-    results {
-      _id
-      domain
-      original
-      owner
-      tags
-      note
-    }
-  }
-}
-    `;
-
-/**
- * __useGetBookmarkByTagsQuery__
- *
- * To run a query within a React component, call `useGetBookmarkByTagsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetBookmarkByTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetBookmarkByTagsQuery({
- *   variables: {
- *      opts: // value for 'opts'
- *   },
- * });
- */
-export function useGetBookmarkByTagsQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
-        return Apollo.useQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
-      }
-export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
-          return Apollo.useLazyQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
-        }
-export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
-export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
-export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;
 export const GetTagsByOwnerDocument = gql`
     query getTagsByOwner($userId: String!) {
   listAllTag(owner: $userId) {
@@ -678,6 +651,7 @@ export const SearchDocument = gql`
       owner
       tags
       updateAt
+      unwindTags
     }
   }
 }
@@ -779,3 +753,44 @@ export function useGetBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>;
 export type GetBookmarkLazyQueryHookResult = ReturnType<typeof useGetBookmarkLazyQuery>;
 export type GetBookmarkQueryResult = Apollo.QueryResult<GetBookmarkQuery, GetBookmarkQueryVariables>;
+export const GetBookmarkByTagsDocument = gql`
+    query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+      unwindTags
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBookmarkByTagsQuery__
+ *
+ * To run a query within a React component, call `useGetBookmarkByTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBookmarkByTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBookmarkByTagsQuery({
+ *   variables: {
+ *      opts: // value for 'opts'
+ *   },
+ * });
+ */
+export function useGetBookmarkByTagsQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+        return Apollo.useQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+      }
+export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>) {
+          return Apollo.useLazyQuery<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>(GetBookmarkByTagsDocument, baseOptions);
+        }
+export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
+export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
+export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;

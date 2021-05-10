@@ -22,19 +22,6 @@ mutation createAccount($user: UserRegisterInputDTO!) {
   }
 }
 
-query getBookmarkByTags($opts: SearchFilterTag!) {
-  searchFilterText(SearchFilterTag: $opts) {
-    results {
-      _id
-      domain
-      original
-      owner
-      tags
-      note
-    }
-  }
-}
-
 query getTagsByOwner($userId: String!) {
   listAllTag(owner: $userId) {
     result {
@@ -85,6 +72,7 @@ query search($word: SearchTextInputDTO!) {
       owner
       tags
       updateAt
+      unwindTags
     }
   }
 }
@@ -104,5 +92,19 @@ query getBookmark($id: String!) {
     note
     original
     tags
+  }
+}
+
+query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+      unwindTags
+    }
   }
 }
