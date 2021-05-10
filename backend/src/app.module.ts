@@ -27,7 +27,10 @@ import { SearchModule } from './search/search.module';
         useGlobalPrefix: true,
         autoSchemaFile: join(process.cwd(), 'schema.gql'),
         sortSchema: true,
-        cors: { origin: true, credentials: true },
+        cors: {
+          credentials: true,
+          origin: true,
+        },
         context: ({ req }) => ({ ...req }),
       }),
     }),
