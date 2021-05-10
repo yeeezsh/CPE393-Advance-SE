@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarkService } from './bookmark.service';
 import { BookmarkDTO } from './dtos/bookmark.dto';
+import { BookmarkClearInput } from './dtos/input/bookmark-clear.input.dto';
 import { BookmarkCreateInputDTO } from './dtos/input/bookmark-create.input';
 import { BookmarkEditInputDTO } from './dtos/input/bookmark-edit.input.dto';
 
@@ -37,5 +38,10 @@ export class BookmarkResolver {
     @Args(BookmarkEditInputDTO.name) bookmarkEditInputDTO: BookmarkEditInputDTO,
   ): Promise<BookmarkDTO> {
     return this.bookmarkService.editBookmark(bookmarkEditInputDTO);
+  }
+
+  @Mutation(() => String)
+  async clearTrash(@Args(BookmarkClearInput.name) command: BookmarkClearInput) {
+    return this.bookmarkService.clearTrash(command);
   }
 }
