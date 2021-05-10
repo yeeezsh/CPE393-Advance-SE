@@ -22,24 +22,24 @@ export class BookmarkService {
     skip = 0,
     limit = MAX_QUERY,
   ): Promise<BookmarkDTO[]> {
-    const doc = await this.urlModel
-      .find({
-        owner,
-        $or: [
-          {
-            tags: {
-              $elemMatch: {
-                $nin: ['delete', 'archive'],
-              },
-            },
+    const doc = await this.urlModel.aggregate([
+      {
+        $match: {
+          owner: owner,
+          tags: {
+            $nin: ['delete'],
           },
-          { tags: { $eq: [] } },
-        ],
-      })
-      .sort({ updateAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+        },
+      },
+      {
+        $sort: {
+          updateAt: -1,
+        },
+      },
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+
     return doc as BookmarkDTO[];
   }
 
