@@ -74,7 +74,7 @@ const AccountInfo: React.FC<AccountInfoProps> = (props) => {
       </CharacterBadge>
       <DisplayNameStyle>{props.displayname}</DisplayNameStyle>
       <EmailStyle>{props.email}</EmailStyle>
-      <ManageButton />
+      {/* <ManageButton /> */}
       <Line />
       <div style={{ height: 102 }} />
       <LogoutButton {...props} onClick={onClick} />
