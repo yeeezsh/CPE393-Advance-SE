@@ -135,15 +135,10 @@ const BookmarkContainer: React.FC = (props) => {
       <Row justify="center">
         {bookmarkTags === "recent" && <Add onAdd={onAdd} />}
       </Row>
-      <Row justify="start">
+
+      <Row justify="end">
         {bookmarkTags === "delete" && (
-          <Button
-            icon
-            style={{ marginRight: "50%" }}
-            type="primary"
-            danger
-            onClick={showConfirm}
-          >
+          <Button icon type="primary" danger onClick={showConfirm}>
             Empty trash
           </Button>
         )}
@@ -152,60 +147,6 @@ const BookmarkContainer: React.FC = (props) => {
       {loading && <p>loading ...</p>}
 
       <Row>
-        {/* only recent */}
-        {/* {selectedBookmarkTags === "recent" &&
-          allTags &&
-          recent?.getRecentBookmark.map((el) => {
-            const mappedTags = el.tags.map((el) => {
-              const foundTag = allTags.find((f) => f._id === el);
-              return {
-                _id: el,
-                checked: true,
-                label: foundTag?.label,
-                createAt: foundTag?.createAt,
-              };
-            }) as TagType;
-
-            return (
-              <Col span={8} key={el._id}>
-                <Cards
-                  _id={el._id}
-                  domain={el.domain}
-                  original={el.original}
-                  note={el.note}
-                  tags={mappedTags}
-                  onEdit={onEdit}
-                />
-              </Col>
-            );
-          })} */}
-
-        {/* search display */}
-        {/* {data?.searchFilterText.results.map((el) => {
-          const mappedTags = el.tags.map((el) => {
-            const foundTag = allTags.find((f) => f._id === el);
-            return {
-              _id: el,
-              checked: true,
-              label: foundTag?.label,
-              createAt: foundTag?.createAt,
-            };
-          }) as TagType;
-
-          return (
-            <Col span={8} key={el._id}>
-              <Cards
-                _id={el._id}
-                domain={el.domain}
-                original={el.original}
-                note={el.note}
-                tags={mappedTags}
-                onEdit={onEdit}
-              />
-            </Col>
-          );
-        })} */}
-
         {/* show cards only recent */}
         {!searchingWord &&
           bookmarkTags === "recent" &&
