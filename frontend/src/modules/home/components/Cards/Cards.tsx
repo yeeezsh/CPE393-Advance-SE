@@ -48,6 +48,9 @@ const ExpandCard: React.FC<
   const dispatch = useDispatch();
   const { confirm } = Modal;
   const alltags = useSelector((s: Store) => s.tags.tags);
+  const selectedBookmarkTags = useSelector(
+    (s: Store) => s.bookmark.selectedTag
+  );
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
   const [deleteBookmarkMutation] = useDeleteBookmarkMutation({
@@ -97,7 +100,6 @@ const ExpandCard: React.FC<
   };
 
   const onDelete = () => {
-    console.log("delete!");
     deleteBookmarkMutation({
       variables: {
         bookmarkId: props._id,
@@ -106,6 +108,9 @@ const ExpandCard: React.FC<
     onCancel();
   };
 
+  const onRestore = () => {
+    console.log("restore");
+  };
   const showConfirm = () => {
     confirm({
       title: "Do you Want to delete this url?",
@@ -135,6 +140,27 @@ const ExpandCard: React.FC<
     });
   };
 
+  const DeleteButton: React.FC<{ isDeleted: boolean }> = (props) =>
+    props.isDeleted ? (
+      <Button
+        style={{ marginRight: "50%" }}
+        type="primary"
+        danger
+        onClick={onRestore}
+      >
+        Restore
+      </Button>
+    ) : (
+      <Button
+        style={{ marginRight: "50%" }}
+        type="primary"
+        danger
+        onClick={showConfirm}
+      >
+        Delete
+      </Button>
+    );
+
   return (
     <Modal
       style={{ zIndex: 2 }}
@@ -143,14 +169,7 @@ const ExpandCard: React.FC<
       onCancel={onCancel}
       onOk={onOk}
       footer={[
-        <Button
-          style={{ marginRight: "50%" }}
-          type="primary"
-          danger
-          onClick={showConfirm}
-        >
-          Delete
-        </Button>,
+        <DeleteButton isDeleted={selectedBookmarkTags === "delete"} />,
         <Button onClick={onCancel}>Cancel</Button>,
         <Button type="primary" onClick={onOk}>
           Save
