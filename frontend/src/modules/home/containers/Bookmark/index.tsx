@@ -16,23 +16,31 @@ import { TagType } from "../../components/Tags";
 const BookmarkCard: React.FC<{
   el: BookmarkDto;
   onEdit: (data: BookmarkEditInputDto) => void;
-}> = (props) => (
-  <Col span={8} key={props.el._id}>
-    <Cards
-      _id={props.el._id}
-      domain={props.el.domain}
-      original={props.el.original}
-      note={props.el.note}
-      tags={props.el.tags.map((t: string) => ({
-        _id: "",
-        label: t,
-        checked: true,
-        createAt: new Date(),
-      }))}
-      onEdit={props.onEdit}
-    />
-  </Col>
-);
+}> = (props) => {
+  const allTags = useSelector((s: Store) => s.tags.tags);
+  return (
+    <>
+      {allTags && (
+        <Col span={8} key={props.el._id}>
+          <Cards
+            key={props.el._id}
+            _id={props.el._id}
+            domain={props.el.domain}
+            original={props.el.original}
+            note={props.el.note}
+            tags={props.el.tags.map((t: string) => ({
+              _id: t,
+              label: allTags.find((f) => f._id === t)?.label || t,
+              checked: true,
+              createAt: new Date(),
+            }))}
+            onEdit={props.onEdit}
+          />
+        </Col>
+      )}
+    </>
+  );
+};
 
 const BookmarkContainer: React.FC = (props) => {
   const userId = useSelector((s: Store) => s.user.user._id);
