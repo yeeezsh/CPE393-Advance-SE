@@ -117,3 +117,7 @@ mutation deleteBookmark($bookmarkId: String!) {
     owner
   }
 }
+
+mutation ClearTrash($userId: String!) {
+  clearTrash(BookmarkClearInput: { owner: $userId })
+}

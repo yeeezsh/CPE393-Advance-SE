@@ -35,7 +35,7 @@ const AccountSignUpPage: React.FC<{
   useEffect(() => {
     if (!error && data) {
       dispatch(setUser(data.createAccount));
-      history.push("/");
+      history.push("/signin");
     } else {
       setStatusError(error?.graphQLErrors[0].extensions?.exception.status);
     }

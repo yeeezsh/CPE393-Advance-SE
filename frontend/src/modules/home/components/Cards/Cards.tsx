@@ -9,7 +9,6 @@ import {
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
-import { DataTagStore } from "../../../../common/store/tags";
 import Tags, { TagType } from "../Tags/index";
 import {
   CardInputUrlStyle,

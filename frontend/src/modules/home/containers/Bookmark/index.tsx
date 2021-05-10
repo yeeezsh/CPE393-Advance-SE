@@ -1,9 +1,11 @@
-import { Col, Row } from "antd";
+import { Button, Col, Modal, Row } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   BookmarkDto,
   BookmarkEditInputDto,
+  useClearTrashMutation,
   useEditBookmarkByIdMutation,
   useGetBookmarkByTagsQuery,
   useGetRecentBookmarkLazyQuery,
@@ -42,6 +44,7 @@ const BookmarkCard: React.FC<{
 };
 
 const BookmarkContainer: React.FC = (props) => {
+  const { confirm } = Modal;
   const userId = useSelector((s: Store) => s.user.user._id);
   const selectedBookmarkTags = useSelector(
     (s: Store) => s.bookmark.selectedTag
@@ -51,6 +54,11 @@ const BookmarkContainer: React.FC = (props) => {
   const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
   const searchingWord = useSelector((s: Store) => s.instantSearch.word);
   const searchResults = useSelector((s: Store) => s.instantSearch.results);
+  const [clearTrashMutation] = useClearTrashMutation({
+    variables: {
+      userId: "", // value for 'userId'
+    },
+  });
 
   const { data: bookmarkByTag, loading } = useGetBookmarkByTagsQuery({
     variables: {
@@ -97,10 +105,45 @@ const BookmarkContainer: React.FC = (props) => {
     recentTrigger({ variables: { owner: userId } });
   }, [recentTrigger, userId]);
 
+  const onEmptyTrash = () => {
+    clearTrashMutation({
+      variables: {
+        userId: userId,
+      },
+    });
+  };
+
+  const showConfirm = () => {
+    confirm({
+      title: "Are you sure to empty your trash?",
+      icon: <ExclamationCircleOutlined />,
+      content: "All of items in this trash will be permanently removed!",
+      onOk() {
+        onEmptyTrash();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+
   return (
     <div style={{ paddingTop: "16px" }}>
       <Row justify="center">
         {bookmarkTags === "recent" && <Add onAdd={onAdd} />}
+      </Row>
+      <Row justify="start">
+        {bookmarkTags === "delete" && (
+          <Button
+            icon
+            style={{ marginRight: "50%" }}
+            type="primary"
+            danger
+            onClick={showConfirm}
+          >
+            Empty trash
+          </Button>
+        )}
       </Row>
 
       {loading && <p>loading ...</p>}
