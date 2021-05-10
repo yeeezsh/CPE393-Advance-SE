@@ -50,13 +50,13 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
           </Menu.Item>
         ))}
 
-        <Menu.Item
+        {/* <Menu.Item
           key="archive"
           icon={<DeleteOutlined />}
           onClick={() => onSelect("archive")}
         >
           Archive
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
           key="trash"
           icon={<DeleteOutlined />}

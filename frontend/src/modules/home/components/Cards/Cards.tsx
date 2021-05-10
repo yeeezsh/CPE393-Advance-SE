@@ -1,8 +1,12 @@
 import { LinkOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BookmarkEditInputDto } from "../../../../common/services/generate/generate-types";
+import {
+  BookmarkEditInputDto,
+  useDeleteBookmarkMutation,
+} from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
 import Tags, { TagType } from "../Tags/index";
@@ -42,9 +46,15 @@ const ExpandCard: React.FC<
   CardProps & { visible: boolean; onSave: (save: BookmarkEditInputDto) => void }
 > = (props) => {
   const dispatch = useDispatch();
+  const { confirm } = Modal;
   const alltags = useSelector((s: Store) => s.tags.tags);
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
+  const [deleteBookmarkMutation] = useDeleteBookmarkMutation({
+    variables: {
+      bookmarkId: "", // value for 'bookmarkId'
+    },
+  });
 
   const selectedTags = props.tags.map((el) => el._id);
   const initTagsMapped = alltags.map((el) => ({
@@ -86,7 +96,29 @@ const ExpandCard: React.FC<
     onSave(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = () => {
+    console.log("delete!");
+    deleteBookmarkMutation({
+      variables: {
+        bookmarkId: props._id,
+      },
+    });
+    onCancel();
+  };
+
+  const showConfirm = () => {
+    confirm({
+      title: "Do you Want to delete this url?",
+      icon: <ExclamationCircleOutlined />,
+      content: "This item will be moved to trash",
+      onOk() {
+        onDelete();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
 
   const onSelectTag = (tagId: string) => {
     setTags((t) => {
@@ -111,7 +143,12 @@ const ExpandCard: React.FC<
       onCancel={onCancel}
       onOk={onOk}
       footer={[
-        <Button style={{ marginRight: "50%" }} type="primary" danger>
+        <Button
+          style={{ marginRight: "50%" }}
+          type="primary"
+          danger
+          onClick={showConfirm}
+        >
           Delete
         </Button>,
         <Button onClick={onCancel}>Cancel</Button>,
