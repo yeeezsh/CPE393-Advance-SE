@@ -36,6 +36,7 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
         note: "",
       },
     },
+    fetchPolicy: "no-cache",
   });
 
   const onAdd = () => {
