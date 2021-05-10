@@ -19,6 +19,7 @@ export const Searchbar: React.FC = () => {
   const bookmarkSelectedTags = useSelector(
     (s: Store) => s.bookmark.selectedTag
   );
+  const searchValue = useSelector((s: Store) => s.instantSearch.word);
   const [searchTrigger, { data, loading }] = useSearchLazyQuery({
     variables: {
       word: {
@@ -56,6 +57,7 @@ export const Searchbar: React.FC = () => {
       placeholder="Search"
       size="large"
       prefix={<SearchIcon />}
+      value={searchValue}
       onChange={(e) => {
         dispatch(instantSearchActions.onSearch({ word: e.target.value }));
       }}

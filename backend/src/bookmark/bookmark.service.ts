@@ -23,7 +23,14 @@ export class BookmarkService {
     limit = MAX_QUERY,
   ): Promise<BookmarkDTO[]> {
     const doc = await this.urlModel
-      .find({ owner })
+      .find({
+        owner,
+        tags: {
+          $elemMatch: {
+            $nin: ['delete', 'archive'],
+          },
+        },
+      })
       .sort({ updateAt: -1 })
       .skip(skip)
       .limit(limit)

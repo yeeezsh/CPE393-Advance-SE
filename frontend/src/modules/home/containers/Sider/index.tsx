@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
+import { instantSearchActions } from "../../../../common/store/instantSearch";
 const { Sider: SiderAnt } = Layout;
 
 const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
@@ -17,6 +18,7 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
 
   const onSelect = (tag: string) => {
     dispatch(BookmarkAction.setSelectedTag({ tag }));
+    dispatch(instantSearchActions.clear());
   };
 
   useEffect(() => {
