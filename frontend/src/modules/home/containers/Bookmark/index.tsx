@@ -47,7 +47,7 @@ const BookmarkContainer: React.FC = (props) => {
     (s: Store) => s.bookmark.selectedTag
   );
 
-  const allTags = useSelector((s: Store) => s.tags.tags);
+  // const allTags = useSelector((s: Store) => s.tags.tags);
   const bookmarkTags = useSelector((s: Store) => s.bookmark.selectedTag);
   const searchingWord = useSelector((s: Store) => s.instantSearch.word);
   const searchResults = useSelector((s: Store) => s.instantSearch.results);
