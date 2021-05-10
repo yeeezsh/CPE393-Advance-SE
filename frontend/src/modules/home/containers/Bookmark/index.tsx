@@ -156,7 +156,7 @@ const BookmarkContainer: React.FC = (props) => {
         {!searchingWord &&
           bookmarkTags === "recent" &&
           recent?.getRecentBookmark.map((el) => (
-            <BookmarkCard {...props} el={el} onEdit={onEdit} />
+            <BookmarkCard key={el._id} {...props} el={el} onEdit={onEdit} />
           ))}
 
         {/* show cards by selected tag */}
@@ -169,7 +169,7 @@ const BookmarkContainer: React.FC = (props) => {
         {searchingWord &&
           searchResults &&
           searchResults.map((el) => (
-            <BookmarkCard {...props} el={el} onEdit={onEdit} />
+            <BookmarkCard key={el._id} {...props} el={el} onEdit={onEdit} />
           ))}
       </Row>
     </div>
