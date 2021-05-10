@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TagDto } from "../../services/generate/generate-types";
 
-type DataTagStore = Pick<TagDto, "_id" | "createAt" | "label">[];
+export type DataTagStore = Pick<TagDto, "_id" | "createAt" | "label">[];
 export type TagStore = {
   tags: DataTagStore;
 };
@@ -18,7 +18,10 @@ const tagSlice = createSlice({
       return initialState;
     },
     updateTag(state, action: PayloadAction<{ data: DataTagStore }>) {
-      state.tags = action.payload.data;
+      state.tags = action.payload.data.map((el) => ({
+        ...el,
+        createAt: String(el.createAt),
+      }));
     },
     appendTag(state, action: PayloadAction<{ data: DataTagStore[0] }>) {
       state.tags.push(action.payload.data);
