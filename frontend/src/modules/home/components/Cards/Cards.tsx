@@ -1,5 +1,6 @@
 import { LinkOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -46,6 +47,7 @@ const ExpandCard: React.FC<
   CardProps & { visible: boolean; onSave: (save: BookmarkEditInputDto) => void }
 > = (props) => {
   const dispatch = useDispatch();
+  const { confirm } = Modal;
   const alltags = useSelector((s: Store) => s.tags.tags);
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
@@ -102,6 +104,21 @@ const ExpandCard: React.FC<
         bookmarkId: props._id,
       },
     });
+    onCancel();
+  };
+
+  const showConfirm = () => {
+    confirm({
+      title: "Do you Want to delete this url?",
+      icon: <ExclamationCircleOutlined />,
+      content: "This item will be moved to trash",
+      onOk() {
+        onDelete();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
 
   const onSelectTag = (tagId: string) => {
@@ -131,7 +148,7 @@ const ExpandCard: React.FC<
           style={{ marginRight: "50%" }}
           type="primary"
           danger
-          onClick={onDelete}
+          onClick={showConfirm}
         >
           Delete
         </Button>,
