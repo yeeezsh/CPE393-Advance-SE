@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarkDTO } from './dtos/bookmark.dto';
 import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
 import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
@@ -52,5 +52,8 @@ export class TagsResolver {
     return this.tagService.listAllTag(owner);
   }
 
-  // @Mutation(() =>)
+  @Mutation(() => String)
+  async restoreFromTrash(@Args('bookmarkId') bookmark: string) {
+    return this.tagService.restoreFromTrash(bookmark);
+  }
 }
