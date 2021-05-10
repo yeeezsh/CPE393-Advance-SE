@@ -9,7 +9,7 @@ import { BookmarkGetInputDTO } from './dtos/input/bookmark-get.input.dto';
 import { TagAddToBookmarkDTO } from './dtos/input/tag-addToBookmark.input.dto';
 import { TagCreateInputDTO } from './dtos/input/tag-create.input.dto';
 import { TagEditInputDTO } from './dtos/input/tag-edit.input.dto';
-import { TagListDTO } from './dtos/tag-list.dto';
+import { TagListDTO } from './dtos/input/tag-list.dto';
 import { TagDTO } from './dtos/tag.dto';
 import { TagBadIdException } from './exceptions/tag-bad-id.exceptions';
 import { Tag, TagDocument } from './schema/tag.schema';
