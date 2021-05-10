@@ -22,19 +22,6 @@ mutation createAccount($user: UserRegisterInputDTO!) {
   }
 }
 
-query getBookmarkByTags($opts: SearchFilterTag!) {
-  searchFilterText(SearchFilterTag: $opts) {
-    results {
-      _id
-      domain
-      original
-      owner
-      tags
-      note
-    }
-  }
-}
-
 query getTagsByOwner($userId: String!) {
   listAllTag(owner: $userId) {
     result {
@@ -85,6 +72,52 @@ query search($word: SearchTextInputDTO!) {
       owner
       tags
       updateAt
+      unwindTags
     }
   }
+}
+
+mutation createTag($tag: TagCreateInputDTO!) {
+  createTag(TagCreateInputDTO: $tag) {
+    _id
+    label
+  }
+}
+
+query getBookmark($id: String!) {
+  getABookmark(bookmarkId: $id) {
+    _id
+    owner
+    domain
+    note
+    original
+    tags
+  }
+}
+
+query getBookmarkByTags($opts: SearchFilterTag!) {
+  searchFilterText(SearchFilterTag: $opts) {
+    results {
+      _id
+      domain
+      original
+      owner
+      tags
+      note
+      unwindTags
+    }
+  }
+}
+
+mutation deleteBookmark($bookmarkId: String!) {
+  deleteTag(BookmarkGetInputDTO: { bookmarkId: $bookmarkId }) {
+    _id
+    tags
+    original
+    owner
+  }
+}
+
+mutation ClearTrash($userId: String!) {
+  clearTrash(BookmarkClearInput: { owner: $userId })
 }

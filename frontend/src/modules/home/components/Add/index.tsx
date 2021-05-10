@@ -1,17 +1,32 @@
 import { LinkOutlined, PushpinOutlined } from "@ant-design/icons";
 import { Button, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAddBookmarkMutation } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
+import Tags, { TagType } from "../Tags";
 import { InputCard, InputHeader, InputStyle, InputTextfield } from "./styled";
-import Tags from "../Tags";
 
 const Add: React.FC<{ onAdd: () => void }> = (props) => {
   const userId = useSelector((s: Store) => s.user.user._id);
   const [original, setOriginal] = useState("");
   const [note, setNote] = useState("");
   const [error, setError] = useState<boolean>(false);
+  const alltags = useSelector((s: Store) => s.tags.tags);
+
+  const [tags, setTags] = useState<TagType>([]);
+
+  useEffect(() => {
+    alltags &&
+      setTags(
+        alltags.map((el) => ({
+          ...el,
+          checked: false,
+          createAt: new Date(el.createAt),
+        }))
+      );
+  }, [alltags]);
+
   const [addBookmarkMutation] = useAddBookmarkMutation({
     variables: {
       bookmark: {
@@ -21,6 +36,7 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
         note: "",
       },
     },
+    fetchPolicy: "no-cache",
   });
 
   const onAdd = () => {
@@ -35,12 +51,40 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
             owner: userId,
             note,
             original,
-            tags: [],
+            tags: tags.filter((el) => el.checked).map((el) => el._id),
           },
         },
       });
       props.onAdd();
+      clear();
     }
+  };
+
+  const clear = () => {
+    setOriginal("");
+    setNote("");
+    setTags(
+      alltags.map((el) => ({
+        ...el,
+        checked: false,
+        createAt: new Date(el.createAt),
+      }))
+    );
+  };
+
+  const onSelectTag = (tagId: string) => {
+    setTags((t) => {
+      return t.map((el) => {
+        const isSelecting = el._id === tagId;
+        if (isSelecting) {
+          return {
+            ...el,
+            checked: !el.checked,
+          };
+        }
+        return el;
+      });
+    });
   };
 
   return (
@@ -74,7 +118,21 @@ const Add: React.FC<{ onAdd: () => void }> = (props) => {
         />
 
         {/* tags */}
-        <Tags />
+        <Tags
+          tags={tags}
+          onSelect={onSelectTag}
+          onAddNewTag={(newTag) =>
+            setTags((t) => [
+              ...t,
+              {
+                _id: newTag._id,
+                checked: true,
+                createAt: newTag.createAt,
+                label: newTag.label,
+              },
+            ])
+          }
+        />
       </InputCard>
     </Row>
   );

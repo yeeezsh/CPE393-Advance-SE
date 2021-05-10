@@ -25,6 +25,11 @@ export class SearchService {
         },
       },
       {
+        $addFields: {
+          unwindTags: '$tags',
+        },
+      },
+      {
         $unwind: {
           path: '$tags',
           preserveNullAndEmptyArrays: true,
@@ -60,6 +65,7 @@ export class SearchService {
 
   async filterByTag(search: SearchFilterTag): Promise<SearchDTO> {
     // FIXME: change on prod
+
     const tags = search.tags;
     const results = await this.bookmarkModel.aggregate([
       {
@@ -68,6 +74,11 @@ export class SearchService {
           tags: {
             $in: tags,
           },
+        },
+      },
+      {
+        $addFields: {
+          unwindTags: '$tags',
         },
       },
     ]);

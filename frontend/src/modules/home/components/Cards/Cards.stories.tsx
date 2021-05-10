@@ -3,9 +3,9 @@ import { TagType } from "../Tags";
 import Cards, { CardProps } from "./Cards";
 
 const MOCK_TAGS: TagType = [
-  { _id: "1", label: "t1", checked: false },
-  { _id: "2", label: "t2", checked: true },
-  { _id: "3", label: "t3", checked: false },
+  { _id: "1", label: "t1", checked: false, createAt: new Date() },
+  { _id: "2", label: "t2", checked: true, createAt: new Date() },
+  { _id: "3", label: "t3", checked: false, createAt: new Date() },
 ];
 
 export default {

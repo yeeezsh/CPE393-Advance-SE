@@ -4,22 +4,27 @@ import {
   FieldTimeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetTagsByOwnerQuery } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
-import { actions } from "../../../../common/store/bookmark";
+import { BookmarkAction } from "../../../../common/store/bookmark";
+import { instantSearchActions } from "../../../../common/store/instantSearch";
 const { Sider: SiderAnt } = Layout;
 
 const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((s: Store) => s.user.user._id);
-  const { data } = useGetTagsByOwnerQuery({ variables: { userId } });
+  const tags = useSelector((s: Store) => s.tags.tags);
 
   const onSelect = (tag: string) => {
-    dispatch(actions.setSelectedTag({ tag }));
+    dispatch(BookmarkAction.setSelectedTag({ tag }));
+    dispatch(instantSearchActions.clear());
   };
+
+  useEffect(() => {
+    dispatch(BookmarkAction.setSelectedTag({ tag: "recent" }));
+  }, [dispatch]);
+
   return (
     <SiderAnt
       trigger={null}
@@ -35,7 +40,7 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
         >
           Recent
         </Menu.Item>
-        {data?.listAllTag.result.map((el) => (
+        {tags.map((el) => (
           <Menu.Item
             key={el._id}
             icon={<BookOutlined />}
@@ -45,13 +50,13 @@ const SiderContainer: React.FC<{ collapsed: boolean }> = (props) => {
           </Menu.Item>
         ))}
 
-        <Menu.Item
+        {/* <Menu.Item
           key="archive"
           icon={<DeleteOutlined />}
           onClick={() => onSelect("archive")}
         >
           Archive
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
           key="trash"
           icon={<DeleteOutlined />}
