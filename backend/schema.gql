@@ -32,7 +32,7 @@ type BookmarkDTOSearch {
   original: String!
   owner: String!
   tags: [String!]!
-  unwindTag: [String!]!
+  unwindTags: [String!]!
   updateAt: DateTime
 }
 

@@ -4,7 +4,7 @@ import { BookmarkDTO } from '../../bookmark/dtos/bookmark.dto';
 @ObjectType()
 export class BookmarkDTOSearch extends BookmarkDTO {
   @Field(() => [String])
-  unwindTag: string[];
+  unwindTags: string[];
 }
 
 @ObjectType()
