@@ -108,3 +108,12 @@ query getBookmarkByTags($opts: SearchFilterTag!) {
     }
   }
 }
+
+mutation deleteBookmark($bookmarkId: String!) {
+  deleteTag(BookmarkGetInputDTO: { bookmarkId: $bookmarkId }) {
+    _id
+    tags
+    original
+    owner
+  }
+}

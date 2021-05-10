@@ -390,6 +390,19 @@ export type GetBookmarkByTagsQuery = (
   ) }
 );
 
+export type DeleteBookmarkMutationVariables = Exact<{
+  bookmarkId: Scalars['String'];
+}>;
+
+
+export type DeleteBookmarkMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteTag: (
+    { __typename?: 'BookmarkDTO' }
+    & Pick<BookmarkDto, '_id' | 'tags' | 'original' | 'owner'>
+  ) }
+);
+
 
 export const DemoDocument = gql`
     query demo {
@@ -794,3 +807,38 @@ export function useGetBookmarkByTagsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetBookmarkByTagsQueryHookResult = ReturnType<typeof useGetBookmarkByTagsQuery>;
 export type GetBookmarkByTagsLazyQueryHookResult = ReturnType<typeof useGetBookmarkByTagsLazyQuery>;
 export type GetBookmarkByTagsQueryResult = Apollo.QueryResult<GetBookmarkByTagsQuery, GetBookmarkByTagsQueryVariables>;
+export const DeleteBookmarkDocument = gql`
+    mutation deleteBookmark($bookmarkId: String!) {
+  deleteTag(BookmarkGetInputDTO: {bookmarkId: $bookmarkId}) {
+    _id
+    tags
+    original
+    owner
+  }
+}
+    `;
+export type DeleteBookmarkMutationFn = Apollo.MutationFunction<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
+
+/**
+ * __useDeleteBookmarkMutation__
+ *
+ * To run a mutation, you first call `useDeleteBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBookmarkMutation, { data, loading, error }] = useDeleteBookmarkMutation({
+ *   variables: {
+ *      bookmarkId: // value for 'bookmarkId'
+ *   },
+ * });
+ */
+export function useDeleteBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>) {
+        return Apollo.useMutation<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>(DeleteBookmarkDocument, baseOptions);
+      }
+export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
+export type DeleteBookmarkMutationResult = Apollo.MutationResult<DeleteBookmarkMutation>;
+export type DeleteBookmarkMutationOptions = Apollo.BaseMutationOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
