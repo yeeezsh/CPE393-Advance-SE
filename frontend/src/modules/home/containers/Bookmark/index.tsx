@@ -11,7 +11,6 @@ import {
 import { Store } from "../../../../common/store";
 import Add from "../../components/Add";
 import Cards from "../../components/Cards/Cards";
-import { TagType } from "../../components/Tags";
 
 const BookmarkCard: React.FC<{
   el: BookmarkDto;
@@ -20,7 +19,7 @@ const BookmarkCard: React.FC<{
   const allTags = useSelector((s: Store) => s.tags.tags);
   return (
     <>
-      {allTags && (
+      {props.el.tags && (
         <Col span={8} key={props.el._id}>
           <Cards
             key={props.el._id}
@@ -53,13 +52,14 @@ const BookmarkContainer: React.FC = (props) => {
   const searchingWord = useSelector((s: Store) => s.instantSearch.word);
   const searchResults = useSelector((s: Store) => s.instantSearch.results);
 
-  const { data, loading } = useGetBookmarkByTagsQuery({
+  const { data: bookmarkByTag, loading } = useGetBookmarkByTagsQuery({
     variables: {
       opts: {
         owner: userId,
         tags: [selectedBookmarkTags],
       },
     },
+    fetchPolicy: "network-only",
   });
 
   const [recentTrigger, { data: recent }] = useGetRecentBookmarkLazyQuery({
@@ -135,7 +135,7 @@ const BookmarkContainer: React.FC = (props) => {
           })} */}
 
         {/* search display */}
-        {data?.searchFilterText.results.map((el) => {
+        {/* {data?.searchFilterText.results.map((el) => {
           const mappedTags = el.tags.map((el) => {
             const foundTag = allTags.find((f) => f._id === el);
             return {
@@ -158,26 +158,57 @@ const BookmarkContainer: React.FC = (props) => {
               />
             </Col>
           );
-        })}
+        })} */}
 
         {/* show cards only recent */}
         {!searchingWord &&
           bookmarkTags === "recent" &&
           recent?.getRecentBookmark.map((el) => (
-            <BookmarkCard key={el._id} {...props} el={el} onEdit={onEdit} />
+            <BookmarkCard
+              key={el._id + "recent"}
+              {...props}
+              el={el}
+              onEdit={onEdit}
+            />
           ))}
 
         {/* show cards by selected tag */}
         {!searchingWord &&
-          data?.searchFilterText.results.map((el) => (
-            <BookmarkCard {...props} el={el} onEdit={onEdit} />
-          ))}
+          bookmarkByTag?.searchFilterText.results.map((el) => {
+            return (
+              <BookmarkCard
+                key={el._id + "tag"}
+                {...props}
+                el={{
+                  domain: el.domain,
+                  original: el.original,
+                  tags: el.unwindTags,
+                  _id: el._id,
+                  note: el.note,
+                  owner: el.owner,
+                }}
+                onEdit={onEdit}
+              />
+            );
+          })}
 
         {/* show cards from searching results */}
         {searchingWord &&
           searchResults &&
           searchResults.map((el) => (
-            <BookmarkCard key={el._id} {...props} el={el} onEdit={onEdit} />
+            <BookmarkCard
+              key={el._id + "search"}
+              {...props}
+              el={{
+                domain: el.domain,
+                original: el.original,
+                tags: el.unwindTags,
+                _id: el._id,
+                note: el.note,
+                owner: el.owner,
+              }}
+              onEdit={onEdit}
+            />
           ))}
       </Row>
     </div>
