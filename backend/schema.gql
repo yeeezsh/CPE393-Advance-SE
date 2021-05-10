@@ -24,6 +24,18 @@ type BookmarkDTO {
   updateAt: DateTime
 }
 
+type BookmarkDTOSearch {
+  _id: String!
+  createAt: DateTime
+  domain: String!
+  note: String!
+  original: String!
+  owner: String!
+  tags: [String!]!
+  unwindTag: [String!]!
+  updateAt: DateTime
+}
+
 input BookmarkEditInputDTO {
   _id: String!
   note: String
@@ -63,7 +75,7 @@ type Query {
 }
 
 type SearchDTO {
-  results: [BookmarkDTO!]!
+  results: [BookmarkDTOSearch!]!
 }
 
 input SearchFilterTag {
