@@ -25,11 +25,18 @@ export class BookmarkService {
     const doc = await this.urlModel
       .find({
         owner,
-        tags: {
-          $elemMatch: {
-            $nin: ['delete', 'archive'],
+        $or: [
+          {
+            tags: {
+              $elemMatch: {
+                $nin: ['delete', 'archive'],
+              },
+            },
           },
-        },
+          {
+            $where: 'this.tags.length === 0',
+          },
+        ],
       })
       .sort({ updateAt: -1 })
       .skip(skip)
