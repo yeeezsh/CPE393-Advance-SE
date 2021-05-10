@@ -100,7 +100,7 @@ const BookmarkContainer: React.FC = (props) => {
   return (
     <div style={{ paddingTop: "16px" }}>
       <Row justify="center">
-        <Add onAdd={onAdd} />
+        {bookmarkTags === "recent" && <Add onAdd={onAdd} />}
       </Row>
 
       {loading && <p>loading ...</p>}
