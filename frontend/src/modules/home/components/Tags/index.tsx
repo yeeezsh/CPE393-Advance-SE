@@ -7,7 +7,7 @@ import {
   useGetTagsByOwnerLazyQuery,
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
-import { TagAction } from "../../../../common/store/tags";
+import { DataTagStore, TagAction } from "../../../../common/store/tags";
 import onEnter from "../../../../common/utils/onEnterKey";
 
 const { CheckableTag } = AntdTag;
@@ -15,7 +15,8 @@ const { CheckableTag } = AntdTag;
 export interface TagsProps {
   tags?: TagType;
   selected?: string[];
-  onAddNewTag?: () => void;
+  onAddNewTag?: (newTag: DataTagStore[0]) => void;
+  onSelect?: (id: string) => void;
 }
 
 export type TagType = {
@@ -35,7 +36,6 @@ const Tags: React.FC<TagsProps> = (props) => {
     variables: { userId },
     fetchPolicy: "network-only",
   });
-  const tagsStore = useSelector((s: Store) => s.tags.tags);
 
   const [input, setInput] = useState<{
     visible: boolean;
@@ -77,10 +77,14 @@ const Tags: React.FC<TagsProps> = (props) => {
 
     tagCreated.data &&
       dispatch(TagAction.appendTag({ data: tagCreated.data.createTag }));
-    props.onAddNewTag && props.onAddNewTag();
+    props.onAddNewTag &&
+      tagCreated?.data?.createTag &&
+      props.onAddNewTag(tagCreated.data.createTag);
   };
 
-  const onSelect = (id: string) => {};
+  const onSelect = (id: string) => {
+    props.onSelect && props.onSelect(id);
+  };
 
   if (error) {
     message.error("Duplicated label");
@@ -91,40 +95,30 @@ const Tags: React.FC<TagsProps> = (props) => {
       <div>
         {loading && <span>Loading ...</span>}
 
-        {tagsStore.map((el) => (
-          <CheckableTag
-            key={el._id}
-            onClick={() => onSelect(el._id)}
-            checked={false}
-            // checked={el.checked}
-            style={{ minWidth: 40, textAlign: "center" }}
-          >
-            <>
-              <AntdTag style={{ width: "100%" }}>{el.label}</AntdTag>
-            </>
-
-            {/* {!el.checked && (
+        {props.tags &&
+          props.tags.map((el) => (
+            <CheckableTag
+              key={el._id}
+              onClick={() => onSelect(el._id)}
+              checked={false}
+              style={{ minWidth: 40, textAlign: "center" }}
+            >
               <>
-                <AntdTag>
+                <AntdTag
+                  style={{
+                    width: "100%",
+                    marginLeft: "2em",
+                    color: el.checked ? "white" : "black",
+                    backgroundColor: el.checked ? "#2c71f5" : "white",
+                  }}
+                >
                   {el.label}
-                  <CloseOutlined
-                    onClick={() => onDelete(el._id)}
-                    style={{ marginLeft: "2em", cursor: "pointer" }}
-                  />
                 </AntdTag>
               </>
-            )} */}
-            {/* {el.checked && (
-              <>
-                {el.label}
-                <CloseOutlined
-                  onClick={() => onDelete(el._id)}
-                  style={{ marginLeft: "2em", cursor: "pointer" }}
-                />
-              </>
-            )} */}
-          </CheckableTag>
-        ))}
+            </CheckableTag>
+          ))}
+
+        {/* add new */}
         <AntdTag onClick={onNewtag}>
           {!input.visible && (
             <>
