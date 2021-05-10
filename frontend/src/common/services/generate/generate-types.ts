@@ -78,6 +78,7 @@ export type Mutation = {
   deleteTag: BookmarkDto;
   editBookmark: BookmarkDto;
   editTag: TagDto;
+  restoreFromTrash: Scalars['String'];
   setArchiveTag: BookmarkDto;
   userLogin: UserLoginResponseDto;
 };
@@ -120,6 +121,11 @@ export type MutationEditBookmarkArgs = {
 
 export type MutationEditTagArgs = {
   TagEditInputDTO: TagEditInputDto;
+};
+
+
+export type MutationRestoreFromTrashArgs = {
+  bookmarkId: Scalars['String'];
 };
 
 
@@ -421,6 +427,16 @@ export type ClearTrashMutationVariables = Exact<{
 export type ClearTrashMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'clearTrash'>
+);
+
+export type RestoreFromTrashMutationVariables = Exact<{
+  bookmarkId: Scalars['String'];
+}>;
+
+
+export type RestoreFromTrashMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'restoreFromTrash'>
 );
 
 
@@ -892,3 +908,33 @@ export function useClearTrashMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type ClearTrashMutationHookResult = ReturnType<typeof useClearTrashMutation>;
 export type ClearTrashMutationResult = Apollo.MutationResult<ClearTrashMutation>;
 export type ClearTrashMutationOptions = Apollo.BaseMutationOptions<ClearTrashMutation, ClearTrashMutationVariables>;
+export const RestoreFromTrashDocument = gql`
+    mutation restoreFromTrash($bookmarkId: String!) {
+  restoreFromTrash(bookmarkId: $bookmarkId)
+}
+    `;
+export type RestoreFromTrashMutationFn = Apollo.MutationFunction<RestoreFromTrashMutation, RestoreFromTrashMutationVariables>;
+
+/**
+ * __useRestoreFromTrashMutation__
+ *
+ * To run a mutation, you first call `useRestoreFromTrashMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRestoreFromTrashMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [restoreFromTrashMutation, { data, loading, error }] = useRestoreFromTrashMutation({
+ *   variables: {
+ *      bookmarkId: // value for 'bookmarkId'
+ *   },
+ * });
+ */
+export function useRestoreFromTrashMutation(baseOptions?: Apollo.MutationHookOptions<RestoreFromTrashMutation, RestoreFromTrashMutationVariables>) {
+        return Apollo.useMutation<RestoreFromTrashMutation, RestoreFromTrashMutationVariables>(RestoreFromTrashDocument, baseOptions);
+      }
+export type RestoreFromTrashMutationHookResult = ReturnType<typeof useRestoreFromTrashMutation>;
+export type RestoreFromTrashMutationResult = Apollo.MutationResult<RestoreFromTrashMutation>;
+export type RestoreFromTrashMutationOptions = Apollo.BaseMutationOptions<RestoreFromTrashMutation, RestoreFromTrashMutationVariables>;

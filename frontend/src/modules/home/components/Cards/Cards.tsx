@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   BookmarkEditInputDto,
   useDeleteBookmarkMutation,
+  useRestoreFromTrashMutation,
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
@@ -48,9 +49,17 @@ const ExpandCard: React.FC<
   const dispatch = useDispatch();
   const { confirm } = Modal;
   const alltags = useSelector((s: Store) => s.tags.tags);
+  const selectedBookmarkTags = useSelector(
+    (s: Store) => s.bookmark.selectedTag
+  );
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
   const [deleteBookmarkMutation] = useDeleteBookmarkMutation({
+    variables: {
+      bookmarkId: "", // value for 'bookmarkId'
+    },
+  });
+  const [restoreFromTrashMutation] = useRestoreFromTrashMutation({
     variables: {
       bookmarkId: "", // value for 'bookmarkId'
     },
@@ -97,7 +106,6 @@ const ExpandCard: React.FC<
   };
 
   const onDelete = () => {
-    console.log("delete!");
     deleteBookmarkMutation({
       variables: {
         bookmarkId: props._id,
@@ -135,6 +143,37 @@ const ExpandCard: React.FC<
     });
   };
 
+  const onRestore = () => {
+    restoreFromTrashMutation({
+      variables: {
+        bookmarkId: props._id,
+      },
+    });
+    onCancel();
+    window.location.reload(true);
+  };
+
+  const DeleteButton: React.FC<{ isDeleted: boolean }> = (props) =>
+    props.isDeleted ? (
+      <Button
+        style={{ marginRight: "50%" }}
+        type="primary"
+        danger
+        onClick={onRestore}
+      >
+        Restore
+      </Button>
+    ) : (
+      <Button
+        style={{ marginRight: "50%" }}
+        type="primary"
+        danger
+        onClick={showConfirm}
+      >
+        Delete
+      </Button>
+    );
+
   return (
     <Modal
       style={{ zIndex: 2 }}
@@ -143,14 +182,7 @@ const ExpandCard: React.FC<
       onCancel={onCancel}
       onOk={onOk}
       footer={[
-        <Button
-          style={{ marginRight: "50%" }}
-          type="primary"
-          danger
-          onClick={showConfirm}
-        >
-          Delete
-        </Button>,
+        <DeleteButton isDeleted={selectedBookmarkTags === "delete"} />,
         <Button onClick={onCancel}>Cancel</Button>,
         <Button type="primary" onClick={onOk}>
           Save

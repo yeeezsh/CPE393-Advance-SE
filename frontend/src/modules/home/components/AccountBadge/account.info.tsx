@@ -25,14 +25,14 @@ const Line: React.FC = () => (
   <Divider style={{ width: "100%", margin: "12px 6px" }} />
 );
 
-const ManageButton: React.FC = () => (
-  <Button
-    style={{ justifyContent: "center", display: "flex", margin: "auto" }}
-    rounded
-  >
-    Manage your Account
-  </Button>
-);
+// const ManageButton: React.FC = () => (
+//   <Button
+//     style={{ justifyContent: "center", display: "flex", margin: "auto" }}
+//     rounded
+//   >
+//     Manage your Account
+//   </Button>
+// );
 
 const LogoutButton: React.FC<{ onClick: () => void }> = (props) => (
   <Button
@@ -74,7 +74,7 @@ const AccountInfo: React.FC<AccountInfoProps> = (props) => {
       </CharacterBadge>
       <DisplayNameStyle>{props.displayname}</DisplayNameStyle>
       <EmailStyle>{props.email}</EmailStyle>
-      <ManageButton />
+      {/* <ManageButton /> */}
       <Line />
       <div style={{ height: 102 }} />
       <LogoutButton {...props} onClick={onClick} />
