@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   BookmarkEditInputDto,
   useDeleteBookmarkMutation,
+  useRestoreFromTrashMutation,
 } from "../../../../common/services/generate/generate-types";
 import { Store } from "../../../../common/store";
 import { BookmarkAction } from "../../../../common/store/bookmark";
@@ -54,6 +55,11 @@ const ExpandCard: React.FC<
   const [original, setOriginal] = useState(props.domain);
   const [note, setNote] = useState(props.note);
   const [deleteBookmarkMutation] = useDeleteBookmarkMutation({
+    variables: {
+      bookmarkId: "", // value for 'bookmarkId'
+    },
+  });
+  const [restoreFromTrashMutation] = useRestoreFromTrashMutation({
     variables: {
       bookmarkId: "", // value for 'bookmarkId'
     },
@@ -108,9 +114,6 @@ const ExpandCard: React.FC<
     onCancel();
   };
 
-  const onRestore = () => {
-    console.log("restore");
-  };
   const showConfirm = () => {
     confirm({
       title: "Do you Want to delete this url?",
@@ -138,6 +141,16 @@ const ExpandCard: React.FC<
         return el;
       });
     });
+  };
+
+  const onRestore = () => {
+    restoreFromTrashMutation({
+      variables: {
+        bookmarkId: props._id,
+      },
+    });
+    onCancel();
+    window.location.reload(true);
   };
 
   const DeleteButton: React.FC<{ isDeleted: boolean }> = (props) =>
