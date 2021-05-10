@@ -135,15 +135,10 @@ const BookmarkContainer: React.FC = (props) => {
       <Row justify="center">
         {bookmarkTags === "recent" && <Add onAdd={onAdd} />}
       </Row>
-      <Row justify="start">
+
+      <Row justify="end">
         {bookmarkTags === "delete" && (
-          <Button
-            icon
-            style={{ marginRight: "50%" }}
-            type="primary"
-            danger
-            onClick={showConfirm}
-          >
+          <Button icon type="primary" danger onClick={showConfirm}>
             Empty trash
           </Button>
         )}
